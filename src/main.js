@@ -7,8 +7,15 @@ var gameConfig = {
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 1920,
         height: 1080,
-    },   
-    scene: [bootScene]
+    },
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 200 },
+            debug: true
+        }
+    },  
+    scene: [bootScene,infiniteScene,gameOverScene]
 }
 
 var game = new Phaser.Game(gameConfig);
