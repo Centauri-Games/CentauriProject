@@ -18,7 +18,7 @@ class infiniteScene extends Phaser.Scene {
             
         }
     }
-   
+
 
     preload(){
         //assets load
@@ -27,7 +27,6 @@ class infiniteScene extends Phaser.Scene {
     create() {
         
         //Elementos del juego. Aqui solo habria que pintarlos , ya que la parte de físicas la calcula el servidor de java
-
         var playerShape = this.add.ellipse(500,500,20,50,0x990000);
         var playerShape2 = this.add.ellipse(500,500,20,50,0xffffff);
 
@@ -37,11 +36,12 @@ class infiniteScene extends Phaser.Scene {
         //playerPhysics.body.setAllowGravity(false);
 
         var staticFloorForm = this.add.rectangle(960,1030,1920,100, 0x990000);
-
         var floorPhysics = this.physics.add.existing(staticFloorForm, 1);
+        var floorCollider = this.physics.add.collider(playerShape,staticFloorForm);
+        var floorCollider2 = this.physics.add.collider(playerShape2,staticFloorForm);
 
-        var floorCollider = this.physics.add.collider(playerShape,staticFloorForm,()=>{});
-        var floorCollider2 = this.physics.add.collider(playerShape2,staticFloorForm,()=>{});
+        var spikeTest = this.add.rectangle(1050, 970, 100, 25, 0xff0000);
+        var spikePhysics = this.physics.add.existing(spikeTest, 2);
 
         //variable de la cámara que sigue al jugador
 
@@ -53,81 +53,109 @@ class infiniteScene extends Phaser.Scene {
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
 
+        //variables del texto
+        var vidas = 3;
+        var vidasText = this.add.text(1000, 1000, 'Vidas: 3', {font: '32px'});
+        var spikeCollider = this.physics.add.collider(playerShape, spikeTest, function(){
+            if (vidas > 0){
+                vidas--;
+                vidasText.setText('Vidas: ' + vidas);
+                playerShape.setPosition(500, 500);
+            } else {
+                this.scene.start('gameOverScene');
+            }
+        }, null, this);
+        var spikeCollider2 = this.physics.add.collider(playerShape2, spikeTest, function(){
+            if (vidas > 0){
+                vidas--;
+                vidasText.setText('Vidas: ' + vidas);
+                playerShape2.setPosition(500, 500);
+            } else {
+                this.scene.start('gameOverScene');
+            }
+        }, null, this);
+
         //Variables de control y teclas
 
-        var keyMovement = this.input.keyboard.addKeys('A,D,right,left');
+        var keyMovement = this.input.keyboard.addKeys('A, D, W, right, left, up');
 
         var pressedA = false;
         var pressedD = false;
+        var pressedW = false;
 
         var pressedRight = false;
         var pressedLeft = false;
+        var pressedUp = false;
 
-
-        //Codigo de "teclas" para el movimiento. Habria que cambiar el codigo de dentro por el mensaje que se enviará al servidor para decir que movimientio ha realizado el personaje
+        //Codigo de "teclas" para el movimiento. Habria que cambiar el codigo de dentro por el mensaje que se enviará al servidor para decir que movimiento ha realizado el personaje
 
         keyMovement.D.on('down', function(e) {
-          
             pressedD = true;
             console.log(pressedD);
             playerPhysics.body.setVelocityX(100);
-
         });
 
         keyMovement.A.on('down', function(e) {
-            
             pressedA = true;
             console.log(pressedA);
             playerPhysics.body.setVelocityX(-100);
-            
-            
+        });
+
+        keyMovement.W.on('down', function(e) {
+            pressedW = true;
+            console.log(pressedW);
+            if (playerPhysics.body.touching.down){
+                playerPhysics.body.setVelocityY(-200);
+            }
         });
 
         keyMovement.D.on('up', function(e){
             pressedD = false;
             console.log(pressedD)
-            if(!pressedA){
+            if (!pressedA){
                 playerPhysics.body.setVelocityX(0);
-            }else{
+            } else {
                 playerPhysics.body.setVelocityX(-100);
             }
         });
 
         keyMovement.A.on('up', function(e){
-                pressedA = false;
-                console.log(pressedA);
-                if(!pressedD){
-                    playerPhysics.body.setVelocityX(0);
-
-                }else{
-                    playerPhysics.body.setVelocityX(100);
-                }
+            pressedA = false;
+            console.log(pressedA);
+            if (!pressedD){
+                playerPhysics.body.setVelocityX(0);
+            } else {
+                playerPhysics.body.setVelocityX(100);
+            }
         });
 
         //Player 2
         keyMovement.right.on('down', function(e) {
-
             pressedRight = true;
             console.log(pressedRight);
             playerPhysics2.body.setVelocityX(100);
-
         });
 
         keyMovement.left.on('down', function(e) {
-
             pressedLeft = true;
             console.log(pressedLeft);
             playerPhysics2.body.setVelocityX(-100);
+        });
 
-
+        keyMovement.up.on('down', function(e) {
+            pressedUp = true;
+            console.log(pressedUp);
+            if (playerPhysics2.body.touching.down){
+                playerPhysics2.body.setVelocityY(-200);
+            }
         });
 
         keyMovement.right.on('up', function(e){
             pressedRight = false;
             console.log(pressedRight)
-            if(!pressedLeft){
+            if (!pressedLeft){
                 playerPhysics2.body.setVelocityX(0);
-            }else{
+            } else {
                 playerPhysics2.body.setVelocityX(-100);
             }
         });
@@ -135,19 +163,15 @@ class infiniteScene extends Phaser.Scene {
         keyMovement.left.on('up', function(e){
             pressedLeft = false;
             console.log(pressedLeft);
-            if(!pressedRight){
+            if (!pressedRight){
                 playerPhysics2.body.setVelocityX(0);
-
-            }else{
+            } else{
                 playerPhysics2.body.setVelocityX(100);
             }
         });
-        
-
     }
 
     update(){
-        
        /* if (passedlevelcounter)
         updatinglevels = 2;
         */
