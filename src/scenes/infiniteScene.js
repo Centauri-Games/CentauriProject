@@ -1,9 +1,7 @@
 class infiniteScene extends Phaser.Scene {
-
     constructor(){
         super("infiniteScene");
     }
-
     
     levelGenerator(difficulty,level){
         switch(level){
@@ -19,13 +17,11 @@ class infiniteScene extends Phaser.Scene {
         }
     }
 
-
     preload(){
         //assets load
     }
 
     create() {
-        
         //Elementos del juego. Aqui solo habria que pintarlos , ya que la parte de físicas la calcula el servidor de java
         var playerShape = this.add.ellipse(500,500,20,50,0x990000);
         var playerShape2 = this.add.ellipse(500,500,20,50,0xffffff);
@@ -41,7 +37,14 @@ class infiniteScene extends Phaser.Scene {
         var floorCollider2 = this.physics.add.collider(playerShape2,staticFloorForm);
 
         var spikeTest = this.add.rectangle(1050, 970, 100, 25, 0xff0000);
-        var spikePhysics = this.physics.add.existing(spikeTest, 2);
+        this.physics.add.existing(spikeTest, 1);
+
+        var boxTest = this.add.rectangle(400, 500, 50, 50, 0xffff00);
+        var boxPhysics = this.physics.add.existing(boxTest, 0);
+
+        this.physics.add.collider(boxTest,staticFloorForm);
+        this.physics.add.collider(playerShape,boxTest);
+        this.physics.add.collider(playerShape2,boxTest);
 
         //variable de la cámara que sigue al jugador
 
@@ -175,7 +178,5 @@ class infiniteScene extends Phaser.Scene {
        /* if (passedlevelcounter)
         updatinglevels = 2;
         */
-
     }
-
 }
