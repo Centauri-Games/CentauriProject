@@ -36,15 +36,33 @@ class infiniteScene extends Phaser.Scene {
         var floorCollider = this.physics.add.collider(playerShape,staticFloorForm);
         var floorCollider2 = this.physics.add.collider(playerShape2,staticFloorForm);
 
+        //prueba pinchos
         var spikeTest = this.add.rectangle(1050, 970, 100, 25, 0xff0000);
         this.physics.add.existing(spikeTest, 1);
 
+        //prueba caja empujable
         var boxTest = this.add.rectangle(400, 500, 50, 50, 0xffff00);
         var boxPhysics = this.physics.add.existing(boxTest, 0);
 
         this.physics.add.collider(boxTest,staticFloorForm);
         this.physics.add.collider(playerShape,boxTest);
         this.physics.add.collider(playerShape2,boxTest);
+
+        //prueba teletransporte
+        var teleportEnter = this.add.ellipse(-50,1200,150,50,0x0000ff);
+        var teleportExit = this.add.ellipse(900,900,150,50,0xff0000);
+        var teleportPhysics = this.physics.add.existing(teleportEnter, 1);
+
+        this.physics.add.collider(playerShape, teleportEnter, function(){
+            playerShape.setPosition(teleportExit.x, teleportExit.y);
+        }, null, this);
+        this.physics.add.collider(playerShape2, teleportEnter, function(){
+            playerShape2.setPosition(teleportExit.x, teleportExit.y);
+        }, null, this);
+        this.physics.add.collider(boxTest, teleportEnter, function(){
+            boxTest.setPosition(teleportExit.x, teleportExit.y);
+        }, null, this);
+
 
         //variable de la cámara que sigue al jugador
 
