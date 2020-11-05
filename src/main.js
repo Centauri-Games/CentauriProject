@@ -15,7 +15,7 @@ var gameConfig = {
             debug: true
         }
     },  
-    scene: [bootScene,infiniteScene,gameOverScene]
+    scene: [infiniteScene,bootScene,gameOverScene]
 }
 
 var game = new Phaser.Game(gameConfig);
