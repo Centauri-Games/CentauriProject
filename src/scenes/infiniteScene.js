@@ -147,10 +147,21 @@ class infiniteScene extends Phaser.Scene {
 
         var mirror = this.add.rectangle(600, 950, 20, 20, 0x39caa9);
         var mirrorPhysics = this.physics.add.existing(mirror, 0);
+        var mirrorPosition = 0;
         mirrorPhysics.body.setAllowGravity(false);
+
 
         mirror.setInteractive().on('pointerup', function(){
             mirrorPhysics.setRotation(mirror.rotation+(Math.PI/3));
+            mirrorPosition = (mirrorPosition +1)%6;
+
+            if(mirrorPosition ==0){
+                console.log("Posicion correcta");
+            }
+            else{
+                console.log("Posicion incorrecta");
+            }
+
         });
 
         //CONTROL Y MOVIMIENTO
