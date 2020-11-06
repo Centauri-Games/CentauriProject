@@ -155,7 +155,7 @@ class infiniteScene extends Phaser.Scene {
             mirrorPhysics.setRotation(mirror.rotation+(Math.PI/3));
             mirrorPosition = (mirrorPosition +1)%6;
 
-            if(mirrorPosition ==0){
+            if(mirrorPosition ==0){ //Cambiar if por switch case para dibujar el rayo en las distintas posiciones
                 console.log("Posicion correcta");
             }
             else{
