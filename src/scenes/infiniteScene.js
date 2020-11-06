@@ -29,18 +29,17 @@ class infiniteScene extends Phaser.Scene {
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
 
-        //playerPhysics.body.setAllowGravity(false);
 
         var staticFloorForm = this.add.rectangle(960,1030,1920,100, 0x990000);
         var floorPhysics = this.physics.add.existing(staticFloorForm, 1);
         var floorCollider = this.physics.add.collider(playerShape,staticFloorForm);
         var floorCollider2 = this.physics.add.collider(playerShape2,staticFloorForm);
 
-        //prueba pinchos
+        //PINCHOS
         var spikeTest = this.add.rectangle(1050, 970, 100, 25, 0xff0000);
         this.physics.add.existing(spikeTest, 1);
 
-        //prueba caja empujable
+        //CAJA
         var boxTest = this.add.rectangle(400, 500, 50, 50, 0xffff00);
         var boxPhysics = this.physics.add.existing(boxTest, 0);
 
@@ -48,7 +47,7 @@ class infiniteScene extends Phaser.Scene {
         this.physics.add.collider(playerShape,boxTest);
         this.physics.add.collider(playerShape2,boxTest);
 
-        //prueba teletransporte
+        //TELETRANSPORTE
         var teleportEnter = this.add.ellipse(-50,1200,150,50,0x0000ff);
         var teleportExit = this.add.ellipse(900,900,150,50,0xff0000);
         var teleportPhysics = this.physics.add.existing(teleportEnter, 1);
@@ -64,7 +63,7 @@ class infiniteScene extends Phaser.Scene {
         }, null, this);
 
 
-        //variable de la cámara que sigue al jugador
+        //CÁMARAS
 
         var cameraMain = this.cameras.main;
         cameraMain.setSize(1920,540);
@@ -96,7 +95,57 @@ class infiniteScene extends Phaser.Scene {
             }
         }, null, this);
 
-        //Variables de control y teclas
+        //PLATAFORMAS
+
+        //Estática
+        var staticPlatform = this.add.rectangle(700, 920, 100, 40, 0xffffff);
+        var staticPlatformPhysics = this.physics.add.existing(staticPlatform, 1);
+        this.physics.add.collider(playerShape,staticPlatform);
+        this.physics.add.collider(playerShape2,staticPlatform);
+
+        //Móvil
+        var movingPlatform = this.add.rectangle(1200, 920, 100, 40, 0xffffff);
+        var movingPlatformPhysics = this.physics.add.existing(movingPlatform, 0);
+        movingPlatformPhysics.body.setAllowGravity(false);
+        movingPlatformPhysics.body.setVelocityX(30);
+        movingPlatformPhysics.body.setImmovable(true);
+        this.physics.add.collider(playerShape,movingPlatform);
+        this.physics.add.collider(playerShape2,movingPlatform);
+
+        this.tweens.timeline({
+            targets: movingPlatformPhysics.body.velocity,
+            loop: -1,
+            tweens: [
+                { x:200, y:0, duration: 2000, ease: 'Stepped' },
+                { x:0, y:0, duration: 2000, ease: 'Stepped' },
+                { x:-200, y:0, duration: 2000, ease: 'Stepped' },
+                { x:0, y:0, duration: 2000, ease: 'Stepped' }
+            ]
+        });
+
+        //Drop
+        var dropPlatform = this.add.rectangle(1600, 920, 100, 40, 0x555555);
+        var dropPlatformPhysics = this.physics.add.existing(dropPlatform, 0);
+        dropPlatformPhysics.body.setAllowGravity(false);
+        dropPlatformPhysics.body.setImmovable(true);
+
+        this.physics.add.collider(dropPlatform,staticFloorForm);
+
+        this.physics.add.collider(playerShape, dropPlatform, function(){
+            if(dropPlatformPhysics.body.allowGravity == false) {
+                dropPlatformPhysics.body.setImmovable(false);
+                dropPlatformPhysics.body.setAllowGravity(true);
+            }
+        }, null, this);
+
+        this.physics.add.collider(playerShape2, dropPlatform, function(){
+            if(dropPlatformPhysics.body.allowGravity == false) {
+                dropPlatformPhysics.body.setImmovable(false);
+                dropPlatformPhysics.body.setAllowGravity(true);
+            }
+        }, null, this);
+
+        //CONTROL Y MOVIMIENTO
 
         var keyMovement = this.input.keyboard.addKeys('A, D, W, right, left, up');
 
