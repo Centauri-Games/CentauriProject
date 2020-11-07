@@ -179,8 +179,29 @@ class infiniteScene extends Phaser.Scene {
         });
 
         //CAMBIO DE GRAVEDAD
+        var bocaAbajo = false;
+
         var switchTest = this.add.rectangle(200, 970, 50, 25, 0x00ff00);
         this.physics.add.existing(switchTest, 1);
+        var switchTest2 = this.add.rectangle(700, 60, 50, 25, 0x0000ff);
+        this.physics.add.existing(switchTest2, 1);
+
+        this.physics.add.collider(playerShape, switchTest, function(){
+            switchTest.setFillStyle(0x0000ff, 1);
+            switchTest2.setFillStyle(0x00ff00, 1);
+            bocaAbajo = true;
+            playerPhysics.body.setGravityY(-400);
+            playerPhysics2.body.setGravityY(-400);
+        }, null, this);
+
+        this.physics.add.collider(playerShape, switchTest2, function(){
+            switchTest2.setFillStyle(0x0000ff, 1);
+            switchTest.setFillStyle(0x00ff00, 1);
+            bocaAbajo = false;
+            playerPhysics.body.setGravityY(0);
+            playerPhysics2.body.setGravityY(0);
+        }, null, this);
+
 
         //CONTROL Y MOVIMIENTO
 
@@ -211,8 +232,11 @@ class infiniteScene extends Phaser.Scene {
         keyMovement.W.on('down', function(e) {
             pressedW = true;
             console.log(pressedW);
-            if (playerPhysics.body.touching.down){
+            if (playerPhysics.body.touching.down && !bocaAbajo){
                 playerPhysics.body.setVelocityY(-200);
+            }
+            if (playerPhysics.body.touching.up && bocaAbajo){
+                playerPhysics.body.setVelocityY(200);
             }
         });
 
@@ -252,8 +276,11 @@ class infiniteScene extends Phaser.Scene {
         keyMovement.up.on('down', function(e) {
             pressedUp = true;
             console.log(pressedUp);
-            if (playerPhysics2.body.touching.down){
+            if (playerPhysics2.body.touching.down && !bocaAbajo){
                 playerPhysics2.body.setVelocityY(-200);
+            }
+            if (playerPhysics2.body.touching.up && bocaAbajo){
+                playerPhysics2.body.setVelocityY(200);
             }
         });
 
