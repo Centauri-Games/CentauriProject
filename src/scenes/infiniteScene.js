@@ -113,6 +113,18 @@ class infiniteScene extends Phaser.Scene {
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
 
+
+        //SUELO
+        var staticFloorForm = this.add.rectangle(960,1030,1920,100, 0x990000);
+        var floorPhysics = this.physics.add.existing(staticFloorForm, 1);
+        var floorCollider = this.physics.add.collider(playerShape,staticFloorForm);
+        var floorCollider2 = this.physics.add.collider(playerShape2,staticFloorForm);
+
+        var staticFloor2Form = this.add.rectangle(960,0,1920,100, 0x990000);
+        var floor2Physics = this.physics.add.existing(staticFloor2Form, 1);
+        var floor2Collider = this.physics.add.collider(playerShape,staticFloor2Form);
+        var floor2Collider2 = this.physics.add.collider(playerShape2,staticFloor2Form);
+
         //CAJA
         var boxTest = this.add.rectangle(400, 500, 50, 50, 0xffff00);
         var boxPhysics = this.physics.add.existing(boxTest, 0);
@@ -131,6 +143,7 @@ class infiniteScene extends Phaser.Scene {
         var teleportEnter = this.Teleport(-50, 1200, 150, 50, 0x0000ff, [playerShape, playerShape2, boxTest], teleportExit);
 
 
+
         //CÁMARAS
         var cameraMain = this.cameras.main;
         cameraMain.setSize(1920,540);
@@ -139,6 +152,47 @@ class infiniteScene extends Phaser.Scene {
 
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
+
+
+        //VIDA + PINCHOS
+        var hp = new Life(this);
+        var spikes = new Spike(this, 1050, 970, 100, 25, 0xff0000, hp);
+        spikes.addPlayerCollide(this, playerShape);
+        spikes.addPlayerCollide(this, playerShape2);
+
+        //CAJA
+        var box = new Box(this, 300, 950, 400, 500, 50, 50, 0xffff00);
+        box.addPlayerCollide(this, playerShape);
+        box.addPlayerCollide(this, playerShape2);
+        box.addWorldCollide(this, staticFloorForm);
+
+        //TELETRANSPORTE
+        var tp = new Teleport(this,-50, 1200, 900, 900, 150, 50, 0x0000ff, 0xff0000);
+        tp.addCollide(this, playerShape);
+        tp.addCollide(this, playerShape2);
+        tp.addCollide(this, box.getBox());
+
+        //PLATAFORMAS
+        //Estática
+        var sp = new StaticPlatform(this, 700, 920, 100, 40, 0xffffff);
+        //=new StaticPlatform(this, 700, 920, spriteName);
+        sp.addPlayerCollide(this, playerShape);
+        sp.addPlayerCollide(this, playerShape2);
+
+        //Móvil
+        var mp = new MovingPlatform(this, 1200, 920, 100, 40, 0xffffff);
+        mp.addPlayerCollide(this, playerShape);
+        mp.addPlayerCollide(this, playerShape2);
+        mp.setMovement(this, 200, 0);
+
+        //Drop
+        var dp = new DropPlatform(this, 1600, 920, 100, 40, 0x555555);
+        dp.addPlayerCollide(this, playerShape);
+        dp.addPlayerCollide(this, playerShape2);
+        dp.addWorldCollider(this, staticFloorForm);
+
+        //MIRROR
+        var mirror = new Mirror(this, 600, 950, 20, 20, 0x39caa9);
 
         //PINCHOS
         var vidas = 3;
@@ -155,17 +209,12 @@ class infiniteScene extends Phaser.Scene {
         //Drop
         var dropPlatform = this.Platform(1600, 920, 100, 40, 0x555555, [playerShape, playerShape2], "drop");
 
-        var mirror = this.add.rectangle(600, 950, 20, 20, 0x39caa9);
-        var mirrorPhysics = this.physics.add.existing(mirror, 0);
-        var mirrorPosition = 0;
-        mirrorPhysics.body.setAllowGravity(false);
 
+        mirror.mirror.setInteractive().on('pointerup', function(){  //Ciclo del espejo
+            mirror.mirrorPhysics.setRotation(mirror.mirror.rotation+(Math.PI/3));
+            mirror.mirrorPosition = (mirror.mirrorPosition +1)%6;
 
-        mirror.setInteractive().on('pointerup', function(){
-            mirrorPhysics.setRotation(mirror.rotation+(Math.PI/3));
-            mirrorPosition = (mirrorPosition +1)%6;
-
-            if(mirrorPosition ==0){ //Cambiar if por switch case para dibujar el rayo en las distintas posiciones
+            if(mirror.mirrorPosition ==0){ //Cambiar if por switch case para dibujar el rayo en las distintas posiciones
                 console.log("Posicion correcta");
             }
             else{
@@ -175,32 +224,11 @@ class infiniteScene extends Phaser.Scene {
         });
 
         //CAMBIO DE GRAVEDAD
-        var bocaAbajo = false;
-
-        var switchTest = this.add.rectangle(200, 970, 50, 25, 0x00ff00);
-        this.physics.add.existing(switchTest, 1);
-        var switchTest2 = this.add.rectangle(700, 60, 50, 25, 0x0000ff);
-        this.physics.add.existing(switchTest2, 1);
-
-        this.physics.add.collider(playerShape, switchTest, function(){
-            switchTest.setFillStyle(0x0000ff, 1);
-            switchTest2.setFillStyle(0x00ff00, 1);
-            bocaAbajo = true;
-            playerPhysics.body.setGravityY(-400);
-            playerPhysics2.body.setGravityY(-400);
-        }, null, this);
-
-        this.physics.add.collider(playerShape, switchTest2, function(){
-            switchTest2.setFillStyle(0x0000ff, 1);
-            switchTest.setFillStyle(0x00ff00, 1);
-            bocaAbajo = false;
-            playerPhysics.body.setGravityY(0);
-            playerPhysics2.body.setGravityY(0);
-        }, null, this);
+        var gravity = new GravitySwitch(this, 200, 970, 700, 60, 50, 25, 0x00ff00, 0x0000ff);
+        gravity.addTrigger(this, playerShape, playerPhysics, playerPhysics2);
 
 
         //CONTROL Y MOVIMIENTO
-
         var keyMovement = this.input.keyboard.addKeys('A, D, W, right, left, up');
 
         var pressedA = false;
@@ -228,10 +256,10 @@ class infiniteScene extends Phaser.Scene {
         keyMovement.W.on('down', function(e) {
             pressedW = true;
             console.log(pressedW);
-            if (playerPhysics.body.touching.down && !bocaAbajo){
+            if (playerPhysics.body.touching.down && !gravity.getUpsideDown()){
                 playerPhysics.body.setVelocityY(-200);
             }
-            if (playerPhysics.body.touching.up && bocaAbajo){
+            if (playerPhysics.body.touching.up && gravity.getUpsideDown()){
                 playerPhysics.body.setVelocityY(200);
             }
         });
@@ -272,10 +300,10 @@ class infiniteScene extends Phaser.Scene {
         keyMovement.up.on('down', function(e) {
             pressedUp = true;
             console.log(pressedUp);
-            if (playerPhysics2.body.touching.down && !bocaAbajo){
+            if (playerPhysics2.body.touching.down && !gravity.getUpsideDown()){
                 playerPhysics2.body.setVelocityY(-200);
             }
-            if (playerPhysics2.body.touching.up && bocaAbajo){
+            if (playerPhysics2.body.touching.up && gravity.getUpsideDown()){
                 playerPhysics2.body.setVelocityY(200);
             }
         });

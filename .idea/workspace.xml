@@ -20,7 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="855b0853-c074-4950-9709-cbb6de0a2789" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/scenes/auxiliar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scenes/infiniteScene.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scenes/infiniteScene.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +50,16 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RunManager">
+    <configuration name="auxiliar.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/scenes/auxiliar.js" working-dir="$PROJECT_DIR$/src/scenes">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.auxiliar.js" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -61,7 +73,8 @@
       <workItem from="1604508213888" duration="1405000" />
       <workItem from="1604571091884" duration="3309000" />
       <workItem from="1604665287335" duration="831000" />
-      <workItem from="1604690331313" duration="3946000" />
+      <workItem from="1604690331313" duration="3964000" />
+      <workItem from="1604770401116" duration="7932000" />
     </task>
     <servers />
   </component>
@@ -78,5 +91,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
