@@ -62,7 +62,6 @@ class infiniteScene extends Phaser.Scene {
         box.addWorldCollide(this, staticFloorForm);
 
         //TELETRANSPORTE
-
         var tp = new Teleport(this,-50, 1200, 900, 900, 150, 50, 0x0000ff, 0xff0000);
         tp.addCollide(this, playerShape);
         tp.addCollide(this, playerShape2);
