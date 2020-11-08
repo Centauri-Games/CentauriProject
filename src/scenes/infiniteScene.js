@@ -19,6 +19,17 @@ class infiniteScene extends Phaser.Scene {
 
     preload(){
         //assets load
+
+        this.load.spritesheet('mirror', 'assets/sprites/espejo.png', {
+            frameWidth: 104,
+            frameHeight: 128
+        });
+
+        this.load.image('caja', 'assets/sprites/caja.png');
+        this.load.image('plataforma', 'assets/sprites/plataforma.png');
+        this.load.image('portalA', 'assets/sprites/portalAzul.png');
+        this.load.image('portalR', 'assets/sprites/portalRojo.png');
+
     }
 
     create() {
@@ -56,48 +67,76 @@ class infiniteScene extends Phaser.Scene {
         spikes.addPlayerCollide(this, playerShape2);
 
         //CAJA
-        var box = new Box(this, 300, 950, 400, 500, 50, 50, 0xffff00);
+        var box = new Box(this, 300, 950, 400, 500, 50, 50, 'caja');
         box.addPlayerCollide(this, playerShape);
         box.addPlayerCollide(this, playerShape2);
         box.addWorldCollide(this, staticFloorForm);
 
         //TELETRANSPORTE
-        var tp = new Teleport(this,-50, 1200, 900, 900, 150, 50, 0x0000ff, 0xff0000);
+        var tp = new Teleport(this,-50, 1200, 900, 800, 'portalA', 'portalR');
         tp.addCollide(this, playerShape);
         tp.addCollide(this, playerShape2);
         tp.addCollide(this, box.getBox());
 
         //PLATAFORMAS
         //Estática
-        var sp = new StaticPlatform(this, 700, 920, 100, 40, 0xffffff);
-        //=new StaticPlatform(this, 700, 920, spriteName);
+        var sp = new StaticPlatform(this, 700, 920, 'plataforma');
         sp.addPlayerCollide(this, playerShape);
         sp.addPlayerCollide(this, playerShape2);
 
         //Móvil
-        var mp = new MovingPlatform(this, 1200, 920, 100, 40, 0xffffff);
+        var mp = new MovingPlatform(this, 1200, 920, 'plataforma');
         mp.addPlayerCollide(this, playerShape);
         mp.addPlayerCollide(this, playerShape2);
         mp.setMovement(this, 200, 0);
 
         //Drop
-        var dp = new DropPlatform(this, 1600, 920, 100, 40, 0x555555);
+        var dp = new DropPlatform(this, 1600, 920, 'plataforma');
         dp.addPlayerCollide(this, playerShape);
         dp.addPlayerCollide(this, playerShape2);
         dp.addWorldCollider(this, staticFloorForm);
 
         //MIRROR
-        var mirror = new Mirror(this, 600, 950, 20, 20, 0x39caa9);
+
+        var mirror = new Mirror(this, 600, 950, 'mirror');
 
         mirror.mirror.setInteractive().on('pointerup', function(){  //Ciclo del espejo
-            mirror.mirrorPhysics.setRotation(mirror.mirror.rotation+(Math.PI/3));
-            mirror.mirrorPosition = (mirror.mirrorPosition +1)%6;
+            mirror.mirrorPosition = (mirror.mirrorPosition +1)%8;
 
-            if(mirror.mirrorPosition ==0){ //Cambiar if por switch case para dibujar el rayo en las distintas posiciones
-                console.log("Posicion correcta");
-            }
-            else{
-                console.log("Posicion incorrecta");
+            switch(mirror.mirrorPosition){
+                case 0:
+                    mirror.mirror.anims.play('pos0', false);
+                    console.log("pos 0");
+                    break;
+                case 1:
+                    mirror.mirror.anims.play('pos1', false);
+                    console.log("pos 1");
+                    break;
+                case 2:
+                    mirror.mirror.anims.play('pos2', false);
+                    console.log("pos 2");
+                    break;
+                case 3:
+                    mirror.mirror.anims.play('pos3', false);
+                    console.log("pos 3");
+                    break;
+                case 4:
+                    mirror.mirror.anims.play('pos4', false);
+                    console.log("pos 4");
+                    break;
+                case 5:
+                    mirror.mirror.anims.play('pos5', false);
+                    console.log("pos 5");
+                    break;
+                case 6:
+                    mirror.mirror.anims.play('pos6', false);
+                    console.log("pos 6");
+                    break;
+                case 7:
+                    mirror.mirror.anims.play('pos7', true);
+                    console.log("posicion correcta");
+                    break;
+                default:
             }
 
         });
