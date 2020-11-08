@@ -1,4 +1,3 @@
-
 var gameConfig = {
     type: Phaser.AUTO,
     scale: {
@@ -15,7 +14,7 @@ var gameConfig = {
             debug: true
         }
     },  
-    scene: [menuScene,selectLevel,selectMode,level1Scene,infiniteScene,gameOverScene]
+    scene: [menuScene,settings,selectLevel,selectMode,level1Scene,infiniteScene,gameOverScene]
 }
 
 var game = new Phaser.Game(gameConfig);
