@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< Updated upstream
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -25,11 +26,16 @@
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scenes/infiniteScene.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scenes/infiniteScene.js" afterDir="false" />
     </list>
+=======
+  <component name="ChangeListManager">
+    <list default="true" id="27965791-8512-4daa-9924-31cb0d9aaea2" name="Default Changelist" comment="" />
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< Updated upstream
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -41,6 +47,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1jpRe91y7XY1FWQmi4M6Lojse0K" />
+=======
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1jVF00VcfRiYGMk8rE9yttGDBvr" />
+>>>>>>> Stashed changes
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -48,21 +60,34 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+<<<<<<< Updated upstream
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
     <configuration name="auxiliar.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/scenes/auxiliar.js" working-dir="$PROJECT_DIR$/src/scenes">
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/CentauriProject/index.html" useBuiltInWebServerPort="true">
+>>>>>>> Stashed changes
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+<<<<<<< Updated upstream
         <item itemvalue="Node.js.auxiliar.js" />
+=======
+        <item itemvalue="JavaScript Debug.index.html" />
+>>>>>>> Stashed changes
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< Updated upstream
       <changelist id="855b0853-c074-4950-9709-cbb6de0a2789" name="Default Changelist" comment="" />
       <created>1604499140223</created>
       <option name="number" value="Default" />
@@ -75,12 +100,21 @@
       <workItem from="1604665287335" duration="831000" />
       <workItem from="1604690331313" duration="3964000" />
       <workItem from="1604770401116" duration="7932000" />
+=======
+      <changelist id="27965791-8512-4daa-9924-31cb0d9aaea2" name="Default Changelist" comment="" />
+      <created>1603881124674</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1603881124674</updated>
+      <workItem from="1603881129090" duration="1347000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+<<<<<<< Updated upstream
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -93,4 +127,6 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+=======
+>>>>>>> Stashed changes
 </project>
