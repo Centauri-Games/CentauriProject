@@ -1,8 +1,8 @@
-
-class bootScene extends Phaser.Scene{
+class level6Scene extends Phaser.Scene{
     constructor(){
-        super("bootScene")
+        super("level6Scene");
     }
+
     preload(){
 
     }
