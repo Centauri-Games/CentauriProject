@@ -114,13 +114,8 @@ class GravitySwitch{
         }, null, this);
 
         scene.physics.add.collider(playerShape, this.switchOff, function(){
-
-            this.switchOn.setFillStyle(0x0000ff, 1);
-            this.switchOff.setFillStyle(0x00ff00, 1);
-
             this.switchOn.setFillStyle(0x00ff00, 1);
             this.switchOff.setFillStyle(0x0000ff, 1);
-
             this.upsideDown = false;
             playerPhysics.body.setGravityY(0);
             playerPhysics2.body.setGravityY(0);
@@ -175,10 +170,7 @@ class Box{
     constructor(scene, destX, destY, boxX, boxY, sizeX, sizeY, color){
 
         this.dest = scene.add.rectangle(destX, destY, sizeX, sizeY, 0x000000);
-
-
         this.dest.setFillStyle(color, 0);
-
         this.dest.setStrokeStyle(3, color, 1);
         scene.physics.add.existing(this.dest, 1);
 
@@ -196,13 +188,9 @@ class Box{
         return this.box;
     }
     addPlayerCollide(scene, playerShape){
-
-        scene.physics.add.collider(playerShape,this.box);
-
         scene.physics.add.collider(playerShape,this.box,function(){
             this.box.body.setDragX(100);//FRICCIÓN
         },null,this);
-
     }
 
     addWorldCollide(scene, object){

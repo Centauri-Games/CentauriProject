@@ -21,90 +21,6 @@ class infiniteScene extends Phaser.Scene {
         //assets load
     }
 
-    //CLASE PLATAFORMA
-    Platform(x, y, w, h, c, o, t){
-        var p = this.add.rectangle(x, y, w, h, c);
-        if (t === "static"){
-            this.physics.add.existing(p, 1);
-            for (var i=0; i<o.length; i++){
-                this.physics.add.collider(o[i], p);
-            }
-        } else if (t === "move"){
-            var mPhysic = this.physics.add.existing(p, 0);
-            mPhysic.body.setAllowGravity(false);
-            mPhysic.body.setVelocityX(30);
-            mPhysic.body.setImmovable(true);
-            for (var i=0; i<o.length; i++){
-                this.physics.add.collider(o[i], p);
-            }
-            this.tweens.timeline({
-                targets: mPhysic.body.velocity,
-                loop: -1,
-                tweens: [
-                    { x:200, y:0, duration: 2000, ease: 'Stepped' },
-                    { x:0, y:0, duration: 2000, ease: 'Stepped' },
-                    { x:-200, y:0, duration: 2000, ease: 'Stepped' },
-                    { x:0, y:0, duration: 2000, ease: 'Stepped' }
-                ]
-            });
-        } else if (t === "drop"){
-            var dPhysic = this.physics.add.existing(p, 0);
-            dPhysic.body.setAllowGravity(false);
-            dPhysic.body.setImmovable(true);
-            for (var i=0; i<o.length; i++){
-                this.physics.add.collider(o[i], p, function(){
-                    if(dPhysic.body.allowGravity == false) {
-                        dPhysic.body.setImmovable(false);
-                        dPhysic.body.setAllowGravity(true);
-                    }
-                }, null, this);
-            }
-        }
-    }
-
-    //CLASE PINCHOS
-    Spike(x, y, w, h, c, v, t, o){
-        var s = this.add.rectangle(x, y, w, h, c);
-        this.physics.add.existing(s, 1);
-        for (var i=0; i<o.length; i++){
-            var object = o[i];
-            this.physics.add.collider(object, s, function(){
-                if (v > 0){
-                    v--;
-                    t.setText('Vidas: ' + v);
-                    object.setPosition(500, 500);
-                } else {
-                    this.scene.start('gameOverScene');
-                }
-            }, null, this);
-        }
-    }
-
-    //CLASE HUECO
-    Hole(x, y, w, h, cf, lw, cs, b, bp){
-        var hole = this.add.rectangle(x, y, w, h, cf);
-        hole.setFillStyle(cf, 0);
-        hole.setStrokeStyle(lw, cs, 1);
-        this.physics.add.existing(hole, 1);
-        this.physics.add.collider(b, hole, function(){
-            b.setPosition(hole.x, hole.y);
-            bp.body.setImmovable(true);
-            bp.body.setAllowGravity(false);
-        }, null, this);
-    }
-
-    //CLASE TELETRANSPORTE
-    Teleport(x, y, w, h, c, o, exit){
-        var t = this.add.ellipse(x, y, w, h, c);
-        this.physics.add.existing(t, 1);
-        for (var i=0; i<o.length; i++){
-            var object = o[i];
-            this.physics.add.collider(object, t, function(){
-                object.setPosition(exit.x, exit.y);
-            }, null, this);
-        }
-    }
-
     create() {
         //Elementos del juego. Aqui solo habria que pintarlos , ya que la parte de físicas la calcula el servidor de java
         var playerShape = this.add.ellipse(500,500,20,50,0x990000);
@@ -112,7 +28,6 @@ class infiniteScene extends Phaser.Scene {
 
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
-
 
         //SUELO
         var staticFloorForm = this.add.rectangle(960,1030,1920,100, 0x990000);
@@ -125,25 +40,6 @@ class infiniteScene extends Phaser.Scene {
         var floor2Collider = this.physics.add.collider(playerShape,staticFloor2Form);
         var floor2Collider2 = this.physics.add.collider(playerShape2,staticFloor2Form);
 
-        //CAJA
-        var boxTest = this.add.rectangle(400, 500, 50, 50, 0xffff00);
-        var boxPhysics = this.physics.add.existing(boxTest, 0);
-
-        this.physics.add.collider(playerShape,boxTest);
-        this.physics.add.collider(playerShape2,boxTest);
-
-        var hueco = this.Hole(300, 950, 50, 50, 0x000000, 3, 0xffff00, boxTest, boxPhysics);
-
-        //SUELOS
-        var floor = this.Platform(960, 1030, 1920, 100, 0x990000, [playerShape, playerShape2, boxTest], "static");
-        var floor2 = this.Platform(960, 0, 1920, 100, 0x990000, [playerShape, playerShape2, boxTest], "static");
-
-        //TELETRANSPORTE
-        var teleportExit = this.add.ellipse(900,900,150,50,0xff0000);
-        var teleportEnter = this.Teleport(-50, 1200, 150, 50, 0x0000ff, [playerShape, playerShape2, boxTest], teleportExit);
-
-
-
         //CÁMARAS
         var cameraMain = this.cameras.main;
         cameraMain.setSize(1920,540);
@@ -152,7 +48,6 @@ class infiniteScene extends Phaser.Scene {
 
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
-
 
         //VIDA + PINCHOS
         var hp = new Life(this);
@@ -193,22 +88,6 @@ class infiniteScene extends Phaser.Scene {
 
         //MIRROR
         var mirror = new Mirror(this, 600, 950, 20, 20, 0x39caa9);
-
-        //PINCHOS
-        var vidas = 3;
-        var vidasText = this.add.text(1000, 1000, 'Vidas: 3', {font: '32px'});
-        var spikeTest = this.Spike(1050, 970, 100, 25, 0xff0000, vidas, vidasText, [playerShape, playerShape2]);
-
-        //PLATAFORMAS
-        //Estática
-        var staticPlatform = this.Platform(700, 920, 100, 40, 0xffffff, [playerShape, playerShape2], "static");
-
-        //Móvil
-        var movingPlatform = this.Platform(1200, 920, 100, 40, 0xffffff, [playerShape, playerShape2], "move");
-
-        //Drop
-        var dropPlatform = this.Platform(1600, 920, 100, 40, 0x555555, [playerShape, playerShape2], "drop");
-
 
         mirror.mirror.setInteractive().on('pointerup', function(){  //Ciclo del espejo
             mirror.mirrorPhysics.setRotation(mirror.mirror.rotation+(Math.PI/3));
