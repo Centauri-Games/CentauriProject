@@ -1,16 +1,14 @@
-class gameOverScene extends Phaser.Scene{
+class level2Scene extends Phaser.Scene{
     constructor(){
-        super("gameOverScene");
+        super("level2Scene");
     }
 
     preload(){
 
     }
-
     create(){
 
     }
-
     update(){
         
     }

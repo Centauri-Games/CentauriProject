@@ -15,7 +15,7 @@ var gameConfig = {
             debug: true
         }
     },  
-    scene: [infiniteScene,bootScene,gameOverScene]
+    scene: [menuScene,selectLevel,selectMode,level1Scene,infiniteScene,gameOverScene]
 }
 
 var game = new Phaser.Game(gameConfig);
