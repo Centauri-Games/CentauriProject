@@ -212,3 +212,26 @@ class Teleport{
         }, null, this);
     }
 }
+
+class Button{
+
+    constructor(scene, buttonX, buttonY, doorX, doorY, color, color2){
+        this.button = scene.add.rectangle(buttonX, buttonY, 100, 100, color);
+        scene.add.physics.existing(this.button, 1);
+
+        this.door = scene.add.rectangle(doorX, doorY,100, 200, color2);
+        scene.add.physics.existing(this.door, 1);
+    }
+
+    addCollideDoor(scene, playerShape){
+        this.doorCollider = scene.physics.add.collider(playerShape, this.door);
+    }
+
+    addCollideButton(scene, playerShape){
+        scene.physics.add.collider(playerShape, this.button, function(){
+            scene.world.physics.removeCollider(this.doorCollider);
+            this.door.setFillStyle(this.door.color, 0);
+            this.dest.setStrokeStyle(3, this.door.color, 1);
+        }, null, this);
+    }
+}
