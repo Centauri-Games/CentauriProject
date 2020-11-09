@@ -29,6 +29,7 @@ class infiniteScene extends Phaser.Scene {
         this.load.image('plataforma', 'assets/sprites/plataforma.png');
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
         this.load.image('portalR', 'assets/sprites/portalRojo.png');
+        this.load.image('andamio', 'assets/sprites/andamio.png')
 
     }
 
@@ -50,6 +51,14 @@ class infiniteScene extends Phaser.Scene {
         var floor2Physics = this.physics.add.existing(staticFloor2Form, 1);
         var floor2Collider = this.physics.add.collider(playerShape,staticFloor2Form);
         var floor2Collider2 = this.physics.add.collider(playerShape2,staticFloor2Form);
+
+        //Andamio
+        var and = this.add.sprite(900, 800, 'andamio');
+        var andPhysics = this.physics.add.existing(and, 1);
+        andPhysics.body.setSize(280, 50);
+        andPhysics.body.setOffset(20, 50);
+        this.physics.add.collider(playerShape, and);
+        this.physics.add.collider(playerShape2, and);
 
         //CÁMARAS
         var cameraMain = this.cameras.main;
@@ -73,7 +82,7 @@ class infiniteScene extends Phaser.Scene {
         box.addWorldCollide(this, staticFloorForm);
 
         //TELETRANSPORTE
-        var tp = new Teleport(this,-50, 1200, 900, 800, 'portalA', 'portalR');
+        var tp = new Teleport(this,-50, 1200, 900, 400, 'portalA', 'portalR');
         tp.addCollide(this, playerShape);
         tp.addCollide(this, playerShape2);
         tp.addCollide(this, box.getBox());
