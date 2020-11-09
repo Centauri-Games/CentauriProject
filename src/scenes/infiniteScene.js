@@ -2,13 +2,16 @@ class infiniteScene extends Phaser.Scene {
     constructor(){
         super("infiniteScene");
     }
+
+    init(data){
+        this.English = data.english;
+    }
     
     levelGenerator(difficulty,level){
         switch(level){
             //cada caso representaria el tipo de nivel. EL parametro level lo recibiría desde el servidor de java. (Difficulty es provisional, se me ha ocurrido que sea un parametro que vaya aumentando 
             // según pasa el tiempo para qu elos niveles se vayan modificando)
             case 1:
-                
                 break;
             case 2:
                 break;
@@ -61,10 +64,10 @@ class infiniteScene extends Phaser.Scene {
         camera2.startFollow(playerShape2);
 
         //VIDA + PINCHOS
-        var hp = new Life(this);
+        var hp = new Life(this, this.English);
         var spikes = new Spike(this, 1050, 970, 100, 25, 0xff0000, hp);
-        spikes.addPlayerCollide(this, playerShape);
-        spikes.addPlayerCollide(this, playerShape2);
+        spikes.addPlayerCollide(this, playerShape, playerShape2, this.English);
+        spikes.addPlayerCollide(this, playerShape2, playerShape, this.English);
 
         //CAJA
         var box = new Box(this, 300, 950, 400, 500, 50, 50, 'caja');

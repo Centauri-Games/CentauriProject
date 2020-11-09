@@ -4,10 +4,10 @@ class level5Scene extends Phaser.Scene{
     }
 
     preload(){
-
+        this.load.image('bg', 'assets/backgrounds/factory.png');
     }
     create(){
-
+        this.add.sprite(960,540,'bg');
     }
     update(){
         
