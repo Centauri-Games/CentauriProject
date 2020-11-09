@@ -9,7 +9,7 @@ class selectMode extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('screen', 'assets/FullScreen.png');
+        this.load.image('screen', 'assets/UI/FullScreen.png');
     }
 
     create(){
@@ -29,7 +29,7 @@ class selectMode extends Phaser.Scene{
         this.add.rectangle(960,360,800,200,0xffff00).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
             console.log("Click");
-            this.scene.start("selectLevel");
+            this.scene.start("selectLevel", {english: this.English});
         });
         var sText = this.add.text(960,360,"Modo historia",{font : "24px",color : "black"});
 
