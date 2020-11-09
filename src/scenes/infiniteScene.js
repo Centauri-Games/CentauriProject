@@ -20,6 +20,7 @@ class infiniteScene extends Phaser.Scene {
         }
     }
 
+
     preload(){
         //assets load
 
@@ -32,13 +33,18 @@ class infiniteScene extends Phaser.Scene {
         this.load.image('plataforma', 'assets/sprites/plataforma.png');
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
         this.load.image('portalR', 'assets/sprites/portalRojo.png');
+        this.load.image('andamio', 'assets/sprites/andamio.png');
+        this.load.image('light', 'assets/players/light.png')
+        this.load.image('shadow', 'assets/players/shadow.png')
 
     }
 
     create() {
         //Elementos del juego. Aqui solo habria que pintarlos , ya que la parte de físicas la calcula el servidor de java
-        var playerShape = this.add.ellipse(500,500,20,50,0x990000);
-        var playerShape2 = this.add.ellipse(500,500,20,50,0xffffff);
+        console.log("Escena");
+        console.log(this);
+        var playerShape = this.add.sprite(500, 500, 'light');
+        var playerShape2 = this.add.sprite(500, 500, 'shadow');
 
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
@@ -53,6 +59,15 @@ class infiniteScene extends Phaser.Scene {
         var floor2Physics = this.physics.add.existing(staticFloor2Form, 1);
         var floor2Collider = this.physics.add.collider(playerShape,staticFloor2Form);
         var floor2Collider2 = this.physics.add.collider(playerShape2,staticFloor2Form);
+
+
+        //Andamio
+        var and = this.add.sprite(900, 800, 'andamio');
+        var andPhysics = this.physics.add.existing(and, 1);
+        andPhysics.body.setSize(280, 50);
+        andPhysics.body.setOffset(20, 50);
+        this.physics.add.collider(playerShape, and);
+        this.physics.add.collider(playerShape2, and);
 
         //CÁMARAS
         var cameraMain = this.cameras.main;
@@ -76,7 +91,7 @@ class infiniteScene extends Phaser.Scene {
         box.addWorldCollide(this, staticFloorForm);
 
         //TELETRANSPORTE
-        var tp = new Teleport(this,-50, 1200, 900, 800, 'portalA', 'portalR');
+        var tp = new Teleport(this,-50, 1200, 900, 400, 'portalA', 'portalR');
         tp.addCollide(this, playerShape);
         tp.addCollide(this, playerShape2);
         tp.addCollide(this, box.getBox());
@@ -181,7 +196,7 @@ class infiniteScene extends Phaser.Scene {
                 playerPhysics.body.setVelocityY(-200);
             }
             if (playerPhysics.body.touching.up && gravity.getUpsideDown()){
-                playerPhysics.body.setVelocityY(200);
+                infiniteScene.body.setVelocityY(200);
             }
         });
 
@@ -248,6 +263,10 @@ class infiniteScene extends Phaser.Scene {
                 playerPhysics2.body.setVelocityX(100);
             }
         });
+
+        console.log("fisicas");
+        console.log(playerPhysics);
+        console.log(playerPhysics2);
     }
 
     update(){
