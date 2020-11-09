@@ -15,8 +15,6 @@ class infiniteScene extends Phaser.Scene {
                 break;
             case 2:
                 break;
-            
-            
         }
     }
 
@@ -51,17 +49,16 @@ class infiniteScene extends Phaser.Scene {
 
         //SUELO
         var staticFloorForm = this.add.rectangle(960,1030,1920,100, 0x990000);
-        var floorPhysics = this.physics.add.existing(staticFloorForm, 1);
-        var floorCollider = this.physics.add.collider(playerShape,staticFloorForm);
-        var floorCollider2 = this.physics.add.collider(playerShape2,staticFloorForm);
+        this.physics.add.existing(staticFloorForm, 1);
+        this.physics.add.collider(playerShape,staticFloorForm);
+        this.physics.add.collider(playerShape2,staticFloorForm);
 
         var staticFloor2Form = this.add.rectangle(960,0,1920,100, 0x990000);
-        var floor2Physics = this.physics.add.existing(staticFloor2Form, 1);
-        var floor2Collider = this.physics.add.collider(playerShape,staticFloor2Form);
-        var floor2Collider2 = this.physics.add.collider(playerShape2,staticFloor2Form);
+        this.physics.add.existing(staticFloor2Form, 1);
+        this.physics.add.collider(playerShape,staticFloor2Form);
+        this.physics.add.collider(playerShape2,staticFloor2Form);
 
-
-        //Andamio
+        //ANDAMIO
         var and = this.add.sprite(900, 800, 'andamio');
         var andPhysics = this.physics.add.existing(and, 1);
         andPhysics.body.setSize(280, 50);
@@ -165,102 +162,88 @@ class infiniteScene extends Phaser.Scene {
 
 
         //CONTROL Y MOVIMIENTO
-        var keyMovement = this.input.keyboard.addKeys('A, D, W, right, left, up');
+        var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
 
         var pressedA = false;
         var pressedD = false;
         var pressedW = false;
 
-        var pressedRight = false;
-        var pressedLeft = false;
-        var pressedUp = false;
+        var playerProta = true;
 
         //Codigo de "teclas" para el movimiento. Habria que cambiar el codigo de dentro por el mensaje que se enviará al servidor para decir que movimiento ha realizado el personaje
 
         keyMovement.D.on('down', function(e) {
             pressedD = true;
-            console.log(pressedD);
-            playerPhysics.body.setVelocityX(100);
+            if (playerProta){
+                playerPhysics.body.setVelocityX(100);
+            } else {
+                playerPhysics2.body.setVelocityX(100);
+            }
         });
 
         keyMovement.A.on('down', function(e) {
             pressedA = true;
-            console.log(pressedA);
-            playerPhysics.body.setVelocityX(-100);
-        });
-
-        keyMovement.W.on('down', function(e) {
-            pressedW = true;
-            console.log(pressedW);
-            if (playerPhysics.body.touching.down && !gravity.getUpsideDown()){
-                playerPhysics.body.setVelocityY(-200);
-            }
-            if (playerPhysics.body.touching.up && gravity.getUpsideDown()){
-                infiniteScene.body.setVelocityY(200);
-            }
-        });
-
-        keyMovement.D.on('up', function(e){
-            pressedD = false;
-            console.log(pressedD)
-            if (!pressedA){
-                playerPhysics.body.setVelocityX(0);
-            } else {
+            if (playerProta){
                 playerPhysics.body.setVelocityX(-100);
-            }
-        });
-
-        keyMovement.A.on('up', function(e){
-            pressedA = false;
-            console.log(pressedA);
-            if (!pressedD){
-                playerPhysics.body.setVelocityX(0);
-            } else {
-                playerPhysics.body.setVelocityX(100);
-            }
-        });
-
-        //Player 2
-        keyMovement.right.on('down', function(e) {
-            pressedRight = true;
-            console.log(pressedRight);
-            playerPhysics2.body.setVelocityX(100);
-        });
-
-        keyMovement.left.on('down', function(e) {
-            pressedLeft = true;
-            console.log(pressedLeft);
-            playerPhysics2.body.setVelocityX(-100);
-        });
-
-        keyMovement.up.on('down', function(e) {
-            pressedUp = true;
-            console.log(pressedUp);
-            if (playerPhysics2.body.touching.down && !gravity.getUpsideDown()){
-                playerPhysics2.body.setVelocityY(-200);
-            }
-            if (playerPhysics2.body.touching.up && gravity.getUpsideDown()){
-                playerPhysics2.body.setVelocityY(200);
-            }
-        });
-
-        keyMovement.right.on('up', function(e){
-            pressedRight = false;
-            console.log(pressedRight)
-            if (!pressedLeft){
-                playerPhysics2.body.setVelocityX(0);
             } else {
                 playerPhysics2.body.setVelocityX(-100);
             }
         });
 
-        keyMovement.left.on('up', function(e){
-            pressedLeft = false;
-            console.log(pressedLeft);
-            if (!pressedRight){
-                playerPhysics2.body.setVelocityX(0);
-            } else{
-                playerPhysics2.body.setVelocityX(100);
+        keyMovement.W.on('down', function(e) {
+            pressedW = true;
+            if (playerProta){
+                if (playerPhysics.body.touching.down && !gravity.getUpsideDown()){
+                    playerPhysics.body.setVelocityY(-200);
+                }
+                if (playerPhysics.body.touching.up && gravity.getUpsideDown()){
+                    playerPhysics.body.setVelocityY(200);
+                }
+            } else {
+                if (playerPhysics2.body.touching.down && !gravity.getUpsideDown()){
+                    playerPhysics2.body.setVelocityY(-200);
+                }
+                if (playerPhysics2.body.touching.up && gravity.getUpsideDown()){
+                    playerPhysics2.body.setVelocityY(200);
+                }
+            }
+        });
+
+        keyMovement.SPACE.on('down', function(e){
+            playerProta = !playerProta;
+        });
+
+        keyMovement.D.on('up', function(e){
+            pressedD = false;
+            if (playerProta){
+                if (!pressedA){
+                    playerPhysics.body.setVelocityX(0);
+                } else {
+                    playerPhysics.body.setVelocityX(-100);
+                }
+            } else {
+                if (!pressedA){
+                    playerPhysics2.body.setVelocityX(0);
+                } else {
+                    playerPhysics2.body.setVelocityX(-100);
+                }
+            }
+        });
+
+        keyMovement.A.on('up', function(e) {
+            pressedA = false;
+            if (playerProta) {
+                if (!pressedD) {
+                    playerPhysics.body.setVelocityX(0);
+                } else {
+                    playerPhysics.body.setVelocityX(100);
+                }
+            } else {
+                if (!pressedD) {
+                    playerPhysics2.body.setVelocityX(0);
+                } else {
+                    playerPhysics2.body.setVelocityX(-100);
+                }
             }
         });
 
