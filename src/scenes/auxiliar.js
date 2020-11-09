@@ -176,13 +176,16 @@ class Spike{
         this.hp = hp;
     }
 
-    addPlayerCollide(scene, playerShape){
+    addPlayerCollide(scene, playerShape, playerShape2, eng){
         scene.physics.add.collider(playerShape, this.spikes, function(){
             if (this.hp.getHP() > 0){
                 this.hp.takeDamage();
                 playerShape.setPosition(500, 500);
             } else {
-                scene.scene.start('gameOverScene');
+                scene.scene.start('gameOverScene', {english: eng});
+                this.hp.resetDamage();
+                playerShape.setPosition(500, 500);
+                playerShape2.setPosition(500, 500);
             }
         }, null, this);
     }
@@ -190,9 +193,13 @@ class Spike{
 
 class Life{
 
-    constructor(scene){
+    constructor(scene, english){
         this.lifes = 3;
-        this.lifesText = scene.add.text(1000, 1000, 'Vidas: 3', {font: '32px'});
+        this.lifesText = scene.add.text(1000, 1000, 'Vidas: ' + this.lifes, {font: '32px'});
+        this.english = english;
+        if (this.english){
+            this.lifesText.setText('Lives: ' + this.lifes);
+        }
     }
 
     getHP(){
@@ -202,6 +209,17 @@ class Life{
     takeDamage(){
         this.lifes--;
         this.lifesText.setText('Vidas: ' + this.lifes);
+        if (this.english){
+            this.lifesText.setText('Lives: ' + this.lifes);
+        }
+    }
+
+    resetDamage(){
+        this.lifes = 3;
+        this.lifesText.setText('Vidas: ' + this.lifes);
+        if (this.english){
+            this.lifesText.setText('Lives: ' + this.lifes);
+        }
     }
 }
 

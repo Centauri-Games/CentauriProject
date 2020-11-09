@@ -2,13 +2,16 @@ class infiniteScene extends Phaser.Scene {
     constructor(){
         super("infiniteScene");
     }
+
+    init(data){
+        this.English = data.english;
+    }
     
     levelGenerator(difficulty,level){
         switch(level){
             //cada caso representaria el tipo de nivel. EL parametro level lo recibiría desde el servidor de java. (Difficulty es provisional, se me ha ocurrido que sea un parametro que vaya aumentando 
             // según pasa el tiempo para qu elos niveles se vayan modificando)
             case 1:
-                
                 break;
             case 2:
                 break;
@@ -29,7 +32,6 @@ class infiniteScene extends Phaser.Scene {
         this.load.image('plataforma', 'assets/sprites/plataforma.png');
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
         this.load.image('portalR', 'assets/sprites/portalRojo.png');
-        this.load.image('andamio', 'assets/sprites/andamio.png')
 
     }
 
@@ -52,14 +54,6 @@ class infiniteScene extends Phaser.Scene {
         var floor2Collider = this.physics.add.collider(playerShape,staticFloor2Form);
         var floor2Collider2 = this.physics.add.collider(playerShape2,staticFloor2Form);
 
-        //Andamio
-        var and = this.add.sprite(900, 800, 'andamio');
-        var andPhysics = this.physics.add.existing(and, 1);
-        andPhysics.body.setSize(280, 50);
-        andPhysics.body.setOffset(20, 50);
-        this.physics.add.collider(playerShape, and);
-        this.physics.add.collider(playerShape2, and);
-
         //CÁMARAS
         var cameraMain = this.cameras.main;
         cameraMain.setSize(1920,540);
@@ -70,10 +64,10 @@ class infiniteScene extends Phaser.Scene {
         camera2.startFollow(playerShape2);
 
         //VIDA + PINCHOS
-        var hp = new Life(this);
+        var hp = new Life(this, this.English);
         var spikes = new Spike(this, 1050, 970, 100, 25, 0xff0000, hp);
-        spikes.addPlayerCollide(this, playerShape);
-        spikes.addPlayerCollide(this, playerShape2);
+        spikes.addPlayerCollide(this, playerShape, playerShape2, this.English);
+        spikes.addPlayerCollide(this, playerShape2, playerShape, this.English);
 
         //CAJA
         var box = new Box(this, 300, 950, 400, 500, 50, 50, 'caja');
@@ -82,7 +76,7 @@ class infiniteScene extends Phaser.Scene {
         box.addWorldCollide(this, staticFloorForm);
 
         //TELETRANSPORTE
-        var tp = new Teleport(this,-50, 1200, 900, 400, 'portalA', 'portalR');
+        var tp = new Teleport(this,-50, 1200, 900, 800, 'portalA', 'portalR');
         tp.addCollide(this, playerShape);
         tp.addCollide(this, playerShape2);
         tp.addCollide(this, box.getBox());

@@ -43,7 +43,7 @@ class menuScene extends Phaser.Scene{
         if (this.English){
             fsText.setText("Full screen");
             sText.setText("Settings");
-            mpText.setText("Online co-op");
+            mpText.setText("Cooperative online");
             spText.setText("Single player");
         }
     }

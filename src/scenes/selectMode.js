@@ -36,7 +36,7 @@ class selectMode extends Phaser.Scene{
         this.add.rectangle(960,720,800,200,0xffff00).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
             console.log("Click");
-            this.scene.start("infiniteScene");
+            this.scene.start("infiniteScene", {english: this.English});
         });
         var iText = this.add.text(960,720,"Modo infinito",{font : "24px",color : "black"});
 
