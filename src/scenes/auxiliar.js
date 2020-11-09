@@ -258,12 +258,6 @@ class Box{
 
 class Teleport{
 
-    /*constructor(scene, enterX, enterY, exitX, exitY, sizeX, sizeY, color, color2){
-        this.tpEnter = scene.add.ellipse(enterX, enterY, sizeX, sizeY,color);
-        this.tpExit = scene.add.ellipse(exitX,exitY, sizeX,sizeY,color2);
-        this.tpPhysics = scene.physics.add.existing(this.tpEnter, 1);
-    }*/
-
     constructor(scene, enterX, enterY, exitX, exitY, nameEnter, nameExit){
         this.tpEnter = scene.add.sprite(enterX, enterY, nameEnter);
         this.tpExit = scene.add.sprite(exitX,exitY, nameExit);
