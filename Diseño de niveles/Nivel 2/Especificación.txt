@@ -1,0 +1,6 @@
+
+Un boton activa la gravedad mientras que el otro la desactiva
+
+Un jugador controla la gravedad
+
+El otro debe pasar mediante las plataformas, con ayuda de ese control de la gravedad 
