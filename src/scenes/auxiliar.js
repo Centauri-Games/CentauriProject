@@ -15,6 +15,10 @@ class StaticPlatform{
         scene.physics.add.collider(playerShape,this.staticPlatform);
     }
 
+    setAlpha(value){
+        this.staticPlatform.setAlpha(value);
+    }
+
     rotate(angle){
         this.staticPlatform.setRotation(angle);
     }
@@ -36,7 +40,7 @@ class MovingPlatform{
         this.movingPlatform.setAlpha(value);
     }
 
-    setMovement(scene, displaceX, displaceY){   //Set movement - Basic linear movement
+    setMovement(scene, displaceX, displaceY, playerPhysics){   //Set movement - Basic linear movement
         scene.tweens.timeline({
             targets: this.movingPlatformPhysics.body.velocity,
             loop: -1,
@@ -45,12 +49,16 @@ class MovingPlatform{
                 { x:0, y:0, duration: 2000, ease: 'Stepped' },
                 { x:-displaceX, y:-displaceY, duration: 2000, ease: 'Stepped' },
                 { x:0, y:0, duration: 2000, ease: 'Stepped' }
-            ]
+            ],
         });
     }
 
     rotate(angle){
         this.movingPlatform.setRotation(angle);
+    }
+
+    scale(sizeX, sizeY){
+        this.movingPlatform.setScale(sizeX, sizeY);
     }
 }
 
@@ -193,16 +201,16 @@ class Spike{
         this.hp = hp;
     }
 
-    addPlayerCollide(scene, playerShape, playerShape2, eng){
+    addPlayerCollide(scene, playerShape, playerShape2, eng, startX, startY, startX2, startY2){
         scene.physics.add.collider(playerShape, this.spikes, function(){
             if (this.hp.getHP() > 0){
                 this.hp.takeDamage();
-                playerShape.setPosition(500, 500);
+                playerShape.setPosition(startX, startY);
             } else {
                 scene.scene.start('gameOverScene', {english: eng});
                 this.hp.resetDamage();
-                playerShape.setPosition(500, 500);
-                playerShape2.setPosition(500, 500);
+                playerShape.setPosition(startX, startY);
+                playerShape2.setPosition(startX2, startY2);
             }
         }, null, this);
     }

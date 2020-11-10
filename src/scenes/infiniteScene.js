@@ -41,8 +41,10 @@ class infiniteScene extends Phaser.Scene {
         //Elementos del juego. Aqui solo habria que pintarlos , ya que la parte de físicas la calcula el servidor de java
         console.log("Escena");
         console.log(this);
-        var playerShape = this.add.sprite(500, 500, 'light');
-        var playerShape2 = this.add.sprite(500, 500, 'shadow');
+        var iniX = 500;
+        var iniY = 500;
+        var playerShape = this.add.sprite(iniX, iniY, 'light');
+        var playerShape2 = this.add.sprite(iniX, iniY, 'shadow');
 
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
@@ -78,8 +80,8 @@ class infiniteScene extends Phaser.Scene {
         //VIDA + PINCHOS
         var hp = new Life(this, this.English, playerShape, playerShape2);
         var spikes = new Spike(this, 1050, 970, 100, 25, 0xff0000, hp);
-        spikes.addPlayerCollide(this, playerShape, playerShape2, this.English);
-        spikes.addPlayerCollide(this, playerShape2, playerShape, this.English);
+        spikes.addPlayerCollide(this, playerShape, playerShape2, this.English, iniX, iniY, iniX, iniY);
+        spikes.addPlayerCollide(this, playerShape2, playerShape, this.English, iniX, iniY, iniX, iniY);
 
         //CAJA
         var box = new Box(this, 300, 950, 400, 500, 50, 50, 'caja');
