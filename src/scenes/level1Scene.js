@@ -14,171 +14,189 @@ class level1Scene extends Phaser.Scene{
         this.load.image('andamio', 'assets/sprites/andamio.png');
         this.load.image('light', 'assets/players/light.png');
         this.load.image('shadow', 'assets/players/shadow.png');
+
+        this.load.image('tiles', 'assets/tileset/Tilemap.png')
+        this.load.tilemapTiledJSON('map','assets/levels/level1.json');
     }
     create(){
-        this.add.sprite(960, 540, 'bg');
-        var iniXL = 200;
-        var iniYL = 200;
+
+        var iniXL = 300;
+        var iniYL = 875;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
-        var iniXS = 200;
-        var iniYS = 1200;
+        playerShape.setDepth(10);
+        var iniXS = 300;
+        var iniYS = 2325;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
+        playerShape2.setDepth(10);
 
         var playerPhysics = this.physics.add.existing(playerShape, 0);
-        playerPhysics.body.setGravityY(-400);
+        //playerPhysics.body.setGravityY(-400);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
+
+        this.map = this.add.tilemap('map');
+        var tileset = this.map.addTilesetImage('tileset', 'tiles');
+
+        var bg = this.add.sprite(200, 0, 'bg');
+        bg.setScrollFactor(0);
+
+        var ground = this.map.createStaticLayer('Suelo',tileset,0,0);
+        var spikes = this.map.createStaticLayer('Pinchos',tileset,0,0);
+
+        ground.setCollision([43,44,45,58]);
+
+        this.physics.add.collider(ground, playerShape);
+        this.physics.add.collider(ground, playerShape2);
+
+        var spikesPhysics = this.physics.add.existing(spikes, 1);
+
+        //FALTA LA HITBOX DE LAS SPIKES//
+
+        /*this.physics.add.collider(playerShape, spikes, function(){
+            if (this.hp.getHP() > 0){
+                this.hp.takeDamage();
+                playerShape.setPosition(startX, startY);
+            } else {
+                scene.scene.start('gameOverScene', {english: eng});
+                this.hp.resetDamage();
+                playerShape.setPosition(iniXL, iniYL);
+                playerShape2.setPosition(iniXS, iniYS);
+            }
+        }, null, this);
+        this.physics.add.collider(playerShape2, spikes, function(){
+            if (this.hp.getHP() > 0){
+                this.hp.takeDamage();
+                playerShape.setPosition(startX, startY);
+            } else {
+                scene.scene.start('gameOverScene', {english: eng});
+                this.hp.resetDamage();
+                playerShape.setPosition(iniXL, iniYL);
+                playerShape2.setPosition(iniXS, iniYS);
+            }
+        }, null, this);*/
 
 
         //ANDAMIOS
-        var andl = new Scaffold(this, 200, -100, 'andamio', 280, 50, 20, 350);
-        andl.rotate(Math.PI);
-        andl.addCollide(this, playerShape);
+        var andl = new Scaffold(this, 300, 1125, 'andamio', 350, 80, 20, 80);
+        andl.addCollide(this, playerShape); //Inicio superior
 
-        var andd = new Scaffold(this, 200, 1500, 'andamio', 280, 50, 20, 50);
-        andd.addCollide(this, playerShape2);
+        var andd = new Scaffold(this, 300, 2570, 'andamio', 350, 80, 20, 80);
+        andd.addCollide(this, playerShape2);    //Inicio inferior
 
-        var andl2 = new Scaffold(this, 3100, -100, 'andamio', 280, 50, 20, 350);
-        andl2.rotate(Math.PI);
+        var andl2 = new Scaffold(this, 3750, 1125, 'andamio', 350, 80, 20, 80);
         andl2.addCollide(this, playerShape);
 
-        var andd2 = new Scaffold(this, 3100, 1500, 'andamio', 280, 50, 20, 50);
+        var andd2 = new Scaffold(this, 3750, 2570, 'andamio', 350, 80, 20, 80);
         andd2.addCollide(this, playerShape2);
+
+
+        //COLOCAR BIEN //
+        var nextLevel = this.add.zone(1970,0,10,1920);
+
+        this.physics.add.overlap(playerPhysics,nextLevel,function(){
+            if (this.physics.world.overlap(playerPhysics2,nextLevel)){
+                this.scene.start("level2Scene");
+            }
+        });
+
+        this.physics.add.overlap(playerPhysics2,nextLevel,function(){
+            if (this.physics.world.overlap(playerPhysics,nextLevel)){
+                this.scene.start("level2Scene");
+            }
+        });
+
 
 
         //CÁMARAS
         var cameraMain = this.cameras.main;
         cameraMain.setSize(1920,540);
+        cameraMain.setBounds(0,0,4032,1440);
 
         var camera2 = this.cameras.add(0,540, 1920, 540);
+        camera2.setBounds(0,1440,4032, 1440);
 
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
 
-        //LÍMITE JUGADORES
-        var limit = this.add.rectangle(1600, 700, 3000, 100, 0x000000);
-        this.physics.add.existing(limit, 1);
-        this.physics.add.collider(playerShape, limit);
-        this.physics.add.collider(playerShape2, limit);
-
         //PLATAFORMAS
         //Móviles
-        var mpl = new MovingPlatform(this, 500, 0, 'plataforma');
-        mpl.rotate(Math.PI);
+        var displaceY = 1445;
+
+        var mpl = new MovingPlatform(this, 600, 925, 'plataforma'); //1
         mpl.addPlayerCollide(this, playerShape);
         mpl.setMovement(this, 200, 0, playerPhysics);
 
-        var mpd = new MovingPlatform(this, 500, 1400, 'plataforma');
+        var mpd = new MovingPlatform(this, 600, 925+displaceY, 'plataforma');
         mpd.setAlpha(0);
         mpd.addPlayerCollide(this, playerShape2);
         mpd.setMovement(this, 200, 0, playerPhysics2);
 
-        var mpl2 = new MovingPlatform(this, 1100, 300, 'plataforma');
+        var mpl2 = new MovingPlatform(this, 1200, 1225, 'plataforma');   //2
         mpl2.setAlpha(0);
         mpl2.addPlayerCollide(this, playerShape);
         mpl2.setMovement(this, 0, -400, playerPhysics);
 
-        var mpd2 = new MovingPlatform(this, 1100, 1100, 'plataforma');
+        var mpd2 = new MovingPlatform(this, 1200, 1225+displaceY, 'plataforma');
         mpd2.addPlayerCollide(this, playerShape2);
-        mpd2.setMovement(this, 0, 400, playerPhysics2);
+        mpd2.setMovement(this, 0, -400, playerPhysics2);
 
-        var mpl3 = new MovingPlatform(this, 2400, -630, 'plataforma');
+        var mpl3 = new MovingPlatform(this, 2900, 400, 'plataforma');  //8
         mpl3.scale(2, 2);
         mpl3.setAlpha(0);
         mpl3.addPlayerCollide(this, playerShape);
         mpl3.setMovement(this, 0, 400, playerPhysics);
 
-        var mpd3 = new MovingPlatform(this, 2400, 2030, 'plataforma');
+        var mpd3 = new MovingPlatform(this, 2900, 400+displaceY, 'plataforma');
         mpd3.scale(2, 2);
         mpd3.addPlayerCollide(this, playerShape2);
-        mpd3.setMovement(this, 0, -400, playerPhysics2);
+        mpd3.setMovement(this, 0, 400, playerPhysics2);
 
         //Estáticas
-        var spl = new StaticPlatform(this, 1300, 350, 'plataforma');
-        spl.rotate(Math.PI);
+        var spl = new StaticPlatform(this, 1400, 425, 'plataforma');    //3
         spl.addPlayerCollide(this, playerShape);
 
-        var spd = new StaticPlatform(this, 1300, 1050, 'plataforma');
+        var spd = new StaticPlatform(this, 1400, 425+displaceY, 'plataforma');
         spd.setAlpha(0);
         spd.addPlayerCollide(this, playerShape2);
 
-        var spl2 = new StaticPlatform(this, 1500, -600, 'plataforma');
+        var spl2 = new StaticPlatform(this, 1600, 1200, 'plataforma');  //4
         spl2.setAlpha(0);
         spl2.addPlayerCollide(this, playerShape);
 
-        var spd2 = new StaticPlatform(this, 1500, 2000, 'plataforma');
+        var spd2 = new StaticPlatform(this, 1600, 1200+displaceY, 'plataforma');
         spd2.addPlayerCollide(this, playerShape2);
 
-        var spl3 = new StaticPlatform(this, 1800, -550, 'plataforma');
-        spl3.rotate(Math.PI);
+        var spl3 = new StaticPlatform(this, 1900, 1150, 'plataforma');  //5
         spl3.addPlayerCollide(this, playerShape);
 
-        var spd3 = new StaticPlatform(this, 1800, 1950, 'plataforma');
+        var spd3 = new StaticPlatform(this, 1900, 1150+displaceY, 'plataforma');
         spd3.setAlpha(0);
         spd3.addPlayerCollide(this, playerShape2);
 
-        var spl4 = new StaticPlatform(this, 1950, -510, 'plataforma');
+        var spl4 = new StaticPlatform(this, 2200, 1110, 'plataforma');  //6
         spl4.setAlpha(0);
         spl4.addPlayerCollide(this, playerShape);
 
-        var spd4 = new StaticPlatform(this, 1950, 1910, 'plataforma');
+        var spd4 = new StaticPlatform(this, 2200, 1110+displaceY, 'plataforma');
         spd4.addPlayerCollide(this, playerShape2);
 
-        var spl5 = new StaticPlatform(this, 2100, -470, 'plataforma');
-        spl5.rotate(Math.PI);
+        var spl5 = new StaticPlatform(this, 2500, 1070, 'plataforma');  //7
         spl5.addPlayerCollide(this, playerShape);
 
-        var spd5 = new StaticPlatform(this, 2100, 1870, 'plataforma');
+        var spd5 = new StaticPlatform(this, 2500, 1070+displaceY, 'plataforma');
         spd5.setAlpha(0);
         spd5.addPlayerCollide(this, playerShape2);
 
-        var spl6 = new StaticPlatform(this, 2750, 300, 'plataforma');
+        var spl6 = new StaticPlatform(this, 3200, 500, 'plataforma');   //9
         spl6.rotate(Math.PI);
         spl6.addPlayerCollide(this, playerShape);
 
-        var spd6 = new StaticPlatform(this, 2750, 1000, 'plataforma');
+        var spd6 = new StaticPlatform(this, 3200, 500 + displaceY, 'plataforma');
         spd6.setAlpha(0);
         spd6.addPlayerCollide(this, playerShape2);
 
         //VIDA + PINCHOS
         var hp = new Life(this, this.English, playerShape, playerShape2);
 
-        //Fondo de la pantalla
-        var spikesl = new Spike(this, 1600, -700, 3000, 100, 0xff0000, hp);
-        spikesl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
-
-        var spikesd = new Spike(this, 1600, 2100, 3000, 100, 0xff0000, hp);
-        spikesd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
-
-        //Encima de la segunda plataforma móvil vertical
-        var spikesl2 = new Spike(this, 2400, 625, 276, 50, 0xff0000, hp);
-        spikesl2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
-
-        var spikesd2 = new Spike(this, 2400, 775, 276, 50, 0xff0000, hp);
-        spikesd2.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
-
-        //Primer escalón
-        var spikel = new Spike(this, 1850, -510, 40, 40, 0xff0000, hp);
-        spikel.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
-
-        var spiked = new Spike(this, 1850, 1910, 40, 40, 0xff0000, hp);
-        spiked.setAlpha(0);
-        spiked.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXS, iniYS, iniXL, iniYL);
-
-        //Segundo escalón
-        var spikel2 = new Spike(this, 2000, -470, 40, 40, 0xff0000, hp);
-        spikel2.setAlpha(0);
-        spikel2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
-
-        var spiked2 = new Spike(this, 2000, 1870, 40, 40, 0xff0000, hp);
-        spiked2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXS, iniYS, iniXL, iniYL);
-
-        //Tercer escalón
-        var spikel3 = new Spike(this, 2150, -430, 40, 40, 0xff0000, hp);
-        spikel3.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
-
-        var spiked3 = new Spike(this, 2150, 1830, 40, 40, 0xff0000, hp);
-        spiked3.setAlpha(0);
-        spiked3.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
@@ -212,8 +230,8 @@ class level1Scene extends Phaser.Scene{
         keyMovement.W.on('down', function(e) {
             pressedW = true;
             if (playerProta){
-                if (playerPhysics.body.touching.up){
-                    playerPhysics.body.setVelocityY(200);
+                if (playerPhysics.body.touching.down){
+                    playerPhysics.body.setVelocityY(-200);
                 }
             } else {
                 if (playerPhysics2.body.touching.down){
@@ -259,23 +277,8 @@ class level1Scene extends Phaser.Scene{
                 }
             }
         });
-
-        //CAMBIO DE NIVEL
-        var nextLevel = this.add.zone(1970,0,10,1920);
-
-        this.physics.add.overlap(playerPhysics,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics2,nextLevel)){
-                this.scene.start("level2Scene");
-            }
-        });
-
-        this.physics.add.overlap(playerPhysics2,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics,nextLevel)){
-                this.scene.start("level2Scene");
-            }
-        });
     }
     update(){
-        
+
     }
 }
