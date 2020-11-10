@@ -25,7 +25,7 @@ class level1Scene extends Phaser.Scene{
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         playerShape.setDepth(10);
         var iniXS = 300;
-        var iniYS = 2325;
+        var iniYS = 2300;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
         playerShape2.setDepth(10);
 
@@ -46,34 +46,6 @@ class level1Scene extends Phaser.Scene{
 
         this.physics.add.collider(ground, playerShape);
         this.physics.add.collider(ground, playerShape2);
-
-        var spikesPhysics = this.physics.add.existing(spikes, 1);
-
-        //FALTA LA HITBOX DE LAS SPIKES//
-
-        /*this.physics.add.collider(playerShape, spikes, function(){
-            if (this.hp.getHP() > 0){
-                this.hp.takeDamage();
-                playerShape.setPosition(startX, startY);
-            } else {
-                scene.scene.start('gameOverScene', {english: eng});
-                this.hp.resetDamage();
-                playerShape.setPosition(iniXL, iniYL);
-                playerShape2.setPosition(iniXS, iniYS);
-            }
-        }, null, this);
-        this.physics.add.collider(playerShape2, spikes, function(){
-            if (this.hp.getHP() > 0){
-                this.hp.takeDamage();
-                playerShape.setPosition(startX, startY);
-            } else {
-                scene.scene.start('gameOverScene', {english: eng});
-                this.hp.resetDamage();
-                playerShape.setPosition(iniXL, iniYL);
-                playerShape2.setPosition(iniXS, iniYS);
-            }
-        }, null, this);*/
-
 
         //ANDAMIOS
         var andl = new Scaffold(this, 300, 1125, 'andamio', 350, 80, 20, 80);
@@ -197,6 +169,13 @@ class level1Scene extends Phaser.Scene{
         //VIDA + PINCHOS
         var hp = new Life(this, this.English, playerShape, playerShape2);
 
+        var spikesUp = new Spike(this, 2000, 1380, 3800, 100, 0xff0000, hp);
+        spikesUp.setAlpha(0);
+        spikesUp.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikesDown = new Spike(this, 2000, 1360+displaceY, 3800, 100, 0xff0000, hp);
+        spikesDown.setAlpha(0);
+        spikesDown.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
