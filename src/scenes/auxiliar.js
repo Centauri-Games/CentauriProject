@@ -22,6 +22,10 @@ class StaticPlatform{
     rotate(angle){
         this.staticPlatform.setRotation(angle);
     }
+
+    scale(sizeX, sizeY){
+        this.staticPlatform.setScale(sizeX, sizeY);
+    }
 }
 
 class MovingPlatform{

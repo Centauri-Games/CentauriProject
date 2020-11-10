@@ -30,6 +30,9 @@ class level2Scene extends Phaser.Scene{
         var andd = new Scaffold(this, 200, 1500, 'andamio', 280, 50, 20, 50);
         andd.addCollide(this, playerShape2);
 
+        var andd2 = new Scaffold(this, 2900, 1500, 'andamio', 280, 50, 20, 50);
+        andd2.addCollide(this, playerShape2);
+
         //CÁMARAS
         var cameraMain = this.cameras.main;
         cameraMain.setSize(1920,540);
@@ -39,21 +42,78 @@ class level2Scene extends Phaser.Scene{
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
 
-        //LÍMITE JUGADORES
+        //LÍMITES JUGADORES
         var limit = this.add.rectangle(1600, 700, 3000, 100, 0x000000);
         this.physics.add.existing(limit, 1);
         this.physics.add.collider(playerShape, limit);
         this.physics.add.collider(playerShape2, limit);
+        var limit2 = this.add.rectangle(1600, 0, 3000, 100, 0x000000);
+        this.physics.add.existing(limit2, 1);
+        this.physics.add.collider(playerShape, limit2);
+
+        //PLATAFORMAS
+        var sp = new StaticPlatform(this, 500, 1800, 'plataforma');
+        sp.addPlayerCollide(this, playerShape2);
+
+        var sp2 = new StaticPlatform(this, 700, 900, 'plataforma');
+        sp2.rotate(Math.PI);
+        sp2.addPlayerCollide(this, playerShape2);
+
+        var sp3 = new StaticPlatform(this, 900, 2200, 'plataforma');
+        sp3.addPlayerCollide(this, playerShape2);
+
+        var sp4 = new StaticPlatform(this, 1200, 2200, 'plataforma');
+        sp4.addPlayerCollide(this, playerShape2);
+
+        var sp5 = new StaticPlatform(this, 1400, 1600, 'plataforma');
+        sp5.rotate(Math.PI);
+        sp5.addPlayerCollide(this, playerShape2);
+
+        var sp6 = new StaticPlatform(this, 1600, 1000, 'plataforma');
+        sp6.rotate(Math.PI);
+        sp6.scale(0.75, 0.75);
+        sp6.addPlayerCollide(this, playerShape2);
+
+        var sp7 = new StaticPlatform(this, 1800, 1900, 'plataforma');
+        sp7.scale(0.75, 0.75);
+        sp7.addPlayerCollide(this, playerShape2);
+
+        var sp8 = new StaticPlatform(this, 2000, 1000, 'plataforma');
+        sp8.rotate(Math.PI);
+        sp8.scale(0.75, 0.75);
+        sp8.addPlayerCollide(this, playerShape2);
+
+        var sp9 = new StaticPlatform(this, 2200, 1900, 'plataforma');
+        sp9.scale(0.75, 0.75);
+        sp9.addPlayerCollide(this, playerShape2);
+
+        var sp10 = new StaticPlatform(this, 2400, 2100, 'plataforma');
+        sp10.addPlayerCollide(this, playerShape2);
+
+        var sp11 = new StaticPlatform(this, 2600, 900, 'plataforma');
+        sp11.rotate(Math.PI);
+        sp11.scale(0.75, 0.75);
+        sp11.addPlayerCollide(this, playerShape2);
 
         //VIDA + PINCHOS
         var hp = new Life(this, this.English, playerShape, playerShape2);
 
-        //Fondo de la pantalla
-        var spikesl = new Spike(this, 1600, -700, 3000, 100, 0xff0000, hp);
-        spikesl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+        //PINCHOS
+        var spikesupd = new Spike(this, 1600, 775, 3000, 100, 0xff0000, hp);
+        spikesupd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
-        var spikesd = new Spike(this, 1600, 2100, 3000, 100, 0xff0000, hp);
-        spikesd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+        var spikesdownd = new Spike(this, 1600, 2500, 3000, 100, 0xff0000, hp);
+        spikesdownd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        var spikesupl = new Spike(this, 1750, 50, 100, 25, 0xff0000, hp);
+        spikesupl.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        var spikesdownl = new Spike(this, 1750, 650, 100, 25, 0xff0000, hp);
+        spikesdownl.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        //CAMBIO DE GRAVEDAD
+        var gravity = new GravitySwitch(this, 2000, 625, 1500, 75, 50, 50, 0x00ff00, 0x0000ff);
+        gravity.addTrigger(this, playerShape, playerPhysics, playerPhysics2);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
@@ -87,12 +147,18 @@ class level2Scene extends Phaser.Scene{
         keyMovement.W.on('down', function(e) {
             pressedW = true;
             if (playerProta){
-                if (playerPhysics.body.touching.up){
+                if (playerPhysics.body.touching.down && !gravity.getUpsideDown()){
+                    playerPhysics.body.setVelocityY(-200);
+                }
+                if (playerPhysics.body.touching.up && gravity.getUpsideDown()){
                     playerPhysics.body.setVelocityY(200);
                 }
             } else {
-                if (playerPhysics2.body.touching.down){
+                if (playerPhysics2.body.touching.down && !gravity.getUpsideDown()){
                     playerPhysics2.body.setVelocityY(-200);
+                }
+                if (playerPhysics2.body.touching.up && gravity.getUpsideDown()){
+                    playerPhysics2.body.setVelocityY(200);
                 }
             }
         });
