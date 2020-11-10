@@ -259,4 +259,9 @@ class infiniteScene extends Phaser.Scene {
         updatinglevels = 2;
         */
     }
+
+    /*async syncLoadPhysics(playerShape,mode){
+        
+        return await this.physics.add.existing(playerShape, mode);
+    }*/
 }

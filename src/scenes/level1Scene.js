@@ -16,6 +16,8 @@ class level1Scene extends Phaser.Scene{
         this.load.image('shadow', 'assets/players/shadow.png');
     }
     create(){
+        
+
         this.add.sprite(960, 540, 'bg');
         var iniXL = 200;
         var iniYL = 200;
@@ -28,6 +30,7 @@ class level1Scene extends Phaser.Scene{
         playerPhysics.body.setGravityY(-400);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
 
+
         //ANDAMIOS
         var andl = new Scaffold(this, 200, -100, 'andamio', 280, 50, 20, 350);
         andl.rotate(Math.PI);
@@ -39,6 +42,24 @@ class level1Scene extends Phaser.Scene{
         var andl2 = new Scaffold(this, 3100, -100, 'andamio', 280, 50, 20, 350);
         andl2.rotate(Math.PI);
         andl2.addCollide(this, playerShape);
+
+        var nextLevel = this.add.zone(1970,0,10,1920);
+
+        this.physics.add.overlap(playerPhysics,nextLevel,function(){
+            if (this.physics.world.overlap(playerPhysics2,nextLevel)){
+                this.scene.start("level2Scene");
+            }
+        });
+
+        this.physics.add.overlap(playerPhysics2,nextLevel,function(){
+            if (this.physics.world.overlap(playerPhysics,nextLevel)){
+                this.scene.start("level2Scene");
+            }
+        });
+
+        var and = new Scaffold(this, 200, -100, 'andamio', 280, 50, 20, 350);
+        and.rotate(Math.PI);
+        and.addCollide(this, playerShape);
 
         var andd2 = new Scaffold(this, 3100, 1500, 'andamio', 280, 50, 20, 50);
         andd2.addCollide(this, playerShape2);
