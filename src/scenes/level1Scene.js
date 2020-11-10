@@ -25,7 +25,7 @@ class level1Scene extends Phaser.Scene{
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         playerShape.setDepth(10);
         var iniXS = 300;
-        var iniYS = 2325;
+        var iniYS = 2300;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
         playerShape2.setDepth(10);
 
@@ -199,6 +199,16 @@ class level1Scene extends Phaser.Scene{
         spd6.setAlpha(0);
         spd6.addPlayerCollide(this, playerShape2);
 
+        //VIDA + PINCHOS
+        var hp = new Life(this, this.English, playerShape, playerShape2);
+
+        var spikesUp = new Spike(this, 2000, 1380, 3800, 100, 0xff0000, hp);
+        spikesUp.setAlpha(0);
+        spikesUp.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikesDown = new Spike(this, 2000, 1360+displaceY, 3800, 100, 0xff0000, hp);
+        spikesDown.setAlpha(0);
+        spikesDown.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
