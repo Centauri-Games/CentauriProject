@@ -2,14 +2,18 @@ class selectLevel extends Phaser.Scene{
     constructor(){
         super("selectLevel");
     }
+
+    init(data){
+        this.English = data.english;
+    }
+
     preload(){
 
     }
 
     create(){
-
-        this.add.text(100,1000,"Atrás",{font : "24px"}).setInteractive().on("pointerup",()=>{
-            this.scene.start("selectMode");
+        var bText = this.add.text(100,1000,"Atrás",{font : "24px"}).setInteractive().on("pointerup",()=>{
+            this.scene.start("selectMode", {english: this.English});
         });
 
         this.add.rectangle(320,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
@@ -89,6 +93,10 @@ class selectLevel extends Phaser.Scene{
         });
 
         this.add.text(1600,720,"10",{font : "24px", color : "black"});
+
+        if (this.English){
+            bText.setText("Back");
+        }
     }
 
     
