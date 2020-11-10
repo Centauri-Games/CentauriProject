@@ -44,19 +44,6 @@ class level1Scene extends Phaser.Scene{
         var andd2 = new Scaffold(this, 3100, 1500, 'andamio', 280, 50, 20, 50);
         andd2.addCollide(this, playerShape2);
 
-        var nextLevel = this.add.zone(1970,0,10,1920);
-
-        this.physics.add.overlap(playerPhysics,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics2,nextLevel)){
-                this.scene.start("level2Scene");
-            }
-        });
-
-        this.physics.add.overlap(playerPhysics2,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics,nextLevel)){
-                this.scene.start("level2Scene");
-            }
-        });
 
         //CÁMARAS
         var cameraMain = this.cameras.main;
@@ -164,7 +151,7 @@ class level1Scene extends Phaser.Scene{
 
         //Encima de la segunda plataforma móvil vertical
         var spikesl2 = new Spike(this, 2400, 625, 276, 50, 0xff0000, hp);
-        spikesl2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikesl2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
 
         var spikesd2 = new Spike(this, 2400, 775, 276, 50, 0xff0000, hp);
         spikesd2.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
@@ -175,7 +162,7 @@ class level1Scene extends Phaser.Scene{
 
         var spiked = new Spike(this, 1850, 1910, 40, 40, 0xff0000, hp);
         spiked.setAlpha(0);
-        spiked.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+        spiked.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //Segundo escalón
         var spikel2 = new Spike(this, 2000, -470, 40, 40, 0xff0000, hp);
@@ -183,7 +170,7 @@ class level1Scene extends Phaser.Scene{
         spikel2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
 
         var spiked2 = new Spike(this, 2000, 1870, 40, 40, 0xff0000, hp);
-        spiked2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+        spiked2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //Tercer escalón
         var spikel3 = new Spike(this, 2150, -430, 40, 40, 0xff0000, hp);
@@ -191,7 +178,7 @@ class level1Scene extends Phaser.Scene{
 
         var spiked3 = new Spike(this, 2150, 1830, 40, 40, 0xff0000, hp);
         spiked3.setAlpha(0);
-        spiked3.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+        spiked3.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
@@ -270,6 +257,21 @@ class level1Scene extends Phaser.Scene{
                 } else {
                     playerPhysics2.body.setVelocityX(-100);
                 }
+            }
+        });
+
+        //CAMBIO DE NIVEL
+        var nextLevel = this.add.zone(1970,0,10,1920);
+
+        this.physics.add.overlap(playerPhysics,nextLevel,function(){
+            if (this.physics.world.overlap(playerPhysics2,nextLevel)){
+                this.scene.start("level2Scene");
+            }
+        });
+
+        this.physics.add.overlap(playerPhysics2,nextLevel,function(){
+            if (this.physics.world.overlap(playerPhysics,nextLevel)){
+                this.scene.start("level2Scene");
             }
         });
     }
