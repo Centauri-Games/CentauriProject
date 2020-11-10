@@ -18,8 +18,8 @@ class level1Scene extends Phaser.Scene{
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
         this.load.tilemapTiledJSON('map','assets/levels/level1.json');
     }
-    create(){
 
+    create(){
         var iniXL = 300;
         var iniYL = 875;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
@@ -30,7 +30,6 @@ class level1Scene extends Phaser.Scene{
         playerShape2.setDepth(10);
 
         var playerPhysics = this.physics.add.existing(playerShape, 0);
-        //playerPhysics.body.setGravityY(-400);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
 
         this.map = this.add.tilemap('map');
@@ -40,35 +39,42 @@ class level1Scene extends Phaser.Scene{
         bg.setScrollFactor(0);
 
         var ground = this.map.createStaticLayer('Suelo',tileset,0,0);
-        var spikes = this.map.createStaticLayer('Pinchos',tileset,0,0);
+        this.map.createStaticLayer('Pinchos',tileset,0,0);
 
-        ground.setCollision([43,44,45,58]);
+        ground.setCollision([43,44,45]);
 
         this.physics.add.collider(ground, playerShape);
         this.physics.add.collider(ground, playerShape2);
 
-        var spikesPhysics = this.physics.add.existing(spikes, 1);
+        //VIDA + PINCHOS
+        var hp = new Life(this, this.English, playerShape, playerShape2);
 
-        //FALTA LA HITBOX DE LAS SPIKES//
+        var spikesL = new Spike(this, 2016, 1400, 4032, 96, 0xff0000, hp);
+        spikesL.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+        spikesL.setAlpha(0);
+        var spikesD = new Spike(this, 2016, 2800, 4032, 96, 0xff0000, hp);
+        spikesD.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+        spikesD.setAlpha(0);
 
-        /*this.physics.add.collider(playerShape, spikes, function(){
-            if (this.hp.getHP() > 0){
-                this.hp.takeDamage();
-                playerShape.setPosition(startX, startY);
+        /*this.physics.add.collider(spikes, playerShape, function(){
+            if (hp.getHP() > 0){
+                hp.takeDamage();
+                playerShape.setPosition(iniXL, iniYL);
             } else {
-                scene.scene.start('gameOverScene', {english: eng});
-                this.hp.resetDamage();
+                this.scene.start('gameOverScene', {english: this.English});
+                hp.resetDamage();
                 playerShape.setPosition(iniXL, iniYL);
                 playerShape2.setPosition(iniXS, iniYS);
             }
         }, null, this);
-        this.physics.add.collider(playerShape2, spikes, function(){
-            if (this.hp.getHP() > 0){
-                this.hp.takeDamage();
-                playerShape.setPosition(startX, startY);
+
+        this.physics.add.collider(spikes, playerShape2, function(){
+            if (hp.getHP() > 0){
+                hp.takeDamage();
+                playerShape.setPosition(iniXS, iniYS);
             } else {
-                scene.scene.start('gameOverScene', {english: eng});
-                this.hp.resetDamage();
+                this.scene.start('gameOverScene', {english: this.English});
+                hp.resetDamage();
                 playerShape.setPosition(iniXL, iniYL);
                 playerShape2.setPosition(iniXS, iniYS);
             }
@@ -187,15 +193,11 @@ class level1Scene extends Phaser.Scene{
         spd5.addPlayerCollide(this, playerShape2);
 
         var spl6 = new StaticPlatform(this, 3200, 500, 'plataforma');   //9
-        spl6.rotate(Math.PI);
         spl6.addPlayerCollide(this, playerShape);
 
         var spd6 = new StaticPlatform(this, 3200, 500 + displaceY, 'plataforma');
         spd6.setAlpha(0);
         spd6.addPlayerCollide(this, playerShape2);
-
-        //VIDA + PINCHOS
-        var hp = new Life(this, this.English, playerShape, playerShape2);
 
 
         //CONTROL Y MOVIMIENTO
