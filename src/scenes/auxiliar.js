@@ -14,6 +14,10 @@ class StaticPlatform{
     addPlayerCollide(scene, playerShape){   //Player collider
         scene.physics.add.collider(playerShape,this.staticPlatform);
     }
+
+    rotate(angle){
+        this.staticPlatform.setRotation(angle);
+    }
 }
 
 class MovingPlatform{
@@ -28,6 +32,10 @@ class MovingPlatform{
         scene.physics.add.collider(playerShape,this.movingPlatform);
     }
 
+    setAlpha(value){
+        this.movingPlatform.setAlpha(value);
+    }
+
     setMovement(scene, displaceX, displaceY){   //Set movement - Basic linear movement
         scene.tweens.timeline({
             targets: this.movingPlatformPhysics.body.velocity,
@@ -39,6 +47,10 @@ class MovingPlatform{
                 { x:0, y:0, duration: 2000, ease: 'Stepped' }
             ]
         });
+    }
+
+    rotate(angle){
+        this.movingPlatform.setRotation(angle);
     }
 }
 
@@ -53,13 +65,18 @@ class DropPlatform{
     addWorldCollider(scene, object){
         scene.physics.add.collider(this.dropPlatform, object);
     }
+
     addPlayerCollide(scene, playerShape){   //Player collider
         scene.physics.add.collider(playerShape, this.dropPlatform, function(){
-            if(this.dropPlatformPhysics.body.allowGravity == false) {
+            if(this.dropPlatformPhysics.body.allowGravity === false) {
                 this.dropPlatformPhysics.body.setImmovable(false);
                 this.dropPlatformPhysics.body.setAllowGravity(true);
             }
         }, null, this);
+    }
+
+    rotate(angle){
+        this.dropPlatform.setRotation(angle);
     }
 }
 
@@ -195,7 +212,7 @@ class Life{
 
     constructor(scene, english){
         this.lifes = 3;
-        this.lifesText = scene.add.text(1000, 1000, 'Vidas: ' + this.lifes, {font: '32px'});
+        this.lifesText = scene.add.text(0, 300, 'Vidas: ' + this.lifes, {font: '32px'});
         this.english = english;
         if (this.english){
             this.lifesText.setText('Lives: ' + this.lifes);
@@ -268,6 +285,23 @@ class Teleport{
         scene.physics.add.collider(object, this.tpEnter, function(){
             object.setPosition(this.tpExit.x, this.tpExit.y);
         }, null, this);
+    }
+}
+
+class Scaffold{
+    constructor(scene, posX, posY, nameEnter, sizeX, sizeY, offX, offY){
+        this.and = scene.add.sprite(posX, posY, nameEnter);
+        this.andPhysics = scene.physics.add.existing(this.and, 1);
+        this.andPhysics.body.setSize(sizeX, sizeY);
+        this.andPhysics.body.setOffset(offX, offY);
+    }
+
+    addCollide(scene, object){
+        scene.physics.add.collider(object, this.and);
+    }
+
+    rotate(angle){
+        this.and.setRotation(angle);
     }
 }
 

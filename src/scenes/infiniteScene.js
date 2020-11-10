@@ -32,8 +32,8 @@ class infiniteScene extends Phaser.Scene {
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
         this.load.image('portalR', 'assets/sprites/portalRojo.png');
         this.load.image('andamio', 'assets/sprites/andamio.png');
-        this.load.image('light', 'assets/players/light.png')
-        this.load.image('shadow', 'assets/players/shadow.png')
+        this.load.image('light', 'assets/players/light.png');
+        this.load.image('shadow', 'assets/players/shadow.png');
 
     }
 
@@ -76,7 +76,7 @@ class infiniteScene extends Phaser.Scene {
         camera2.startFollow(playerShape2);
 
         //VIDA + PINCHOS
-        var hp = new Life(this, this.English);
+        var hp = new Life(this, this.English, playerShape, playerShape2);
         var spikes = new Spike(this, 1050, 970, 100, 25, 0xff0000, hp);
         spikes.addPlayerCollide(this, playerShape, playerShape2, this.English);
         spikes.addPlayerCollide(this, playerShape2, playerShape, this.English);
