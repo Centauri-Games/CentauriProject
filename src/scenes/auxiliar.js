@@ -214,6 +214,10 @@ class Spike{
             }
         }, null, this);
     }
+
+    setAlpha(value){
+        this.spikes.setAlpha(value);
+    }
 }
 
 class Life{

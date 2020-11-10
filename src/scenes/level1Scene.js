@@ -16,8 +16,6 @@ class level1Scene extends Phaser.Scene{
         this.load.image('shadow', 'assets/players/shadow.png');
     }
     create(){
-        
-
         this.add.sprite(960, 540, 'bg');
         var iniXL = 200;
         var iniYL = 200;
@@ -43,6 +41,9 @@ class level1Scene extends Phaser.Scene{
         andl2.rotate(Math.PI);
         andl2.addCollide(this, playerShape);
 
+        var andd2 = new Scaffold(this, 3100, 1500, 'andamio', 280, 50, 20, 50);
+        andd2.addCollide(this, playerShape2);
+
         var nextLevel = this.add.zone(1970,0,10,1920);
 
         this.physics.add.overlap(playerPhysics,nextLevel,function(){
@@ -57,13 +58,6 @@ class level1Scene extends Phaser.Scene{
             }
         });
 
-        var and = new Scaffold(this, 200, -100, 'andamio', 280, 50, 20, 350);
-        and.rotate(Math.PI);
-        and.addCollide(this, playerShape);
-
-        var andd2 = new Scaffold(this, 3100, 1500, 'andamio', 280, 50, 20, 50);
-        andd2.addCollide(this, playerShape2);
-
         //CÁMARAS
         var cameraMain = this.cameras.main;
         cameraMain.setSize(1920,540);
@@ -72,6 +66,12 @@ class level1Scene extends Phaser.Scene{
 
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
+
+        //LÍMITE JUGADORES
+        var limit = this.add.rectangle(1600, 700, 3000, 100, 0x000000);
+        this.physics.add.existing(limit, 1);
+        this.physics.add.collider(playerShape, limit);
+        this.physics.add.collider(playerShape2, limit);
 
         //PLATAFORMAS
         //Móviles
@@ -155,11 +155,43 @@ class level1Scene extends Phaser.Scene{
         //VIDA + PINCHOS
         var hp = new Life(this, this.English, playerShape, playerShape2);
 
-        var spikes = new Spike(this, 1000, -700, 1000, 25, 0xff0000, hp);
-        spikes.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+        //Fondo de la pantalla
+        var spikesl = new Spike(this, 1600, -700, 3000, 100, 0xff0000, hp);
+        spikesl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
 
-        var spikes2 = new Spike(this, 1000, 2100, 1000, 25, 0xff0000, hp);
-        spikes2.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+        var spikesd = new Spike(this, 1600, 2100, 3000, 100, 0xff0000, hp);
+        spikesd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        //Encima de la segunda plataforma móvil vertical
+        var spikesl2 = new Spike(this, 2400, 625, 276, 50, 0xff0000, hp);
+        spikesl2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikesd2 = new Spike(this, 2400, 775, 276, 50, 0xff0000, hp);
+        spikesd2.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        //Primer escalón
+        var spikel = new Spike(this, 1850, -510, 40, 40, 0xff0000, hp);
+        spikel.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+
+        var spiked = new Spike(this, 1850, 1910, 40, 40, 0xff0000, hp);
+        spiked.setAlpha(0);
+        spiked.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+
+        //Segundo escalón
+        var spikel2 = new Spike(this, 2000, -470, 40, 40, 0xff0000, hp);
+        spikel2.setAlpha(0);
+        spikel2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+
+        var spiked2 = new Spike(this, 2000, 1870, 40, 40, 0xff0000, hp);
+        spiked2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+
+        //Tercer escalón
+        var spikel3 = new Spike(this, 2150, -430, 40, 40, 0xff0000, hp);
+        spikel3.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+
+        var spiked3 = new Spike(this, 2150, 1830, 40, 40, 0xff0000, hp);
+        spiked3.setAlpha(0);
+        spiked3.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
