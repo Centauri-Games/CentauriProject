@@ -8,8 +8,8 @@ class menuScene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('screen', 'assets/FullScreen.png');
-        this.load.image('settings', 'assets/Settings.png');
+        this.load.image('screen', 'assets/UI/FullScreen.png');
+        this.load.image('settings', 'assets/UI/Settings.png');
     }
 
     create(){
