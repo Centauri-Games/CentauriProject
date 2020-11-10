@@ -46,16 +46,6 @@ class level1Scene extends Phaser.Scene{
         this.physics.add.collider(ground, playerShape);
         this.physics.add.collider(ground, playerShape2);
 
-        //VIDA + PINCHOS
-        var hp = new Life(this, this.English, playerShape, playerShape2);
-
-        var spikesL = new Spike(this, 2016, 1400, 4032, 96, 0xff0000, hp);
-        spikesL.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
-        spikesL.setAlpha(0);
-        var spikesD = new Spike(this, 2016, 2800, 4032, 96, 0xff0000, hp);
-        spikesD.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
-        spikesD.setAlpha(0);
-
         /*this.physics.add.collider(spikes, playerShape, function(){
             if (hp.getHP() > 0){
                 hp.takeDamage();
