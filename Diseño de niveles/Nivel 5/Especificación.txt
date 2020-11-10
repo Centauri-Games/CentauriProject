@@ -1,0 +1,12 @@
+
+En este nivel los bloques van cayendo
+
+Dos opciones
+
+Opción 1 --> caen de manera consecutiva pasado un determinado tiempo
+
+Opción 2 --> a medida que los jugadores avanzan y tocan los bloques, estos van cayendo
+
+Sea según la opción 1 o la opción 2 los bloques (que son los mismos en un mundo que en el otro) van cayendo a la vez
+
+LOS JUGADORES DEBEN PASARSE EL NIVEL A LA VEZ PARA PODER AVANZAR

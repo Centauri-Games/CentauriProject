@@ -1,0 +1,27 @@
+
+
+Objetivo --> que el láser llegue al receptor para poder avanzar
+
+A nivel de programación --> el jugador debe realizar una secuencia de números correcta
+
+El láser rebota en espejos
+
+En total hay 11 espejos
+
+Cada espejo tiene 8 posiciones distintas
+
+Hay un total de 8.589.934.592 posibles combinaciones
+
+Para que puedan pasar los dos jugadores deben averiguar dos secuencias distintas
+una para cada jugador.
+
+En ambas secuencias deben usar espejos de ambos mundos y participar ambos jugadores
+
+El láser se puede llevar de un mundo a otro si atraviesan los portales
+
+
+Primera combinación --> *5* 2 7 4 2 3 6 8 6 5
+
+Segunda combinación -- > *1* 7 5 7 8 6 8 3
+
+El láser se lanza cada vez que el jugador pulsa un botón (COMPROBACIÓN DE LA SECUENCIA)

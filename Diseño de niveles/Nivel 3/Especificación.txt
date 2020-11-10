@@ -1,0 +1,17 @@
+
+Uso de portales de transporte:
+
+Los jugadores transportan cosas (cajas) de un mundo a otro para que ambos
+puedan seguir el camino
+
+
+Portal verde --> portal de entrada
+
+Portal morado --> portal de salida (llegada de objetos)
+
+Las cajas amarillas pueden ser movidas por los jugadores
+
+Las cajas amarillas con contorno discontinuo son la posición donde acabarán tras ser introducidas en el portal
+
+Los jugadores necesitarán las cajas tanto para pasarlas por el portal como para usarlas ellos mismos
+y que puedan seguir avanzando
