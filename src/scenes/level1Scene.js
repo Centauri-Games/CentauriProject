@@ -15,6 +15,8 @@ class level1Scene extends Phaser.Scene{
         this.load.image('shadow', 'assets/players/shadow.png');
     }
     create(){
+        
+
         this.add.sprite(960, 540, 'bg');
         var playerShape = this.add.sprite(200, 200, 'light');
         var playerShape2 = this.add.sprite(200, 1200, 'shadow');
@@ -22,6 +24,20 @@ class level1Scene extends Phaser.Scene{
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         playerPhysics.body.setGravityY(-400);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
+
+        var nextLevel = this.add.zone(1970,0,10,1920);
+
+        this.physics.add.overlap(playerPhysics,nextLevel,function(){
+            if (this.physics.world.overlap(playerPhysics2,nextLevel)){
+                this.scene.start("level2Scene");
+            }
+        });
+
+        this.physics.add.overlap(playerPhysics2,nextLevel,function(){
+            if (this.physics.world.overlap(playerPhysics,nextLevel)){
+                this.scene.start("level2Scene");
+            }
+        });
 
         var and = new Scaffold(this, 200, -100, 'andamio', 280, 50, 20, 350);
         and.rotate(Math.PI);
