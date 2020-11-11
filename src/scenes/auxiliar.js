@@ -288,6 +288,8 @@ class Life{
 class Box{
 
     constructor(scene, destX, destY, boxX, boxY, sizeX, sizeY, name){
+        this.startX = boxX;
+        this.startY = boxY;
 
         this.dest = scene.add.rectangle(destX, destY, sizeX, sizeY, 0x000000);
         this.dest.setFillStyle(0xffff00, 0);
@@ -307,6 +309,13 @@ class Box{
     getBox(){
         return this.box;
     }
+
+    addResetCollide(scene, object){
+        scene.physics.add.collider(this.box, object);/*, function(){
+            this.box.setPosition(this.startX, this.startY);
+        }, null, this);*/
+    }
+
     addPlayerCollide(scene, playerShape){
         scene.physics.add.collider(playerShape,this.box,function(){
             this.box.body.setDragX(100);//FRICCIÓN
@@ -323,6 +332,8 @@ class Teleport{
     constructor(scene, enterX, enterY, exitX, exitY, nameEnter, nameExit){
         this.tpEnter = scene.add.sprite(enterX, enterY, nameEnter);
         this.tpExit = scene.add.sprite(exitX,exitY, nameExit);
+        this.tpEnter.setDepth(8);
+        this.tpExit.setDepth(8);
         this.tpPhysics = scene.physics.add.existing(this.tpEnter, 1);
     }
 
@@ -330,6 +341,12 @@ class Teleport{
         scene.physics.add.collider(object, this.tpEnter, function(){
             object.setPosition(this.tpExit.x, this.tpExit.y);
         }, null, this);
+    }
+
+    setScale(factorX, factorY){
+        this.tpEnter.setScale(factorX, factorY);
+        this.tpPhysics.setScale(factorX, factorY);
+        this.tpExit.setScale(factorX, factorY);
     }
 }
 
