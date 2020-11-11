@@ -14,6 +14,9 @@ class level5Scene extends Phaser.Scene{
             frameWidth: 65,
             frameHeight: 80
         });
+
+        this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
+
         this.load.image('andamio', 'assets/sprites/andamio.png');
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
         this.load.tilemapTiledJSON('map','assets/levels/level5.json');
@@ -138,7 +141,8 @@ class level5Scene extends Phaser.Scene{
 
         //DROP PLATFORMS
         /*Rellenar*/
-
+        var dualPlat1 = new DualDropPlatform(this, 500, 1125, 800, 1125, 'plataforma');
+        dualPlat1.addPlayerCollide(this, playerShape);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');

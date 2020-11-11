@@ -66,6 +66,78 @@ class MovingPlatform{
     }
 }
 
+class DualDropPlatform{ //DOUBLE DROP PLATFORM
+    constructor(scene, pos1X, pos1Y, pos2X, pos2Y, name){   //Sprite constructor
+        this.starting1X = pos1X;
+        this.starting1Y = pos1Y;
+        this.starting2X = pos2X;
+        this.starting2Y = pos2Y;
+
+        this.dropPlatform1 = scene.add.sprite(pos1X, pos1Y, name);
+        this.dropPlatformPhysics1 = scene.physics.add.existing(this.dropPlatform1, 0);
+        this.dropPlatformPhysics1.body.setAllowGravity(false);
+        this.dropPlatformPhysics1.body.setImmovable(true);
+
+        this.dropPlatform2 = scene.add.sprite(pos2X, pos2Y, name);
+        this.dropPlatformPhysics2 = scene.physics.add.existing(this.dropPlatform2, 0);
+        this.dropPlatformPhysics2.body.setAllowGravity(false);
+        this.dropPlatformPhysics2.body.setImmovable(true);
+    }
+
+    addWorldCollider(scene, object){
+        scene.physics.add.collider(this.dropPlatform1, object);
+        scene.physics.add.collider(this.dropPlatform2, object);
+    }
+
+    addPlayerCollide(scene, playerShape){   //Player collider
+        scene.physics.add.collider(playerShape, this.dropPlatform1, function(){
+            if(this.dropPlatformPhysics1.body.allowGravity === false) {
+                this.dropPlatformPhysics1.body.setImmovable(false);
+                this.dropPlatformPhysics1.body.setAllowGravity(true);
+
+                this.dropPlatformPhysics2.body.setImmovable(false);
+                this.dropPlatformPhysics2.body.setAllowGravity(true);
+
+                //this.resetPlatforms(); //Delay para que se ejecute esto despues de X segundos
+            }
+        }, null, this);
+
+        scene.physics.add.collider(playerShape, this.dropPlatform2, function(){
+            if(this.dropPlatformPhysics2.body.allowGravity === false) {
+                this.dropPlatformPhysics2.body.setImmovable(false);
+                this.dropPlatformPhysics2.body.setAllowGravity(true);
+
+                this.dropPlatformPhysics1.body.setImmovable(false);
+                this.dropPlatformPhysics1.body.setAllowGravity(true);
+
+                //this.resetPlatforms(); //Delay para que se ejecute esto despues de X segundos
+            }
+
+
+
+
+        }, null, this);
+    }
+
+    resetPlatforms(){
+        this.dropPlatformPhysics2.body.setAllowGravity(false);
+        this.dropPlatform1.setPosition(this.starting1X, this.starting1Y);
+        this.dropPlatformPhysics2.body.setImmovable(true);
+
+        this.dropPlatformPhysics1.body.setAllowGravity(false);
+        this.dropPlatform2.setPosition(this.starting2X, this.starting2Y);
+        this.dropPlatformPhysics1.body.setImmovable(true);
+
+
+
+    }
+
+    rotate(angle){
+        this.dropPlatform1.setRotation(angle);
+        this.dropPlatform2.setRotation(angle);
+    }
+}
+
 class DropPlatform{
     constructor(scene, posX, posY, name){   //Sprite constructor
         this.dropPlatform = scene.add.sprite(posX, posY, name);
