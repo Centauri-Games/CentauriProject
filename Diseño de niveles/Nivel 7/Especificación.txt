@@ -1,0 +1,10 @@
+
+Nivel de cooperación y puzzle
+
+Mediante el uso de botones podrán avanzar
+
+Boton rosa para abrir la puerta, boton verde para poner el puente
+
+Boton azul claro para llevar la plataforma al jugador
+
+Boton azul oscuro para llevar la plataforma al final del nivel 

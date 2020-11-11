@@ -1,0 +1,5 @@
+Este es un nivel trivial
+
+Solo habrá un portal en cada mundo por el que tendrán que meterse
+
+Este portal les llevará a un mundo compartido
