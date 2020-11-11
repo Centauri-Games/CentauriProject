@@ -1,0 +1,2 @@
+
+Los bloques morados son invisibles  (estos coinciden en tamaño y posición con los bloques visibles del otro jugador y viceversa)
