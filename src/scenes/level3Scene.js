@@ -17,6 +17,10 @@ class level3Scene extends Phaser.Scene{
             frameHeight: 80
         });
 
+        this.load.image('portalA', 'assets/sprites/portalAzul.png');
+        this.load.image('portalR', 'assets/sprites/portalRojo.png');
+        this.load.image('caja', 'assets/sprites/caja.png');
+
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
         this.load.tilemapTiledJSON('map','assets/levels/level3.json');
     }
@@ -48,8 +52,8 @@ class level3Scene extends Phaser.Scene{
         });
         var playerPhysics = this.physics.add.existing(playerShape, 0);
 
-        var iniXS = 2900;
-        var iniYS = 1500;
+        var iniXS = 300;
+        var iniYS = 2300;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
         this.anims.create({
             key: 'stopS',
@@ -110,7 +114,7 @@ class level3Scene extends Phaser.Scene{
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
 
-        cameraMain.setBounds(0,0,4032,1440);
+        //cameraMain.setBounds(0,0,4032,1440);
         camera2.setBounds(0,1440,4032, 1440);
 
         //ANDAMIOS
@@ -222,15 +226,60 @@ class level3Scene extends Phaser.Scene{
         this.physics.add.existing(floor13, 1);
         this.physics.add.collider(playerShape2, floor13);
 
-        var floor13 = this.add.rectangle(3070, 2675, 300, 80, 0x000000);
-        floor13.setAlpha(0);
-        this.physics.add.existing(floor13, 1);
-        this.physics.add.collider(playerShape2, floor13);
+        this.physics.add.collider(playerShape, floor13);
+        this.physics.add.collider(playerShape, floor12);
+
+        var floor14 = this.add.rectangle(3070, 2675, 300, 80, 0x000000);
+        floor14.setAlpha(0);
+        this.physics.add.existing(floor14, 1);
+        this.physics.add.collider(playerShape2, floor14);
 
         var mp4 = new MovingPlatform(this, 3400, 2200, 'plataforma'); //Plataforma 2
         mp4.addPlayerCollide(this, playerShape2);
         mp4.setMovement(this, 0, 200, playerPhysics2);
 
+        var mp5 = new MovingPlatform(this, 3100, 2400, 'plataforma'); //Plataforma 2
+        mp5.addPlayerCollide(this, playerShape2);
+        mp5.setMovement(this, 0, -200, playerPhysics2);
+
+        //PORTALES
+
+        var portal1 = new Teleport(this, 1050, 1300, 1000, 2300, 'portalA', 'portalR');
+        portal1.setScale(1.5,1.5);
+
+        var portal2 = new Teleport(this, 2600, 2750, 2855, 550, 'portalA', 'portalR');
+        portal2.setScale(1.5,1.5);
+
+
+        //CAJAS
+
+        var box1 = new Box(this, 1000, 2775, 850, 1100, 50, 50, 'caja');
+        box1.addPlayerCollide(this, playerShape);
+        box1.addPlayerCollide(this, playerShape2);
+        box1.addWorldCollide(this, floor4);
+
+        portal1.addCollide(this, box1.getBox());
+
+        var box2 = new Box(this,2855,915,2520, 1600, 50, 50, 'caja');
+        box2.addPlayerCollide(this, playerShape);
+        box2.addPlayerCollide(this, playerShape2);
+        box2.addWorldCollide(this, floor12);
+
+        portal2.addCollide(this, box2.getBox());
+
+        var box3 = new Box(this,2855,865,2400, 1600, 50, 50, 'caja');
+        box3.addPlayerCollide(this, playerShape);
+        box3.addPlayerCollide(this, playerShape2);
+        box3.addWorldCollide(this, floor12);
+
+        portal2.addCollide(this, box3.getBox());
+
+        var box4 = new Box(this,2805,915,2805,915, 50, 50, 'caja');
+        box4.addPlayerCollide(this, playerShape);
+        box4.addResetCollide(this, spikesUp);
+        box4.addResetCollide(this, spikesDown);
+
+        portal2.addCollide(this, box4.getBox());
 
 
 
