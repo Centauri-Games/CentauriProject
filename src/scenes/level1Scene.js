@@ -164,7 +164,6 @@ class level1Scene extends Phaser.Scene{
         spd5.addPlayerCollide(this, playerShape2);
 
         var spl6 = new StaticPlatform(this, 3200, 500, 'plataforma');   //9
-        spl6.rotate(Math.PI);
         spl6.addPlayerCollide(this, playerShape);
 
         var spd6 = new StaticPlatform(this, 3200, 500 + displaceY, 'plataforma');
@@ -178,7 +177,7 @@ class level1Scene extends Phaser.Scene{
         spikesUp.setAlpha(0);
         spikesUp.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
 
-        var spikesDown = new Spike(this, 2000, 1360+displaceY, 3800, 100, 0xff0000, hp);
+        var spikesDown = new Spike(this, 2000, 1380+displaceY, 3800, 100, 0xff0000, hp);
         spikesDown.setAlpha(0);
         spikesDown.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 

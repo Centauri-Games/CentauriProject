@@ -19,7 +19,7 @@ class level2Scene extends Phaser.Scene{
         bg.setScrollFactor(0);
 
         var iniXL = 300;
-        var iniYL = 200;
+        var iniYL = 1000;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         var iniXS = 300;
         var iniYS = 2300;
@@ -42,7 +42,7 @@ class level2Scene extends Phaser.Scene{
 
         ground.setCollision([29,30]);
         ground2.setCollision([58, 3221225530]);
-        walls.setCollision([37,38,44,45]);
+        walls.setCollision([37,38,45]);
 
         this.physics.add.collider(ground2, playerShape);
         this.physics.add.collider(ground2, playerShape2);
@@ -70,11 +70,16 @@ class level2Scene extends Phaser.Scene{
         cameraMain.setBounds(0,0,4032,1440);
         camera2.setBounds(0,1440,4032, 1440);
 
+        //Suelo inferior
+        var floorDownl = this.add.rectangle(2000, 1440, 4000, 100, 0x000000);
+        floorDownl.setAlpha(0);
+        this.physics.add.existing(floorDownl, 1);
+        this.physics.add.collider(playerShape, floorDownl);
         //Suelo superior
-        var floorUp = this.add.rectangle(2000, 1440, 4000, 100, 0x000000);
-        floorUp.setAlpha(0);
-        this.physics.add.existing(floorUp, 1);
-        this.physics.add.collider(playerShape, floorUp);
+        var floorUpl = this.add.rectangle(2000, 527, 4000, 100, 0x000000);
+        floorUpl.setAlpha(0);
+        this.physics.add.existing(floorUpl, 1);
+        this.physics.add.collider(playerShape, floorUpl);
         //this.physics.add.collider(playerShape2, limit);
         //LÍMITES JUGADORES
         /*
@@ -84,68 +89,71 @@ class level2Scene extends Phaser.Scene{
         this.physics.add.collider(playerShape, limit2);*/
 
         //PLATAFORMAS
-        var sp = new StaticPlatform(this, 500, 1800, 'plataforma');
+        var sp = new StaticPlatform(this, 600, 2600, 'plataforma');
         sp.addPlayerCollide(this, playerShape2);
 
-        var sp2 = new StaticPlatform(this, 700, 900, 'plataforma');
+        var sp2 = new StaticPlatform(this, 800, 1700, 'plataforma');
         sp2.rotate(Math.PI);
         sp2.addPlayerCollide(this, playerShape2);
 
-        var sp3 = new StaticPlatform(this, 900, 2200, 'plataforma');
+        var sp3 = new StaticPlatform(this, 1000, 2750, 'plataforma');
         sp3.addPlayerCollide(this, playerShape2);
 
-        var sp4 = new StaticPlatform(this, 1200, 2200, 'plataforma');
+        var sp4 = new StaticPlatform(this, 1300, 2750, 'plataforma');
         sp4.addPlayerCollide(this, playerShape2);
 
-        var sp5 = new StaticPlatform(this, 1400, 1600, 'plataforma');
+        var sp5 = new StaticPlatform(this, 1500, 2400, 'plataforma');
         sp5.rotate(Math.PI);
         sp5.addPlayerCollide(this, playerShape2);
 
-        var sp6 = new StaticPlatform(this, 1600, 1000, 'plataforma');
+        var sp6 = new StaticPlatform(this, 1700, 1800, 'plataforma');
         sp6.rotate(Math.PI);
         sp6.scale(0.75, 0.75);
         sp6.addPlayerCollide(this, playerShape2);
 
-        var sp7 = new StaticPlatform(this, 1800, 1900, 'plataforma');
+        var sp7 = new StaticPlatform(this, 1900, 2700, 'plataforma');
         sp7.scale(0.75, 0.75);
         sp7.addPlayerCollide(this, playerShape2);
 
-        var sp8 = new StaticPlatform(this, 2000, 1000, 'plataforma');
+        var sp8 = new StaticPlatform(this, 2100, 1800, 'plataforma');
         sp8.rotate(Math.PI);
         sp8.scale(0.75, 0.75);
         sp8.addPlayerCollide(this, playerShape2);
 
-        var sp9 = new StaticPlatform(this, 2200, 1900, 'plataforma');
+        var sp9 = new StaticPlatform(this, 2300, 2700, 'plataforma');
         sp9.scale(0.75, 0.75);
         sp9.addPlayerCollide(this, playerShape2);
 
-        var sp10 = new StaticPlatform(this, 2400, 2100, 'plataforma');
+        var sp10 = new StaticPlatform(this, 2600, 2750, 'plataforma');
         sp10.addPlayerCollide(this, playerShape2);
 
-        var sp11 = new StaticPlatform(this, 2600, 900, 'plataforma');
+        var sp11 = new StaticPlatform(this, 2800, 1700, 'plataforma');
         sp11.rotate(Math.PI);
         sp11.scale(0.75, 0.75);
         sp11.addPlayerCollide(this, playerShape2);
 
-        //VIDA + PINCHOS
+        //VIDA
         var hp = new Life(this, this.English, playerShape, playerShape2);
 
         //PINCHOS
-        /*
-        var spikesupd = new Spike(this, 1600, 775, 3000, 100, 0xff0000, hp);
+        var spikesupd = new Spike(this, 2000, 1560, 4000, 100, 0xff0000, hp);
+        spikesupd.setAlpha(0);
         spikesupd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
-        var spikesdownd = new Spike(this, 1600, 2500, 3000, 100, 0xff0000, hp);
+        var spikesdownd = new Spike(this, 2000, 2840, 4000, 100, 0xff0000, hp);
+        spikesdownd.setAlpha(0);
         spikesdownd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
-        var spikesupl = new Spike(this, 1750, 50, 100, 25, 0xff0000, hp);
-        spikesupl.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+        var spikesupl = new Spike(this, 1925, 600, 100, 100, 0xff0000, hp);
+        spikesupl.setAlpha(0);
+        spikesupl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
 
-        var spikesdownl = new Spike(this, 1750, 650, 100, 25, 0xff0000, hp);
-        spikesdownl.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);*/
+        var spikesdownl = new Spike(this, 2125, 1400, 100, 100, 0xff0000, hp);
+        spikesdownl.setAlpha(0);
+        spikesdownl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
 
         //CAMBIO DE GRAVEDAD
-        var gravity = new GravitySwitch(this, 2000, 625, 1500, 75, 50, 50, 0x00ff00, 0x0000ff);
+        var gravity = new GravitySwitch(this, 2500, 1400, 1700, 600, 50, 50, 0x00ff00, 0x0000ff);
         gravity.addTrigger(this, playerShape, playerPhysics, playerPhysics2);
 
         //CONTROL Y MOVIMIENTO
