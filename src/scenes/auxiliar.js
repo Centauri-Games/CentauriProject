@@ -44,7 +44,7 @@ class MovingPlatform{
         this.movingPlatform.setAlpha(value);
     }
 
-    setMovement(scene, displaceX, displaceY, playerPhysics){   //Set movement - Basic linear movement
+    setMovement(scene, displaceX, displaceY){   //Set movement - Basic linear movement
         scene.tweens.timeline({
             targets: this.movingPlatformPhysics.body.velocity,
             loop: -1,
