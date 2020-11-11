@@ -177,9 +177,17 @@ class level1Scene extends Phaser.Scene{
         spikesUp.setAlpha(0);
         spikesUp.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
 
+        var spikesUpR = new Spike(this, 3160, 92, 800, 100, 0xff0000, hp);
+        spikesUpR.setAlpha(0);
+        spikesUpR.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
         var spikesDown = new Spike(this, 2000, 1380+displaceY, 3800, 100, 0xff0000, hp);
         spikesDown.setAlpha(0);
         spikesDown.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        var spikesDownR = new Spike(this, 3160, 92+displaceY, 800, 100, 0xff0000, hp);
+        spikesDownR.setAlpha(0);
+        spikesDownR.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');

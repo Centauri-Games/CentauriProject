@@ -4,6 +4,15 @@ class level2Scene extends Phaser.Scene{
     }
 
     preload(){
+        this.load.spritesheet('greenButton', 'assets/sprites/botonVerde.png', {
+            frameWidth: 59,
+            frameHeight: 150
+        });
+        this.load.spritesheet('redButton', 'assets/sprites/botonRojo.png', {
+            frameWidth: 59,
+            frameHeight: 150
+        });
+
         this.load.image('bg', 'assets/backgrounds/space.png');
 
         this.load.image('plataforma', 'assets/sprites/plataforma.png');
@@ -37,7 +46,7 @@ class level2Scene extends Phaser.Scene{
         var ground = this.map.createStaticLayer('Suelo',tileset,0,0);
         var ground2 = this.map.createStaticLayer('Suelo2',tileset,0,0);
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
-        var spikes = this.map.createStaticLayer('Pinchos',tileset,0,0);
+        this.map.createStaticLayer('Pinchos',tileset,0,0);
 
 
         ground.setCollision([29,30]);
@@ -144,7 +153,7 @@ class level2Scene extends Phaser.Scene{
         spikesdownd.setAlpha(0);
         spikesdownd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
-        var spikesupl = new Spike(this, 1925, 600, 100, 100, 0xff0000, hp);
+        var spikesupl = new Spike(this, 1925, 575, 100, 25, 0xff0000, hp);
         spikesupl.setAlpha(0);
         spikesupl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
 
@@ -153,7 +162,7 @@ class level2Scene extends Phaser.Scene{
         spikesdownl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
 
         //CAMBIO DE GRAVEDAD
-        var gravity = new GravitySwitch(this, 2500, 1400, 1700, 600, 50, 50, 0x00ff00, 0x0000ff);
+        var gravity = new GravitySwitch(this, 2500, 1440, 1700, 560, 'greenButton', 'redButton');
         gravity.addTrigger(this, playerShape, playerPhysics, playerPhysics2);
 
         //CONTROL Y MOVIMIENTO

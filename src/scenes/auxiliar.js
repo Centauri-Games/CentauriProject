@@ -163,28 +163,53 @@ class Mirror{
 }
 
 class GravitySwitch{
-
-    constructor(scene, onX, onY, offX, offY, sizeX, sizeY, color, color2){
-
+    constructor(scene, onX, onY, offX, offY, nameOn, nameOff){
         this.upsideDown = false;
-        this.switchOn = scene.add.rectangle(onX, onY, sizeX, sizeY, color);
+
+        this.switchOn = scene.add.sprite(onX, onY, nameOn);
         scene.physics.add.existing(this.switchOn, 1);
-        this.switchOff = scene.add.rectangle(offX, offY, sizeX, sizeY, color2);
+        scene.anims.create({
+            key: 'offUp',
+            frames: scene.anims.generateFrameNumbers(nameOn, {start: 0, end: 0}),
+            frameRate: 10,
+            repeat: 0
+        });
+        scene.anims.create({
+            key: 'onUp',
+            frames: scene.anims.generateFrameNumbers(nameOn, {start: 0, end: 2}),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        this.switchOff = scene.add.sprite(offX, offY, nameOff);
         scene.physics.add.existing(this.switchOff, 1);
+        this.switchOff.setRotation(Math.PI);
+        scene.anims.create({
+            key: 'offDown',
+            frames: scene.anims.generateFrameNumbers(nameOff, {start: 0, end: 0}),
+            frameRate: 10,
+            repeat: 0
+        });
+        scene.anims.create({
+            key: 'onDown',
+            frames: scene.anims.generateFrameNumbers(nameOff, {start: 0, end: 2}),
+            frameRate: 10,
+            repeat: 0
+        });
     }
 
     addTrigger(scene, playerShape, playerPhysics, playerPhysics2){
         scene.physics.add.collider(playerShape, this.switchOn, function(){
-            this.switchOn.setFillStyle(0x0000ff, 1);
-            this.switchOff.setFillStyle(0x00ff00, 1);
+            this.switchOn.anims.play('onUp', false);
+            this.switchOff.anims.play('offDown', false);
             this.upsideDown = true;
             playerPhysics.body.setGravityY(-400);
             playerPhysics2.body.setGravityY(-400);
         }, null, this);
 
         scene.physics.add.collider(playerShape, this.switchOff, function(){
-            this.switchOn.setFillStyle(0x00ff00, 1);
-            this.switchOff.setFillStyle(0x0000ff, 1);
+            this.switchOff.anims.play('onDown', false);
+            this.switchOn.anims.play('offUp', false);
             this.upsideDown = false;
             playerPhysics.body.setGravityY(0);
             playerPhysics2.body.setGravityY(0);
