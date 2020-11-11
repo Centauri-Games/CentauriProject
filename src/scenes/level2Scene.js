@@ -4,34 +4,59 @@ class level2Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/factory.png');
+        this.load.image('bg', 'assets/backgrounds/space.png');
 
         this.load.image('plataforma', 'assets/sprites/plataforma.png');
         this.load.image('andamio', 'assets/sprites/andamio.png');
         this.load.image('light', 'assets/players/light.png');
         this.load.image('shadow', 'assets/players/shadow.png');
+
+        this.load.image('tiles', 'assets/tileset/Tilemap.png')
+        this.load.tilemapTiledJSON('map','assets/levels/level2.json');
     }
     create(){
-        this.add.sprite(960,540,'bg');
-        var iniXL = 200;
+        var bg = this.add.sprite(960,540,'bg');
+        bg.setScrollFactor(0);
+
+        var iniXL = 300;
         var iniYL = 200;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
-        var iniXS = 200;
-        var iniYS = 1200;
+        var iniXS = 300;
+        var iniYS = 2300;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
 
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
 
+        playerShape.setDepth(10);
+        playerShape2.setDepth(10);
+
+        this.map = this.add.tilemap('map');
+        var tileset = this.map.addTilesetImage('tileset', 'tiles');
+
+        var ground = this.map.createStaticLayer('Suelo',tileset,0,0);
+        var ground2 = this.map.createStaticLayer('Suelo2',tileset,0,0);
+        var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
+        var spikes = this.map.createStaticLayer('Pinchos',tileset,0,0);
+
+
+        ground.setCollision([29,30]);
+        ground2.setCollision([58, 3221225530]);
+        walls.setCollision([37,38,44,45]);
+
+        this.physics.add.collider(ground2, playerShape);
+        this.physics.add.collider(ground2, playerShape2);
+        this.physics.add.collider(walls, playerShape);
+        this.physics.add.collider(walls, playerShape2);
+
+        //FALTA PONER EL COLLIDER DE LAS SPIKES Y CAMBIAR PINCHOS Y PLATAFORMAS//
+
         //ANDAMIOS
-        var andl = new Scaffold(this, 200, 500, 'andamio', 280, 50, 20, 50);
-        andl.addCollide(this, playerShape);
+        var andd = new Scaffold(this, 300, 2570, 'andamio', 350, 80, 20, 80);
+        andd.addCollide(this, playerShape2);    //Inicio inferior
 
-        var andd = new Scaffold(this, 200, 1500, 'andamio', 280, 50, 20, 50);
-        andd.addCollide(this, playerShape2);
-
-        var andd2 = new Scaffold(this, 2900, 1500, 'andamio', 280, 50, 20, 50);
-        andd2.addCollide(this, playerShape2);
+        var andd2 = new Scaffold(this, 3750, 2570, 'andamio', 350, 80, 20, 80);
+        andd2.addCollide(this, playerShape2);   //Final inferior
 
         //CÁMARAS
         var cameraMain = this.cameras.main;
@@ -42,14 +67,21 @@ class level2Scene extends Phaser.Scene{
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
 
+        cameraMain.setBounds(0,0,4032,1440);
+        camera2.setBounds(0,1440,4032, 1440);
+
+        //Suelo superior
+        var floorUp = this.add.rectangle(2000, 1440, 4000, 100, 0x000000);
+        floorUp.setAlpha(0);
+        this.physics.add.existing(floorUp, 1);
+        this.physics.add.collider(playerShape, floorUp);
+        //this.physics.add.collider(playerShape2, limit);
         //LÍMITES JUGADORES
-        var limit = this.add.rectangle(1600, 700, 3000, 100, 0x000000);
-        this.physics.add.existing(limit, 1);
-        this.physics.add.collider(playerShape, limit);
-        this.physics.add.collider(playerShape2, limit);
+        /*
+
         var limit2 = this.add.rectangle(1600, 0, 3000, 100, 0x000000);
         this.physics.add.existing(limit2, 1);
-        this.physics.add.collider(playerShape, limit2);
+        this.physics.add.collider(playerShape, limit2);*/
 
         //PLATAFORMAS
         var sp = new StaticPlatform(this, 500, 1800, 'plataforma');
@@ -99,6 +131,7 @@ class level2Scene extends Phaser.Scene{
         var hp = new Life(this, this.English, playerShape, playerShape2);
 
         //PINCHOS
+        /*
         var spikesupd = new Spike(this, 1600, 775, 3000, 100, 0xff0000, hp);
         spikesupd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
@@ -109,7 +142,7 @@ class level2Scene extends Phaser.Scene{
         spikesupl.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         var spikesdownl = new Spike(this, 1750, 650, 100, 25, 0xff0000, hp);
-        spikesdownl.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+        spikesdownl.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);*/
 
         //CAMBIO DE GRAVEDAD
         var gravity = new GravitySwitch(this, 2000, 625, 1500, 75, 50, 50, 0x00ff00, 0x0000ff);
