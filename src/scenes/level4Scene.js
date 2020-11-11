@@ -4,7 +4,7 @@ class level4Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/factory.png');
+        this.load.image('bg', 'assets/backgrounds/space.png');
     }
     create(){
         var nextLevel = this.add.zone(1970,0,10,1920);
