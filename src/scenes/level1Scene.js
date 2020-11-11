@@ -248,11 +248,23 @@ class level1Scene extends Phaser.Scene{
             if (playerProta){
                 playerPhysics.body.setVelocityX(100);
                 playerShape.flipX = false;
-                playerShape.anims.play('runL', true);
+                if ((playerPhysics.body.velocity.y < 0 && !gravity.getUpsideDown()) || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down && !gravity.getUpsideDown())){
+                    playerShape.anims.play('jumpL', false);
+                } else if ((playerPhysics.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics.body.velocity.y < 0 && !playerPhysics.body.touching.up && gravity.getUpsideDown())){
+                    playerShape.anims.play('jumpL', false);
+                } else {
+                    playerShape.anims.play('runL', true);
+                }
             } else {
                 playerPhysics2.body.setVelocityX(100);
                 playerShape2.flipX = false;
-                playerShape2.anims.play('runS', true);
+                if ((playerPhysics2.body.velocity.y < 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down && !gravity.getUpsideDown())){
+                    playerShape2.anims.play('jumpS', false);
+                } else if ((playerPhysics2.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y < 0 && !playerPhysics2.body.touching.up && gravity.getUpsideDown())){
+                    playerShape2.anims.play('jumpS', false);
+                } else {
+                    playerShape2.anims.play('runS', true);
+                }
             }
         });
 
@@ -261,24 +273,44 @@ class level1Scene extends Phaser.Scene{
             if (playerProta){
                 playerPhysics.body.setVelocityX(-100);
                 playerShape.flipX = true;
-                playerShape.anims.play('runL', true);
+                if ((playerPhysics.body.velocity.y < 0 && !gravity.getUpsideDown()) || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down && !gravity.getUpsideDown())){
+                    playerShape.anims.play('jumpL', false);
+                } else if ((playerPhysics.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics.body.velocity.y < 0 && !playerPhysics.body.touching.up && gravity.getUpsideDown())){
+                    playerShape.anims.play('jumpL', false);
+                } else {
+                    playerShape.anims.play('runL', true);
+                }
             } else {
                 playerPhysics2.body.setVelocityX(-100);
                 playerShape2.flipX = true;
-                playerShape2.anims.play('runS', true);
+                if ((playerPhysics2.body.velocity.y < 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down && !gravity.getUpsideDown())){
+                    playerShape2.anims.play('jumpS', false);
+                } else if ((playerPhysics2.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y < 0 && !playerPhysics2.body.touching.up && gravity.getUpsideDown())){
+                    playerShape2.anims.play('jumpS', false);
+                } else {
+                    playerShape2.anims.play('runS', true);
+                }
             }
         });
 
         keyMovement.W.on('down', function(e) {
             pressedW = true;
             if (playerProta){
-                if (playerPhysics.body.touching.down){
+                if (playerPhysics.body.touching.down && !gravity.getUpsideDown()){
                     playerPhysics.body.setVelocityY(-200);
                     playerShape.anims.play('jumpL', false);
                 }
+                if (playerPhysics.body.touching.up && gravity.getUpsideDown()){
+                    playerPhysics.body.setVelocityY(200);
+                    playerShape.anims.play('jumpL', false);
+                }
             } else {
-                if (playerPhysics2.body.touching.down){
+                if (playerPhysics2.body.touching.down && !gravity.getUpsideDown()){
                     playerPhysics2.body.setVelocityY(-200);
+                    playerShape2.anims.play('jumpS', false);
+                }
+                if (playerPhysics2.body.touching.up && gravity.getUpsideDown()){
+                    playerPhysics2.body.setVelocityY(200);
                     playerShape2.anims.play('jumpS', false);
                 }
             }
@@ -297,7 +329,13 @@ class level1Scene extends Phaser.Scene{
                 } else {
                     playerPhysics.body.setVelocityX(-100);
                     playerShape.flipX = true;
-                    playerShape.anims.play('runL', true);
+                    if ((playerPhysics.body.velocity.y < 0 && !gravity.getUpsideDown()) || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down && !gravity.getUpsideDown())){
+                        playerShape.anims.play('jumpL', false);
+                    } else if ((playerPhysics.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics.body.velocity.y < 0 && !playerPhysics.body.touching.up && gravity.getUpsideDown())){
+                        playerShape.anims.play('jumpL', false);
+                    } else {
+                        playerShape.anims.play('runL', true);
+                    }
                 }
             } else {
                 if (!pressedA){
@@ -306,7 +344,13 @@ class level1Scene extends Phaser.Scene{
                 } else {
                     playerPhysics2.body.setVelocityX(-100);
                     playerShape2.flipX = true;
-                    playerShape2.anims.play('runS', true);
+                    if ((playerPhysics2.body.velocity.y < 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down && !gravity.getUpsideDown())){
+                        playerShape2.anims.play('jumpS', false);
+                    } else if ((playerPhysics2.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y < 0 && !playerPhysics2.body.touching.up && gravity.getUpsideDown())){
+                        playerShape2.anims.play('jumpS', false);
+                    } else {
+                        playerShape2.anims.play('runS', true);
+                    }
                 }
             }
         });
@@ -320,7 +364,13 @@ class level1Scene extends Phaser.Scene{
                 } else {
                     playerPhysics.body.setVelocityX(100);
                     playerShape.flipX = false;
-                    playerShape.anims.play('runL', true);
+                    if ((playerPhysics.body.velocity.y < 0 && !gravity.getUpsideDown()) || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down && !gravity.getUpsideDown())){
+                        playerShape.anims.play('jumpL', false);
+                    } else if ((playerPhysics.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics.body.velocity.y < 0 && !playerPhysics.body.touching.up && gravity.getUpsideDown())){
+                        playerShape.anims.play('jumpL', false);
+                    } else {
+                        playerShape.anims.play('runL', true);
+                    }
                 }
             } else {
                 if (!pressedD) {
@@ -329,7 +379,13 @@ class level1Scene extends Phaser.Scene{
                 } else {
                     playerPhysics2.body.setVelocityX(-100);
                     playerShape2.flipX = false;
-                    playerShape2.anims.play('runS', true);
+                    if ((playerPhysics2.body.velocity.y < 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down && !gravity.getUpsideDown())){
+                        playerShape2.anims.play('jumpS', false);
+                    } else if ((playerPhysics2.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y < 0 && !playerPhysics2.body.touching.up && gravity.getUpsideDown())){
+                        playerShape2.anims.play('jumpS', false);
+                    } else {
+                        playerShape2.anims.play('runS', true);
+                    }
                 }
             }
         });
