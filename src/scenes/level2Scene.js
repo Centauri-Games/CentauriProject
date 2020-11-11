@@ -15,7 +15,7 @@ class level2Scene extends Phaser.Scene{
 
         this.load.image('bg', 'assets/backgrounds/space.png');
 
-        this.load.image('plataforma', 'assets/sprites/plataforma.png');
+        this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
         this.load.image('andamio', 'assets/sprites/andamio.png');
 
         this.load.spritesheet('light', 'assets/players/steps_light.png', {
