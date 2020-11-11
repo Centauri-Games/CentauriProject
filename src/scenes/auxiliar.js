@@ -343,6 +343,14 @@ class Teleport{
         }, null, this);
     }
 
+    rotateEnter(angle){
+        this.tpEnter.setRotation(angle);
+    }
+
+    rotateExit(angle){
+        this.tpExit.setRotation(angle);
+    }
+
     setScale(factorX, factorY){
         this.tpEnter.setScale(factorX, factorY);
         this.tpPhysics.setScale(factorX, factorY);
