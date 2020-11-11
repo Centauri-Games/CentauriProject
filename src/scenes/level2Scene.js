@@ -177,41 +177,39 @@ class level2Scene extends Phaser.Scene{
         sp2.rotate(Math.PI);
         sp2.addPlayerCollide(this, playerShape2);
 
-        var sp3 = new StaticPlatform(this, 1000, 2750, 'plataforma');
+        var sp3 = new StaticPlatform(this, 1100, 2750, 'plataforma');
         sp3.addPlayerCollide(this, playerShape2);
 
-        var sp4 = new StaticPlatform(this, 1300, 2750, 'plataforma');
+        var sp4 = new StaticPlatform(this, 1400, 2750, 'plataforma');
         sp4.addPlayerCollide(this, playerShape2);
 
-        var sp5 = new StaticPlatform(this, 1500, 2400, 'plataforma');
+        var sp5 = new StaticPlatform(this, 1600, 2400, 'plataforma');
         sp5.rotate(Math.PI);
         sp5.addPlayerCollide(this, playerShape2);
 
-        var sp6 = new StaticPlatform(this, 1700, 1800, 'plataforma');
+        var sp6 = new StaticPlatform(this, 1800, 1800, 'plataforma');
         sp6.rotate(Math.PI);
-        sp6.scale(0.75, 0.75);
         sp6.addPlayerCollide(this, playerShape2);
 
-        var sp7 = new StaticPlatform(this, 1900, 2700, 'plataforma');
-        sp7.scale(0.75, 0.75);
+        var sp7 = new StaticPlatform(this, 2000, 2700, 'plataforma');
         sp7.addPlayerCollide(this, playerShape2);
 
-        var sp8 = new StaticPlatform(this, 2100, 1800, 'plataforma');
+        var sp8 = new StaticPlatform(this, 2200, 1800, 'plataforma');
         sp8.rotate(Math.PI);
-        sp8.scale(0.75, 0.75);
         sp8.addPlayerCollide(this, playerShape2);
 
-        var sp9 = new StaticPlatform(this, 2300, 2700, 'plataforma');
-        sp9.scale(0.75, 0.75);
+        var sp9 = new StaticPlatform(this, 2400, 2700, 'plataforma');
         sp9.addPlayerCollide(this, playerShape2);
 
-        var sp10 = new StaticPlatform(this, 2600, 2750, 'plataforma');
+        var sp10 = new StaticPlatform(this, 2700, 2750, 'plataforma');
         sp10.addPlayerCollide(this, playerShape2);
 
-        var sp11 = new StaticPlatform(this, 2800, 1700, 'plataforma');
+        var sp11 = new StaticPlatform(this, 2900, 1700, 'plataforma');
         sp11.rotate(Math.PI);
-        sp11.scale(0.75, 0.75);
         sp11.addPlayerCollide(this, playerShape2);
+
+        var sp12 = new StaticPlatform(this, 3250, 2200, 'plataforma');
+        sp12.addPlayerCollide(this, playerShape2);
 
         //VIDA
         var hp = new Life(this, this.English, playerShape, playerShape2);
@@ -225,7 +223,7 @@ class level2Scene extends Phaser.Scene{
         spikesdownd.setAlpha(0);
         spikesdownd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
-        var spikesupl = new Spike(this, 1900, 550, 100, 25, 0xff0000, hp);
+        var spikesupl = new Spike(this, 1970, 580, 100, 50, 0xff0000, hp);
         spikesupl.setAlpha(0);
         spikesupl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
 
@@ -253,11 +251,23 @@ class level2Scene extends Phaser.Scene{
             if (playerProta){
                 playerPhysics.body.setVelocityX(100);
                 playerShape.flipX = false;
-                playerShape.anims.play('runL', true);
+                if ((playerPhysics.body.velocity.y < 0 && !gravity.getUpsideDown()) || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down && !gravity.getUpsideDown())){
+                    playerShape.anims.play('jumpL', false);
+                } else if ((playerPhysics.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics.body.velocity.y < 0 && !playerPhysics.body.touching.up && gravity.getUpsideDown())){
+                    playerShape.anims.play('jumpL', false);
+                } else {
+                    playerShape.anims.play('runL', true);
+                }
             } else {
                 playerPhysics2.body.setVelocityX(100);
                 playerShape2.flipX = false;
-                playerShape2.anims.play('runS', true);
+                if ((playerPhysics2.body.velocity.y < 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down && !gravity.getUpsideDown())){
+                    playerShape2.anims.play('jumpS', false);
+                } else if ((playerPhysics2.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y < 0 && !playerPhysics2.body.touching.up && gravity.getUpsideDown())){
+                    playerShape2.anims.play('jumpS', false);
+                } else {
+                    playerShape2.anims.play('runS', true);
+                }
             }
         });
 
@@ -266,11 +276,23 @@ class level2Scene extends Phaser.Scene{
             if (playerProta){
                 playerPhysics.body.setVelocityX(-100);
                 playerShape.flipX = true;
-                playerShape.anims.play('runL', true);
+                if ((playerPhysics.body.velocity.y < 0 && !gravity.getUpsideDown()) || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down && !gravity.getUpsideDown())){
+                    playerShape.anims.play('jumpL', false);
+                } else if ((playerPhysics.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics.body.velocity.y < 0 && !playerPhysics.body.touching.up && gravity.getUpsideDown())){
+                    playerShape.anims.play('jumpL', false);
+                } else {
+                    playerShape.anims.play('runL', true);
+                }
             } else {
                 playerPhysics2.body.setVelocityX(-100);
                 playerShape2.flipX = true;
-                playerShape2.anims.play('runS', true);
+                if ((playerPhysics2.body.velocity.y < 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down && !gravity.getUpsideDown())){
+                    playerShape2.anims.play('jumpS', false);
+                } else if ((playerPhysics2.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y < 0 && !playerPhysics2.body.touching.up && gravity.getUpsideDown())){
+                    playerShape2.anims.play('jumpS', false);
+                } else {
+                    playerShape2.anims.play('runS', true);
+                }
             }
         });
 
@@ -310,7 +332,13 @@ class level2Scene extends Phaser.Scene{
                 } else {
                     playerPhysics.body.setVelocityX(-100);
                     playerShape.flipX = true;
-                    playerShape.anims.play('runL', true);
+                    if ((playerPhysics.body.velocity.y < 0 && !gravity.getUpsideDown()) || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down && !gravity.getUpsideDown())){
+                        playerShape.anims.play('jumpL', false);
+                    } else if ((playerPhysics.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics.body.velocity.y < 0 && !playerPhysics.body.touching.up && gravity.getUpsideDown())){
+                        playerShape.anims.play('jumpL', false);
+                    } else {
+                        playerShape.anims.play('runL', true);
+                    }
                 }
             } else {
                 if (!pressedA){
@@ -319,7 +347,13 @@ class level2Scene extends Phaser.Scene{
                 } else {
                     playerPhysics2.body.setVelocityX(-100);
                     playerShape2.flipX = true;
-                    playerShape2.anims.play('runS', true);
+                    if ((playerPhysics2.body.velocity.y < 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down && !gravity.getUpsideDown())){
+                        playerShape2.anims.play('jumpS', false);
+                    } else if ((playerPhysics2.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y < 0 && !playerPhysics2.body.touching.up && gravity.getUpsideDown())){
+                        playerShape2.anims.play('jumpS', false);
+                    } else {
+                        playerShape2.anims.play('runS', true);
+                    }
                 }
             }
         });
@@ -333,7 +367,13 @@ class level2Scene extends Phaser.Scene{
                 } else {
                     playerPhysics.body.setVelocityX(100);
                     playerShape.flipX = false;
-                    playerShape.anims.play('runL', true);
+                    if ((playerPhysics.body.velocity.y < 0 && !gravity.getUpsideDown()) || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down && !gravity.getUpsideDown())){
+                        playerShape.anims.play('jumpL', false);
+                    } else if ((playerPhysics.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics.body.velocity.y < 0 && !playerPhysics.body.touching.up && gravity.getUpsideDown())){
+                        playerShape.anims.play('jumpL', false);
+                    } else {
+                        playerShape.anims.play('runL', true);
+                    }
                 }
             } else {
                 if (!pressedD) {
@@ -342,7 +382,13 @@ class level2Scene extends Phaser.Scene{
                 } else {
                     playerPhysics2.body.setVelocityX(-100);
                     playerShape2.flipX = false;
-                    playerShape2.anims.play('runS', true);
+                    if ((playerPhysics2.body.velocity.y < 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down && !gravity.getUpsideDown())){
+                        playerShape2.anims.play('jumpS', false);
+                    } else if ((playerPhysics2.body.velocity.y > 0 && gravity.getUpsideDown()) || (playerPhysics2.body.velocity.y < 0 && !playerPhysics2.body.touching.up && gravity.getUpsideDown())){
+                        playerShape2.anims.play('jumpS', false);
+                    } else {
+                        playerShape2.anims.play('runS', true);
+                    }
                 }
             }
         });
