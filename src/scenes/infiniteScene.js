@@ -32,8 +32,15 @@ class infiniteScene extends Phaser.Scene {
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
         this.load.image('portalR', 'assets/sprites/portalRojo.png');
         this.load.image('andamio', 'assets/sprites/andamio.png');
-        this.load.image('light', 'assets/players/light.png');
-        this.load.image('shadow', 'assets/players/shadow.png');
+
+        this.load.spritesheet('light', 'assets/players/steps_light.png', {
+            frameWidth: 65,
+            frameHeight: 80
+        });
+        this.load.spritesheet('shadow', 'assets/players/steps_shadow.png', {
+            frameWidth: 65,
+            frameHeight: 80
+        });
 
     }
 
@@ -45,6 +52,42 @@ class infiniteScene extends Phaser.Scene {
         var iniY = 500;
         var playerShape = this.add.sprite(iniX, iniY, 'light');
         var playerShape2 = this.add.sprite(iniX, iniY, 'shadow');
+
+        this.anims.create({
+            key: 'stopL',
+            frames: this.anims.generateFrameNumbers('light', {start: 0, end: 0}),
+            frameRate: 10
+        });
+        this.anims.create({
+            key: 'runL',
+            frames: this.anims.generateFrameNumbers('light', {start: 1, end: 10}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jumpL',
+            frames: this.anims.generateFrameNumbers('light', {start: 3, end: 3}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'stopS',
+            frames: this.anims.generateFrameNumbers('shadow', {start: 0, end: 0}),
+            frameRate: 10
+        });
+        this.anims.create({
+            key: 'runS',
+            frames: this.anims.generateFrameNumbers('shadow', {start: 1, end: 10}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jumpS',
+            frames: this.anims.generateFrameNumbers('shadow', {start: 3, end: 3}),
+            frameRate: 10,
+            repeat: -1
+        });
 
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
@@ -178,8 +221,12 @@ class infiniteScene extends Phaser.Scene {
             pressedD = true;
             if (playerProta){
                 playerPhysics.body.setVelocityX(100);
+                playerShape.flipX = false;
+                playerShape.anims.play('runL', true);
             } else {
                 playerPhysics2.body.setVelocityX(100);
+                playerShape2.flipX = false;
+                playerShape2.anims.play('runS', true);
             }
         });
 
@@ -187,8 +234,12 @@ class infiniteScene extends Phaser.Scene {
             pressedA = true;
             if (playerProta){
                 playerPhysics.body.setVelocityX(-100);
+                playerShape.flipX = true;
+                playerShape.anims.play('runL', true);
             } else {
                 playerPhysics2.body.setVelocityX(-100);
+                playerShape2.flipX = true;
+                playerShape2.anims.play('runS', true);
             }
         });
 
@@ -197,16 +248,20 @@ class infiniteScene extends Phaser.Scene {
             if (playerProta){
                 if (playerPhysics.body.touching.down && !gravity.getUpsideDown()){
                     playerPhysics.body.setVelocityY(-200);
+                    playerShape.anims.play('jumpL', false);
                 }
                 if (playerPhysics.body.touching.up && gravity.getUpsideDown()){
                     playerPhysics.body.setVelocityY(200);
+                    playerShape.anims.play('jumpL', false);
                 }
             } else {
                 if (playerPhysics2.body.touching.down && !gravity.getUpsideDown()){
                     playerPhysics2.body.setVelocityY(-200);
+                    playerShape2.anims.play('jumpS', false);
                 }
                 if (playerPhysics2.body.touching.up && gravity.getUpsideDown()){
                     playerPhysics2.body.setVelocityY(200);
+                    playerShape2.anims.play('jumpS', false);
                 }
             }
         });
@@ -220,14 +275,20 @@ class infiniteScene extends Phaser.Scene {
             if (playerProta){
                 if (!pressedA){
                     playerPhysics.body.setVelocityX(0);
+                    playerShape.anims.play('stopL', false);
                 } else {
                     playerPhysics.body.setVelocityX(-100);
+                    playerShape.flipX = true;
+                    playerShape.anims.play('runL', true);
                 }
             } else {
                 if (!pressedA){
                     playerPhysics2.body.setVelocityX(0);
+                    playerShape2.anims.play('stopS', false);
                 } else {
                     playerPhysics2.body.setVelocityX(-100);
+                    playerShape2.flipX = true;
+                    playerShape2.anims.play('runS', true);
                 }
             }
         });
@@ -237,14 +298,20 @@ class infiniteScene extends Phaser.Scene {
             if (playerProta) {
                 if (!pressedD) {
                     playerPhysics.body.setVelocityX(0);
+                    playerShape.anims.play('stopL', false);
                 } else {
                     playerPhysics.body.setVelocityX(100);
+                    playerShape.flipX = false;
+                    playerShape.anims.play('runL', true);
                 }
             } else {
                 if (!pressedD) {
                     playerPhysics2.body.setVelocityX(0);
+                    playerShape2.anims.play('stopS', false);
                 } else {
                     playerPhysics2.body.setVelocityX(-100);
+                    playerShape2.flipX = false;
+                    playerShape2.anims.play('runS', true);
                 }
             }
         });

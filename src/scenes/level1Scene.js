@@ -12,8 +12,15 @@ class level1Scene extends Phaser.Scene{
 
         this.load.image('plataforma', 'assets/sprites/plataforma.png');
         this.load.image('andamio', 'assets/sprites/andamio.png');
-        this.load.image('light', 'assets/players/light.png');
-        this.load.image('shadow', 'assets/players/shadow.png');
+
+        this.load.spritesheet('light', 'assets/players/steps_light.png', {
+            frameWidth: 65,
+            frameHeight: 80
+        });
+        this.load.spritesheet('shadow', 'assets/players/steps_shadow.png', {
+            frameWidth: 65,
+            frameHeight: 80
+        });
 
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
         this.load.tilemapTiledJSON('map','assets/levels/level1.json');
@@ -24,10 +31,46 @@ class level1Scene extends Phaser.Scene{
         var iniYL = 875;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         playerShape.setDepth(10);
+        this.anims.create({
+            key: 'stopL',
+            frames: this.anims.generateFrameNumbers('light', {start: 0, end: 0}),
+            frameRate: 10
+        });
+        this.anims.create({
+            key: 'runL',
+            frames: this.anims.generateFrameNumbers('light', {start: 1, end: 10}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jumpL',
+            frames: this.anims.generateFrameNumbers('light', {start: 3, end: 3}),
+            frameRate: 10,
+            repeat: -1
+        });
+
         var iniXS = 300;
         var iniYS = 2300;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
         playerShape2.setDepth(10);
+        this.anims.create({
+            key: 'stopS',
+            frames: this.anims.generateFrameNumbers('shadow', {start: 0, end: 0}),
+            frameRate: 10
+        });
+        this.anims.create({
+            key: 'runS',
+            frames: this.anims.generateFrameNumbers('shadow', {start: 1, end: 10}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jumpS',
+            frames: this.anims.generateFrameNumbers('shadow', {start: 3, end: 3}),
+            frameRate: 10,
+            repeat: -1
+        });
+
 
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         //playerPhysics.body.setGravityY(-400);
@@ -204,8 +247,12 @@ class level1Scene extends Phaser.Scene{
             pressedD = true;
             if (playerProta){
                 playerPhysics.body.setVelocityX(100);
+                playerShape.flipX = false;
+                playerShape.anims.play('runL', true);
             } else {
                 playerPhysics2.body.setVelocityX(100);
+                playerShape2.flipX = false;
+                playerShape2.anims.play('runS', true);
             }
         });
 
@@ -213,8 +260,12 @@ class level1Scene extends Phaser.Scene{
             pressedA = true;
             if (playerProta){
                 playerPhysics.body.setVelocityX(-100);
+                playerShape.flipX = true;
+                playerShape.anims.play('runL', true);
             } else {
                 playerPhysics2.body.setVelocityX(-100);
+                playerShape2.flipX = true;
+                playerShape2.anims.play('runS', true);
             }
         });
 
@@ -223,10 +274,12 @@ class level1Scene extends Phaser.Scene{
             if (playerProta){
                 if (playerPhysics.body.touching.down){
                     playerPhysics.body.setVelocityY(-200);
+                    playerShape.anims.play('jumpL', false);
                 }
             } else {
                 if (playerPhysics2.body.touching.down){
                     playerPhysics2.body.setVelocityY(-200);
+                    playerShape2.anims.play('jumpS', false);
                 }
             }
         });
@@ -240,14 +293,20 @@ class level1Scene extends Phaser.Scene{
             if (playerProta){
                 if (!pressedA){
                     playerPhysics.body.setVelocityX(0);
+                    playerShape.anims.play('stopL', false);
                 } else {
                     playerPhysics.body.setVelocityX(-100);
+                    playerShape.flipX = true;
+                    playerShape.anims.play('runL', true);
                 }
             } else {
                 if (!pressedA){
                     playerPhysics2.body.setVelocityX(0);
+                    playerShape2.anims.play('stopS', false);
                 } else {
                     playerPhysics2.body.setVelocityX(-100);
+                    playerShape2.flipX = true;
+                    playerShape2.anims.play('runS', true);
                 }
             }
         });
@@ -257,14 +316,20 @@ class level1Scene extends Phaser.Scene{
             if (playerProta) {
                 if (!pressedD) {
                     playerPhysics.body.setVelocityX(0);
+                    playerShape.anims.play('stopL', false);
                 } else {
                     playerPhysics.body.setVelocityX(100);
+                    playerShape.flipX = false;
+                    playerShape.anims.play('runL', true);
                 }
             } else {
                 if (!pressedD) {
                     playerPhysics2.body.setVelocityX(0);
+                    playerShape2.anims.play('stopS', false);
                 } else {
                     playerPhysics2.body.setVelocityX(-100);
+                    playerShape2.flipX = false;
+                    playerShape2.anims.play('runS', true);
                 }
             }
         });

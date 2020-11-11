@@ -198,11 +198,13 @@ class GravitySwitch{
         });
     }
 
-    addTrigger(scene, playerShape, playerPhysics, playerPhysics2){
+    addTrigger(scene, playerShape, playerShape2, playerPhysics, playerPhysics2){
         scene.physics.add.collider(playerShape, this.switchOn, function(){
             this.switchOn.anims.play('onUp', false);
             this.switchOff.anims.play('offDown', false);
             this.upsideDown = true;
+            playerShape.flipY = true;
+            playerShape2.flipY = true;
             playerPhysics.body.setGravityY(-400);
             playerPhysics2.body.setGravityY(-400);
         }, null, this);
@@ -211,6 +213,8 @@ class GravitySwitch{
             this.switchOff.anims.play('onDown', false);
             this.switchOn.anims.play('offUp', false);
             this.upsideDown = false;
+            playerShape.flipY = false;
+            playerShape2.flipY = false;
             playerPhysics.body.setGravityY(0);
             playerPhysics2.body.setGravityY(0);
         }, null, this);
