@@ -18,8 +18,8 @@ class level1Scene extends Phaser.Scene{
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
         this.load.tilemapTiledJSON('map','assets/levels/level1.json');
     }
-
     create(){
+
         var iniXL = 300;
         var iniYL = 875;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
@@ -30,6 +30,7 @@ class level1Scene extends Phaser.Scene{
         playerShape2.setDepth(10);
 
         var playerPhysics = this.physics.add.existing(playerShape, 0);
+        //playerPhysics.body.setGravityY(-400);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
 
         this.map = this.add.tilemap('map');
@@ -39,37 +40,17 @@ class level1Scene extends Phaser.Scene{
         bg.setScrollFactor(0);
 
         var ground = this.map.createStaticLayer('Suelo',tileset,0,0);
-        this.map.createStaticLayer('Pinchos',tileset,0,0);
+        var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
+        var spikes = this.map.createStaticLayer('Pinchos',tileset,0,0);
 
-        ground.setCollision([43,44,45]);
+
+        ground.setCollision([58]);
+        walls.setCollision([37,44]);
 
         this.physics.add.collider(ground, playerShape);
         this.physics.add.collider(ground, playerShape2);
-
-        /*this.physics.add.collider(spikes, playerShape, function(){
-            if (hp.getHP() > 0){
-                hp.takeDamage();
-                playerShape.setPosition(iniXL, iniYL);
-            } else {
-                this.scene.start('gameOverScene', {english: this.English});
-                hp.resetDamage();
-                playerShape.setPosition(iniXL, iniYL);
-                playerShape2.setPosition(iniXS, iniYS);
-            }
-        }, null, this);
-
-        this.physics.add.collider(spikes, playerShape2, function(){
-            if (hp.getHP() > 0){
-                hp.takeDamage();
-                playerShape.setPosition(iniXS, iniYS);
-            } else {
-                this.scene.start('gameOverScene', {english: this.English});
-                hp.resetDamage();
-                playerShape.setPosition(iniXL, iniYL);
-                playerShape2.setPosition(iniXS, iniYS);
-            }
-        }, null, this);*/
-
+        this.physics.add.collider(walls, playerShape);
+        this.physics.add.collider(walls, playerShape2);
 
         //ANDAMIOS
         var andl = new Scaffold(this, 300, 1125, 'andamio', 350, 80, 20, 80);
@@ -196,7 +177,7 @@ class level1Scene extends Phaser.Scene{
         spikesUp.setAlpha(0);
         spikesUp.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
 
-        var spikesDown = new Spike(this, 2000, 1360+displaceY, 3800, 100, 0xff0000, hp);
+        var spikesDown = new Spike(this, 2000, 1380+displaceY, 3800, 100, 0xff0000, hp);
         spikesDown.setAlpha(0);
         spikesDown.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
