@@ -94,10 +94,12 @@ class DualDropPlatform{ //DOUBLE DROP PLATFORM
             this.dropPlatformPhysics2.body.setAllowGravity(false);
             this.dropPlatform2.setPosition(this.starting2X, this.starting2Y);
             this.dropPlatformPhysics2.body.setImmovable(true);
+            this.dropPlatformPhysics2.body.setVelocity(0, 0);
 
             this.dropPlatformPhysics1.body.setAllowGravity(false);
             this.dropPlatform1.setPosition(this.starting1X, this.starting1Y);
             this.dropPlatformPhysics1.body.setImmovable(true);
+            this.dropPlatformPhysics1.body.setVelocity(0, 0);
         }, [], this);
     }
 
