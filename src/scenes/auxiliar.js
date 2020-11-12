@@ -119,27 +119,28 @@ class DualDropPlatform{ //DOUBLE DROP PLATFORM
     addPlayerCollide(scene, playerShape, sec){   //Player collider
         scene.physics.add.collider(playerShape, this.dropPlatform1, function(){
             if(this.dropPlatformPhysics1.body.allowGravity === false) {
-                this.dropPlatformPhysics1.body.setImmovable(false);
-                this.dropPlatformPhysics1.body.setAllowGravity(true);
+                scene.time.delayedCall(1500, function(){
+                    this.dropPlatformPhysics1.body.setImmovable(false);
+                    this.dropPlatformPhysics1.body.setAllowGravity(true);
 
-                this.dropPlatformPhysics2.body.setImmovable(false);
-                this.dropPlatformPhysics2.body.setAllowGravity(true);
+                    this.dropPlatformPhysics2.body.setImmovable(false);
+                    this.dropPlatformPhysics2.body.setAllowGravity(true);
+                }, [], this);
             }
             this.resetPlatforms(scene, sec);
         }, null, this);
 
         scene.physics.add.collider(playerShape, this.dropPlatform2, function(){
             if(this.dropPlatformPhysics2.body.allowGravity === false) {
-                this.dropPlatformPhysics2.body.setImmovable(false);
-                this.dropPlatformPhysics2.body.setAllowGravity(true);
+                scene.time.delayedCall(1500, function(){
+                    this.dropPlatformPhysics2.body.setImmovable(false);
+                    this.dropPlatformPhysics2.body.setAllowGravity(true);
 
-                this.dropPlatformPhysics1.body.setImmovable(false);
-                this.dropPlatformPhysics1.body.setAllowGravity(true);
+                    this.dropPlatformPhysics1.body.setImmovable(false);
+                    this.dropPlatformPhysics1.body.setAllowGravity(true);
+                }, [], this);
             }
             this.resetPlatforms(scene, sec);
-
-
-
         }, null, this);
     }
 
