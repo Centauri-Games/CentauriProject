@@ -308,10 +308,10 @@ class Spike{
                 this.hp.takeDamage();
                 playerShape.setPosition(startX, startY);
             } else {
-                scene.scene.start('gameOverScene', {english: eng});
-                this.hp.resetDamage();
+                scene.scene.start('gameOverScene', {english: eng,level : scene.level });
+                /*this.hp.resetDamage();
                 playerShape.setPosition(startX, startY);
-                playerShape2.setPosition(startX2, startY2);
+                playerShape2.setPosition(startX2, startY2);*/
             }
         }, null, this);
     }

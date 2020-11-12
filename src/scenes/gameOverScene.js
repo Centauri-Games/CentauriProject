@@ -4,6 +4,7 @@ class gameOverScene extends Phaser.Scene{
     }
 
     init(data){
+        this.level = data.level;
         this.English = data.english;
     }
 
@@ -15,7 +16,7 @@ class gameOverScene extends Phaser.Scene{
         var gText = this.add.text(800,250,"Fin de la partida",{font : "60px"});
         var rText = this.add.text(960,360,"Reintentar",{font : "48px"}).setInteractive().on("pointerup",()=>{
             
-            this.scene.start("infiniteScene", {english: this.English});
+            this.scene.start(this.level, {english: this.English});
         });
         var bText = this.add.text(960,720,"Volver al menú",{font : "48px"}).setInteractive().on("pointerup",()=>{
             

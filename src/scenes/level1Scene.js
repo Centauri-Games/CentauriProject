@@ -4,6 +4,7 @@ class level1Scene extends Phaser.Scene{
     }
 
     init(data){
+        this.level = "level1Scene";
         this.English = data.english;
     }
 

@@ -3,6 +3,11 @@ class level3Scene extends Phaser.Scene{
         super("level3Scene");
     }
 
+    init(data){
+        this.level = "level3Scene";
+        this.English = data.english;
+    }
+
     preload(){
         this.load.image('bg', 'assets/backgrounds/factory.png');
         this.load.image('plataforma', 'assets/sprites/plataforma.png');
