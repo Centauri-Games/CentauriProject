@@ -3,6 +3,11 @@ class level2Scene extends Phaser.Scene{
         super("level2Scene");
     }
 
+    init(data){
+        this.level = "level2Scene";
+        this.English = data.english;
+    }
+
     preload(){
         this.load.spritesheet('greenButton', 'assets/sprites/botonVerde.png', {
             frameWidth: 59,

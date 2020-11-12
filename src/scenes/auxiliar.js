@@ -94,10 +94,12 @@ class DualDropPlatform{ //DOUBLE DROP PLATFORM
             this.dropPlatformPhysics2.body.setAllowGravity(false);
             this.dropPlatform2.setPosition(this.starting2X, this.starting2Y);
             this.dropPlatformPhysics2.body.setImmovable(true);
+            this.dropPlatformPhysics2.body.setVelocity(0, 0);
 
             this.dropPlatformPhysics1.body.setAllowGravity(false);
             this.dropPlatform1.setPosition(this.starting1X, this.starting1Y);
             this.dropPlatformPhysics1.body.setImmovable(true);
+            this.dropPlatformPhysics1.body.setVelocity(0, 0);
         }, [], this);
     }
 
@@ -308,10 +310,10 @@ class Spike{
                 this.hp.takeDamage();
                 playerShape.setPosition(startX, startY);
             } else {
-                scene.scene.start('gameOverScene', {english: eng});
-                this.hp.resetDamage();
+                scene.scene.start('gameOverScene', {english: eng,level : scene.level });
+                /*this.hp.resetDamage();
                 playerShape.setPosition(startX, startY);
-                playerShape2.setPosition(startX2, startY2);
+                playerShape2.setPosition(startX2, startY2);*/
             }
         }, null, this);
     }

@@ -3,6 +3,11 @@ class level4Scene extends Phaser.Scene{
         super("level4Scene");
     }
 
+    init(data){
+        this.level = "level4Scene";
+        this.English = data.english;
+    }
+
     preload(){
         this.load.image('bg', 'assets/backgrounds/space.png');
 
