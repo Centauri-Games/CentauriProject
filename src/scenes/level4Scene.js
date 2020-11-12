@@ -11,6 +11,8 @@ class level4Scene extends Phaser.Scene{
     preload(){
         this.load.image('bg', 'assets/backgrounds/space.png');
 
+        this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
+
         this.load.spritesheet('light', 'assets/players/steps_light.png', {
             frameWidth: 65,
             frameHeight: 80
@@ -19,12 +21,19 @@ class level4Scene extends Phaser.Scene{
             frameWidth: 65,
             frameHeight: 80
         });
+
+        this.load.spritesheet('mirror', 'assets/sprites/espejo.png', {
+            frameWidth: 104,
+            frameHeight: 128
+        });
+
         this.load.image('andamio', 'assets/sprites/andamio.png');
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
         this.load.tilemapTiledJSON('map','assets/levels/level4.json');
     }
     create(){
         var bg = this.add.sprite(960,540,'bg');
+        bg.setDepth(-2);
         bg.setScrollFactor(0);
 
         //JUGADORES
@@ -130,7 +139,7 @@ class level4Scene extends Phaser.Scene{
         var hp = new Life(this, this.English, playerShape, playerShape2);
         var displaceY = 1445;
 
-        //SUELO y PLATAFORMAS
+        //SUELO
         //J Superior
         var floor1 = this.add.rectangle(2000, 1450, 3800, 100, 0xff0000);
         floor1.setAlpha(0);
@@ -142,9 +151,78 @@ class level4Scene extends Phaser.Scene{
         this.physics.add.existing(floor2, 1);
         this.physics.add.collider(playerShape2, floor2);
 
+        var displaceY = 1440;
+
+        //PLATAFORMAS
+        var mp1 = new MovingPlatform(this, 800, 950, 'plataforma'); //Plataforma recorrido medio
+        mp1.addPlayerCollide(this, playerShape);
+        mp1.setMovementTime(this, 330, 0, 6000);
+
+        var mp2 = new MovingPlatform(this, 600, 950, 'plataforma');
+        mp2.addPlayerCollide(this, playerShape);
+        mp2.setMovement(this, 0, 200);
+
+        var mp3 = new MovingPlatform(this, 3000, 950, 'plataforma');
+        mp3.addPlayerCollide(this, playerShape);
+        mp3.setMovement(this, 0, 200);
+
+        var mp4 = new MovingPlatform(this, 800, 950+displaceY, 'plataforma'); //Plataforma recorrido medio
+        mp4.addPlayerCollide(this, playerShape2);
+        mp4.setMovementTime(this, 330, 0, 6000);
+
+        var mp5 = new MovingPlatform(this, 600, 950+displaceY, 'plataforma');
+        mp5.addPlayerCollide(this, playerShape2);
+        mp5.setMovement(this, 0, 200);
+
+        var mp6 = new MovingPlatform(this, 3000, 950+displaceY, 'plataforma');
+        mp6.addPlayerCollide(this, playerShape2);
+        mp6.setMovement(this, 0, 200);
 
         //ESPEJOS
-        /*Rellenar*/
+
+        //var laser = this.add.sprite()
+
+        var mirror1 = new Mirror(this, 1000, 1370, 'mirror');
+        mirror1.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror1, 7);
+
+        var mirror2 = new Mirror(this, 1500, 1370, 'mirror');
+        mirror2.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror2, 5);
+
+        var mirror3 = new Mirror(this, 2000, 1370, 'mirror');
+        mirror3.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror3, 7);
+
+        var mirror4 = new Mirror(this, 2500, 1370, 'mirror');
+        mirror4.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror4, 5);
+
+        var mirror5 = new Mirror(this, 1500, 700, 'mirror');    //Techo
+        mirror5.rotate(Math.PI);
+        mirror5.mirror.setDepth(-1);
+        this.setInteractiveMirror(mirror5, 6);
+
+        //Inferiores
+        var mirror6 = new Mirror(this, 1400, 1370+displaceY, 'mirror');
+        mirror6.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror6, 7);
+
+        var mirror7 = new Mirror(this, 1900, 1050+displaceY, 'mirror');
+        mirror7.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror7, 0);
+
+        var mirror8 = new Mirror(this, 2200, 700+displaceY, 'mirror');   //Techo
+        mirror8.mirror.setDepth(-1);
+        mirror8.rotate(Math.PI);
+        this.setInteractiveMirror(mirror8, 6);
+
+        var mirror9 = new Mirror(this, 2500, 1370+displaceY, 'mirror');
+        mirror9.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror9, 5);
+
+        //this.add.line(pointer.x, pointer.y, 0, 0, 4, 0, color.color);
+
 
 
 
@@ -283,6 +361,54 @@ class level4Scene extends Phaser.Scene{
         });
     }
     update(){
-        
+
+    }
+
+    //Función para configurar espejo
+    setInteractiveMirror(mirror, correctPosition){
+        mirror.mirror.setInteractive().on('pointerup', function(){  //Ciclo del espejo
+            mirror.mirrorPosition = (mirror.mirrorPosition +1)%8;
+            console.log(mirror.mirrorPosition);
+
+            switch(mirror.mirrorPosition){
+                case 0:
+                    mirror.mirror.anims.play('pos0', false);
+                    console.log("pos 0");
+                    break;
+                case 1:
+                    mirror.mirror.anims.play('pos1', false);
+                    console.log("pos 1");
+                    break;
+                case 2:
+                    mirror.mirror.anims.play('pos2', false);
+                    console.log("pos 2");
+                    break;
+                case 3:
+                    mirror.mirror.anims.play('pos3', false);
+                    console.log("pos 3");
+                    break;
+                case 4:
+                    mirror.mirror.anims.play('pos4', false);
+                    console.log("pos 4");
+                    break;
+                case 5:
+                    mirror.mirror.anims.play('pos5', false);
+                    console.log("pos 5");
+                    break;
+                case 6:
+                    mirror.mirror.anims.play('pos6', false);
+                    console.log("pos 6");
+                    break;
+                case 7:
+                    mirror.mirror.anims.play('pos7', true);
+                    console.log("pos 7");
+                    break;
+                default:
+            }
+            if(mirror.mirrorPosition == correctPosition){
+                console.log("Posicion correcta");
+            }
+
+        });
     }
 }

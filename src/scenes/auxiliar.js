@@ -57,6 +57,19 @@ class MovingPlatform{
         });
     }
 
+    setMovementTime(scene, displaceX, displaceY, time){   //Set movement - Basic linear movement
+        scene.tweens.timeline({
+            targets: this.movingPlatformPhysics.body.velocity,
+            loop: -1,
+            tweens: [
+                { x:displaceX, y:displaceY, duration: time, ease: 'Stepped' },
+                { x:0, y:0, duration: 2000, ease: 'Stepped' },
+                { x:-displaceX, y:-displaceY, duration: time, ease: 'Stepped' },
+                { x:0, y:0, duration: 2000, ease: 'Stepped' }
+            ],
+        });
+    }
+
     rotate(angle){
         this.movingPlatform.setRotation(angle);
     }
@@ -229,6 +242,13 @@ class Mirror{
 
     getMirrorPhysics(){
         return this.mirrorPhysics;
+    }
+
+    rotate(angle){
+        this.mirror.setRotation(angle);
+    }
+    scale(sizeX, sizeY){
+        this.mirror.setScale(sizeX, sizeY);
     }
 }
 
