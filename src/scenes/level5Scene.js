@@ -135,19 +135,59 @@ class level5Scene extends Phaser.Scene{
         var displaceY = 1445;
 
         //PINCHOS
-        var spikesUp = new Spike(this, 2000, 1380, 3800, 100, 0xff0000, hp);
+        var spikesUp = new Spike(this, 2000, 1400, 3800, 100, 0xff0000, hp);
         spikesUp.setAlpha(0);
         spikesUp.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
 
-        var spikesDown = new Spike(this, 2000, 1380+displaceY, 3800, 100, 0xff0000, hp);
+        var spikesDown = new Spike(this, 2000, 1400+displaceY, 3800, 100, 0xff0000, hp);
         spikesDown.setAlpha(0);
         spikesDown.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
 
         //DROP PLATFORMS
-        /*Rellenar*/
-        var dualPlat1 = new DualDropPlatform(this, 500, 1125, 800, 1125, 'plataforma');
+        var dualPlat1 = new DualDropPlatform(this, 600, 1100, 600, 2540, 'plataforma');
         dualPlat1.addPlayerCollide(this, playerShape, 5);
+        dualPlat1.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat2 = new DualDropPlatform(this, 900, 1100, 900, 2540, 'plataforma');
+        dualPlat2.addPlayerCollide(this, playerShape, 5);
+        dualPlat2.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat3 = new DualDropPlatform(this, 1200, 1300, 1200, 2740, 'plataforma');
+        dualPlat3.addPlayerCollide(this, playerShape, 5);
+        dualPlat3.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat4 = new DualDropPlatform(this, 1500, 1250, 1500, 2690, 'plataforma');
+        dualPlat4.addPlayerCollide(this, playerShape, 5);
+        dualPlat4.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat5 = new DualDropPlatform(this, 1800, 1200, 1800, 2640, 'plataforma');
+        dualPlat5.addPlayerCollide(this, playerShape, 5);
+        dualPlat5.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat6 = new DualDropPlatform(this, 2100, 1150, 2100, 2590, 'plataforma');
+        dualPlat6.addPlayerCollide(this, playerShape, 5);
+        dualPlat6.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat7 = new DualDropPlatform(this, 2400, 1225, 2400, 2665, 'plataforma');
+        dualPlat7.addPlayerCollide(this, playerShape, 5);
+        dualPlat7.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat8 = new DualDropPlatform(this, 2700, 1200, 2700, 2640, 'plataforma');
+        dualPlat8.addPlayerCollide(this, playerShape, 5);
+        dualPlat8.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat9 = new DualDropPlatform(this, 3000, 1150, 3000, 2590, 'plataforma');
+        dualPlat9.addPlayerCollide(this, playerShape, 5);
+        dualPlat9.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat10 = new DualDropPlatform(this, 3300, 1100, 3300, 2540, 'plataforma');
+        dualPlat10.addPlayerCollide(this, playerShape, 5);
+        dualPlat10.addPlayerCollide(this, playerShape2, 5);
+
+        var dualPlat10 = new DualDropPlatform(this, 3450, 1025, 3450, 2465, 'plataforma');
+        dualPlat10.addPlayerCollide(this, playerShape, 5);
+        dualPlat10.addPlayerCollide(this, playerShape2, 5);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');

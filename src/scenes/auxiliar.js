@@ -57,6 +57,19 @@ class MovingPlatform{
         });
     }
 
+    setMovementTime(scene, displaceX, displaceY, time){   //Set movement - Basic linear movement
+        scene.tweens.timeline({
+            targets: this.movingPlatformPhysics.body.velocity,
+            loop: -1,
+            tweens: [
+                { x:displaceX, y:displaceY, duration: time, ease: 'Stepped' },
+                { x:0, y:0, duration: 2000, ease: 'Stepped' },
+                { x:-displaceX, y:-displaceY, duration: time, ease: 'Stepped' },
+                { x:0, y:0, duration: 2000, ease: 'Stepped' }
+            ],
+        });
+    }
+
     rotate(angle){
         this.movingPlatform.setRotation(angle);
     }
@@ -106,27 +119,28 @@ class DualDropPlatform{ //DOUBLE DROP PLATFORM
     addPlayerCollide(scene, playerShape, sec){   //Player collider
         scene.physics.add.collider(playerShape, this.dropPlatform1, function(){
             if(this.dropPlatformPhysics1.body.allowGravity === false) {
-                this.dropPlatformPhysics1.body.setImmovable(false);
-                this.dropPlatformPhysics1.body.setAllowGravity(true);
+                scene.time.delayedCall(1500, function(){
+                    this.dropPlatformPhysics1.body.setImmovable(false);
+                    this.dropPlatformPhysics1.body.setAllowGravity(true);
 
-                this.dropPlatformPhysics2.body.setImmovable(false);
-                this.dropPlatformPhysics2.body.setAllowGravity(true);
+                    this.dropPlatformPhysics2.body.setImmovable(false);
+                    this.dropPlatformPhysics2.body.setAllowGravity(true);
+                }, [], this);
             }
             this.resetPlatforms(scene, sec);
         }, null, this);
 
         scene.physics.add.collider(playerShape, this.dropPlatform2, function(){
             if(this.dropPlatformPhysics2.body.allowGravity === false) {
-                this.dropPlatformPhysics2.body.setImmovable(false);
-                this.dropPlatformPhysics2.body.setAllowGravity(true);
+                scene.time.delayedCall(1500, function(){
+                    this.dropPlatformPhysics2.body.setImmovable(false);
+                    this.dropPlatformPhysics2.body.setAllowGravity(true);
 
-                this.dropPlatformPhysics1.body.setImmovable(false);
-                this.dropPlatformPhysics1.body.setAllowGravity(true);
+                    this.dropPlatformPhysics1.body.setImmovable(false);
+                    this.dropPlatformPhysics1.body.setAllowGravity(true);
+                }, [], this);
             }
             this.resetPlatforms(scene, sec);
-
-
-
         }, null, this);
     }
 
@@ -162,9 +176,41 @@ class DropPlatform{
     }
 }
 
+class Door{
+    constructor(scene, posX, posY, name){
+        this.scene = scene;
+        this.door = scene.add.sprite(posX,posY, name);
+        this.door.setScale(1.25,1.25);
+        this.doorPhysics = scene.physics.add.existing(this.door, 1);
+        this.playerCollider = null;
+
+        scene.anims.create({
+            key: 'open',
+            frames: scene.anims.generateFrameNumbers(name, { start: 0, end: 5 }),
+            frameRate: 10,
+            repeat: 0
+        });
+    }
+
+    open(){
+        this.door.anims.play('open', false);
+        this.playerCollider.destroy();
+    }
+
+    addPlayerCollide(playerShape){   //Player collider
+        this.playerCollider = this.scene.physics.add.collider(playerShape,this.door);
+    }
+}
 class Mirror{
 
     constructor(scene, posX, posY, name){
+        this.active = false;
+        this.previous = null;
+        this.next = null;
+        this.correctPos = false;
+        this.objectsList = new Array(null, null);
+        this.doorList = new Array(null, null);
+        this.objectCount = 0;
         this.mirror = scene.add.sprite(posX, posY, name);
         this.mirrorPhysics = scene.physics.add.existing(this.mirror, 0);
         this.mirrorPosition = 0;
@@ -227,8 +273,83 @@ class Mirror{
         });
     }
 
+    addObject(object) {
+        if (this.objectCount < 2) {
+            this.objectsList[this.objectCount] = object;
+            this.objectCount++;
+        }
+    }
+
     getMirrorPhysics(){
         return this.mirrorPhysics;
+    }
+
+    getActive(){
+        return this.active;
+    }
+
+    addPrevious(prevMirror){
+        this.previous = prevMirror;
+    }
+
+    addNext(nextMirror){
+        this.next = nextMirror;
+    }
+
+    addDoors(door1, door2){
+        this.doorList[0] = door1;
+        this.doorList[1] = door2;
+    }
+
+    setActive(bool){
+        this.correctPos = bool;
+        if(this.previous != null) {
+            if(this.previous.getActive()) {
+                this.active = bool;
+            }
+            else{
+                this.active = false;
+            }
+        }
+        else{
+            this.active = bool;
+        }
+        this.checkActive();
+    }
+    checkActive(){
+        var i;
+        if(this.active){
+            if(this.previous != null) {
+                if(this.previous.getActive()) {
+                    for (i = 0; i < this.objectCount; i++) {
+                        this.objectsList[i].setAlpha(100)
+                    }
+                    if(this.next == null) {
+                        this.doorList[0].open();
+                        this.doorList[1].open();
+                    }
+                }
+            }else{
+                for (i = 0; i < this.objectCount; i++) {
+                    this.objectsList[i].setAlpha(100)
+                }
+            }
+        }
+        else{
+            for(i=0; i<this.objectCount; i++){
+                this.objectsList[i].setAlpha(0)
+            }
+        }
+
+        if(this.next != null){
+            this.next.setActive(this.next.correctPos);
+        }
+    }
+    rotate(angle){
+        this.mirror.setRotation(angle);
+    }
+    scale(sizeX, sizeY){
+        this.mirror.setScale(sizeX, sizeY);
     }
 }
 
@@ -311,9 +432,6 @@ class Spike{
                 playerShape.setPosition(startX, startY);
             } else {
                 scene.scene.start('gameOverScene', {english: eng,level : scene.level });
-                /*this.hp.resetDamage();
-                playerShape.setPosition(startX, startY);
-                playerShape2.setPosition(startX2, startY2);*/
             }
         }, null, this);
     }
