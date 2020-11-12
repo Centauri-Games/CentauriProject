@@ -175,6 +175,31 @@ class DropPlatform{
     }
 }
 
+class Door{
+    constructor(scene, posX, posY, name){
+        this.scene = scene;
+        this.door = scene.add.sprite(posX,posY, name);
+        this.door.setScale(1.25,1.25);
+        this.doorPhysics = scene.physics.add.existing(this.door, 1);
+        this.playerCollider = null;
+
+        scene.anims.create({
+            key: 'open',
+            frames: scene.anims.generateFrameNumbers(name, { start: 0, end: 5 }),
+            frameRate: 10,
+            repeat: 0
+        });
+    }
+
+    open(){
+        this.door.anims.play('open', false);
+        this.playerCollider.destroy();
+    }
+
+    addPlayerCollide(playerShape){   //Player collider
+        this.playerCollider = this.scene.physics.add.collider(playerShape,this.door);
+    }
+}
 class Mirror{
 
     constructor(scene, posX, posY, name){
@@ -183,6 +208,7 @@ class Mirror{
         this.next = null;
         this.correctPos = false;
         this.objectsList = new Array(null, null);
+        this.doorList = new Array(null, null);
         this.objectCount = 0;
         this.mirror = scene.add.sprite(posX, posY, name);
         this.mirrorPhysics = scene.physics.add.existing(this.mirror, 0);
@@ -269,6 +295,11 @@ class Mirror{
         this.next = nextMirror;
     }
 
+    addDoors(door1, door2){
+        this.doorList[0] = door1;
+        this.doorList[1] = door2;
+    }
+
     setActive(bool){
         this.correctPos = bool;
         if(this.previous != null) {
@@ -292,6 +323,10 @@ class Mirror{
                     for (i = 0; i < this.objectCount; i++) {
                         this.objectsList[i].setAlpha(100)
                     }
+                    if(this.next == null) {
+                        this.doorList[0].open();
+                        this.doorList[1].open();
+                    }
                 }
             }else{
                 for (i = 0; i < this.objectCount; i++) {
@@ -307,9 +342,6 @@ class Mirror{
 
         if(this.next != null){
             this.next.setActive(this.next.correctPos);
-        }
-        else{
-
         }
     }
     rotate(angle){
@@ -399,9 +431,6 @@ class Spike{
                 playerShape.setPosition(startX, startY);
             } else {
                 scene.scene.start('gameOverScene', {english: eng,level : scene.level });
-                /*this.hp.resetDamage();
-                playerShape.setPosition(startX, startY);
-                playerShape2.setPosition(startX2, startY2);*/
             }
         }, null, this);
     }

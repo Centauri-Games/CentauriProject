@@ -29,6 +29,11 @@ class level4Scene extends Phaser.Scene{
             frameHeight: 128
         });
 
+        this.load.spritesheet('door', 'assets/sprites/laserDoor.png', {
+            frameWidth: 64,
+            frameHeight: 288
+        });
+
         this.load.image('andamio', 'assets/sprites/andamio.png');
 
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
@@ -43,7 +48,7 @@ class level4Scene extends Phaser.Scene{
         bg.setScrollFactor(0);
 
         //JUGADORES
-        var iniXL = 300;
+        var iniXL = 3500;
         var iniYL = 875;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         this.anims.create({
@@ -65,7 +70,7 @@ class level4Scene extends Phaser.Scene{
         });
         var playerPhysics = this.physics.add.existing(playerShape, 0);
 
-        var iniXS = 300;
+        var iniXS = 3500;
         var iniYS = 2300;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
         this.anims.create({
@@ -156,6 +161,16 @@ class level4Scene extends Phaser.Scene{
         floor2.setAlpha(0);
         this.physics.add.existing(floor2, 1);
         this.physics.add.collider(playerShape2, floor2);
+
+        var floor3 = this.add.rectangle(3750, 975, 500, 100, 0xff0000);
+        floor3.setAlpha(0);
+        this.physics.add.existing(floor3, 1);
+        this.physics.add.collider(playerShape, floor3);
+
+        var floor4 = this.add.rectangle(3750, 975+displaceY, 500, 100, 0xff0000);
+        floor4.setAlpha(0);
+        this.physics.add.existing(floor4, 1);
+        this.physics.add.collider(playerShape2, floor4);
 
         var displaceY = 1440;
 
@@ -317,6 +332,13 @@ class level4Scene extends Phaser.Scene{
         laser11.setAlpha(0);
         laser12.setAlpha(0);
 
+        //PUERTAS
+        var doorUp = new Door(this, 3625, 850, 'door');
+        doorUp.addPlayerCollide(playerShape);
+        var doorDown = new Door(this, 3625, 850+displaceY, 'door');
+        doorDown.addPlayerCollide(playerShape2);
+
+        mirror7.addDoors(doorUp, doorDown);
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
 
