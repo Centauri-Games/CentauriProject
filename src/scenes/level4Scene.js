@@ -12,6 +12,8 @@ class level4Scene extends Phaser.Scene{
         this.load.image('bg', 'assets/backgrounds/space.png');
 
         this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
+        this.load.image('diamond', 'assets/sprites/diamanteR.png');
+        this.load.image('laser', 'assets/sprites/laser.png');
 
         this.load.spritesheet('light', 'assets/players/steps_light.png', {
             frameWidth: 65,
@@ -28,6 +30,10 @@ class level4Scene extends Phaser.Scene{
         });
 
         this.load.image('andamio', 'assets/sprites/andamio.png');
+
+        this.load.image('portalA', 'assets/sprites/portalAzul.png');
+        this.load.image('portalR', 'assets/sprites/portalRojo.png');
+
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
         this.load.tilemapTiledJSON('map','assets/levels/level4.json');
     }
@@ -180,7 +186,6 @@ class level4Scene extends Phaser.Scene{
 
         //ESPEJOS
 
-        //var laser = this.add.sprite()
 
         var mirror1 = new Mirror(this, 1000, 1370, 'mirror');
         mirror1.mirror.setDepth(11);
@@ -209,8 +214,9 @@ class level4Scene extends Phaser.Scene{
         this.setInteractiveMirror(mirror6, 7);
 
         var mirror7 = new Mirror(this, 1900, 1050+displaceY, 'mirror');
+        mirror7.rotate(Math.PI/2);
         mirror7.mirror.setDepth(11);
-        this.setInteractiveMirror(mirror7, 0);
+        this.setInteractiveMirror(mirror7, 7);
 
         var mirror8 = new Mirror(this, 2200, 700+displaceY, 'mirror');   //Techo
         mirror8.mirror.setDepth(-1);
@@ -221,10 +227,95 @@ class level4Scene extends Phaser.Scene{
         mirror9.mirror.setDepth(11);
         this.setInteractiveMirror(mirror9, 5);
 
-        //this.add.line(pointer.x, pointer.y, 0, 0, 4, 0, color.color);
+        var diam = this.add.sprite(1900, 1370+displaceY, 'diamond').setDepth(13);
+        this.add.sprite(1370, 750+displaceY, 'plataforma').setRotation(Math.PI/2);
+        this.add.sprite(1840, 1050+displaceY, 'plataforma').setScale(1.2,1.2).setRotation(Math.PI/2);
+        var laser = this.add.sprite(1400, 760+displaceY, 'laser');
+        laser.setRotation(Math.PI/2);
+        laser.setDepth(13);
+        laser.setScale(1.3,1.3);
+
+        var portal1D = this.add.sprite(1700, 760+displaceY, 'portalA').setDepth(13);
+        var portal2D = this.add.sprite(2700, 760+displaceY, 'portalR').setDepth(13);
+        var portal1U = this.add.sprite(1000, 800, 'portalR').setDepth(13);
+        var portal2U = this.add.sprite(2000, 800, 'portalA').setDepth(13);
 
 
+        var laser1 = this.add.line(0,0, laser.x+10, laser.y, mirror6.mirror.x, mirror6.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser1.setDepth(12);
 
+        var laser2 = this.add.line(0,0, mirror6.mirror.x, mirror6.mirror.y-10, portal1D.x, portal1D.y, 0xff0000).setOrigin(0,0);
+        laser2.setDepth(12);
+        mirror6.addObject(laser2);
+
+        var laser3 = this.add.line(0,0, portal1U.x, portal1U.y, mirror2.mirror.x, mirror2.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser3.setDepth(12);
+        mirror6.addObject(laser3);
+        mirror6.addNext(mirror2);
+        mirror2.addPrevious(mirror6);
+
+        var laser4 = this.add.line(0,0, mirror2.mirror.x, mirror2.mirror.y-10, mirror1.mirror.x, mirror1.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser4.setDepth(12);
+        mirror2.addObject(laser4);
+        mirror2.addNext(mirror1);
+        mirror1.addPrevious(mirror2);
+
+        var laser5 = this.add.line(0,0, mirror1.mirror.x, mirror1.mirror.y-10, mirror5.mirror.x, mirror5.mirror.y+12, 0xff0000).setOrigin(0,0);
+        laser5.setDepth(12);
+        mirror1.addObject(laser5);
+        mirror1.addNext(mirror5);
+        mirror5.addPrevious(mirror1);
+
+        var laser6 = this.add.line(0,0, mirror5.mirror.x, mirror5.mirror.y+12, mirror3.mirror.x, mirror3.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser6.setDepth(12);
+        mirror5.addObject(laser6);
+        mirror5.addNext(mirror3);
+        mirror3.addPrevious(mirror5);
+
+        var laser7 = this.add.line(0,0, mirror3.mirror.x, mirror3.mirror.y-10, mirror4.mirror.x, mirror4.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser7.setDepth(12);
+        mirror3.addObject(laser7);
+        mirror3.addNext(mirror4);
+        mirror4.addPrevious(mirror3);
+
+        var laser8 = this.add.line(0,0, mirror4.mirror.x, mirror4.mirror.y-10, portal2U.x, portal2U.y, 0xff0000).setOrigin(0,0);
+        laser8.setDepth(12);
+        mirror4.addObject(laser8);
+
+        var laser9 = this.add.line(0,0, portal2D.x, portal2D.y, mirror9.mirror.x, mirror9.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser9.setDepth(12);
+        mirror4.addObject(laser9);
+        mirror4.addNext(mirror9);
+        mirror9.addPrevious(mirror4);
+
+        var laser10 = this.add.line(0,0, mirror9.mirror.x, mirror9.mirror.y-10, mirror8.mirror.x, mirror8.mirror.y+12, 0xff0000).setOrigin(0,0);
+        laser10.setDepth(12);
+        mirror9.addObject(laser10);
+        mirror9.addNext(mirror8);
+        mirror8.addPrevious(mirror9);
+
+        var laser11 = this.add.line(0,0, mirror8.mirror.x, mirror8.mirror.y+12, mirror7.mirror.x+12, mirror7.mirror.y, 0xff0000).setOrigin(0,0);
+        laser11.setDepth(12);
+        mirror8.addObject(laser11);
+        mirror8.addNext(mirror7);
+        mirror7.addPrevious(mirror8);
+
+        var laser12 = this.add.line(0,0, mirror7.mirror.x+12, mirror7.mirror.y, diam.x, diam.y, 0xff0000).setOrigin(0,0);
+        laser12.setDepth(12);
+        mirror7.addObject(laser12);
+
+
+        laser2.setAlpha(0);
+        laser3.setAlpha(0);
+        laser4.setAlpha(0);
+        laser5.setAlpha(0);
+        laser6.setAlpha(0);
+        laser7.setAlpha(0);
+        laser8.setAlpha(0);
+        laser9.setAlpha(0);
+        laser10.setAlpha(0);
+        laser11.setAlpha(0);
+        laser12.setAlpha(0);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
@@ -407,6 +498,10 @@ class level4Scene extends Phaser.Scene{
             }
             if(mirror.mirrorPosition == correctPosition){
                 console.log("Posicion correcta");
+                mirror.setActive(true);
+            }
+            else{
+                mirror.setActive(false);
             }
 
         });

@@ -178,6 +178,12 @@ class DropPlatform{
 class Mirror{
 
     constructor(scene, posX, posY, name){
+        this.active = false;
+        this.previous = null;
+        this.next = null;
+        this.correctPos = false;
+        this.objectsList = new Array(null, null);
+        this.objectCount = 0;
         this.mirror = scene.add.sprite(posX, posY, name);
         this.mirrorPhysics = scene.physics.add.existing(this.mirror, 0);
         this.mirrorPosition = 0;
@@ -240,10 +246,72 @@ class Mirror{
         });
     }
 
+    addObject(object) {
+        if (this.objectCount < 2) {
+            this.objectsList[this.objectCount] = object;
+            this.objectCount++;
+        }
+    }
+
     getMirrorPhysics(){
         return this.mirrorPhysics;
     }
 
+    getActive(){
+        return this.active;
+    }
+
+    addPrevious(prevMirror){
+        this.previous = prevMirror;
+    }
+
+    addNext(nextMirror){
+        this.next = nextMirror;
+    }
+
+    setActive(bool){
+        this.correctPos = bool;
+        if(this.previous != null) {
+            if(this.previous.getActive()) {
+                this.active = bool;
+            }
+            else{
+                this.active = false;
+            }
+        }
+        else{
+            this.active = bool;
+        }
+        this.checkActive();
+    }
+    checkActive(){
+        var i;
+        if(this.active){
+            if(this.previous != null) {
+                if(this.previous.getActive()) {
+                    for (i = 0; i < this.objectCount; i++) {
+                        this.objectsList[i].setAlpha(100)
+                    }
+                }
+            }else{
+                for (i = 0; i < this.objectCount; i++) {
+                    this.objectsList[i].setAlpha(100)
+                }
+            }
+        }
+        else{
+            for(i=0; i<this.objectCount; i++){
+                this.objectsList[i].setAlpha(0)
+            }
+        }
+
+        if(this.next != null){
+            this.next.setActive(this.next.correctPos);
+        }
+        else{
+
+        }
+    }
     rotate(angle){
         this.mirror.setRotation(angle);
     }
