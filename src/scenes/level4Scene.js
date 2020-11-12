@@ -15,11 +15,11 @@ class level4Scene extends Phaser.Scene{
         this.load.image('diamond', 'assets/sprites/diamanteR.png');
         this.load.image('laser', 'assets/sprites/laser.png');
 
-        this.load.spritesheet('light', 'assets/players/steps_light.png', {
+        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
             frameWidth: 65,
             frameHeight: 80
         });
-        this.load.spritesheet('shadow', 'assets/players/steps_shadow.png', {
+        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
             frameWidth: 65,
             frameHeight: 80
         });
@@ -48,7 +48,7 @@ class level4Scene extends Phaser.Scene{
         bg.setScrollFactor(0);
 
         //JUGADORES
-        var iniXL = 3500;
+        var iniXL = 300;
         var iniYL = 875;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         this.anims.create({
@@ -64,13 +64,13 @@ class level4Scene extends Phaser.Scene{
         });
         this.anims.create({
             key: 'jumpL',
-            frames: this.anims.generateFrameNumbers('light', {start: 3, end: 3}),
+            frames: this.anims.generateFrameNumbers('light', {start: 11, end: 11}),
             frameRate: 10,
             repeat: -1
         });
         var playerPhysics = this.physics.add.existing(playerShape, 0);
 
-        var iniXS = 3500;
+        var iniXS = 300;
         var iniYS = 2300;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
         this.anims.create({
@@ -86,7 +86,7 @@ class level4Scene extends Phaser.Scene{
         });
         this.anims.create({
             key: 'jumpS',
-            frames: this.anims.generateFrameNumbers('shadow', {start: 3, end: 3}),
+            frames: this.anims.generateFrameNumbers('shadow', {start: 11, end: 11}),
             frameRate: 10,
             repeat: -1
         });
