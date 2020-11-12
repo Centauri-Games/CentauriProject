@@ -14,11 +14,11 @@ class level1Scene extends Phaser.Scene{
         this.load.image('plataforma', 'assets/sprites/plataforma.png');
         this.load.image('andamio', 'assets/sprites/andamio.png');
 
-        this.load.spritesheet('light', 'assets/players/steps_light.png', {
+        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
             frameWidth: 65,
             frameHeight: 80
         });
-        this.load.spritesheet('shadow', 'assets/players/steps_shadow.png', {
+        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
             frameWidth: 65,
             frameHeight: 80
         });
@@ -45,7 +45,7 @@ class level1Scene extends Phaser.Scene{
         });
         this.anims.create({
             key: 'jumpL',
-            frames: this.anims.generateFrameNumbers('light', {start: 3, end: 3}),
+            frames: this.anims.generateFrameNumbers('light', {start: 11, end: 11}),
             frameRate: 10,
             repeat: -1
         });
@@ -67,7 +67,7 @@ class level1Scene extends Phaser.Scene{
         });
         this.anims.create({
             key: 'jumpS',
-            frames: this.anims.generateFrameNumbers('shadow', {start: 3, end: 3}),
+            frames: this.anims.generateFrameNumbers('shadow', {start: 11, end: 11}),
             frameRate: 10,
             repeat: -1
         });
