@@ -142,7 +142,7 @@ class level5Scene extends Phaser.Scene{
         //DROP PLATFORMS
         /*Rellenar*/
         var dualPlat1 = new DualDropPlatform(this, 500, 1125, 800, 1125, 'plataforma');
-        dualPlat1.addPlayerCollide(this, playerShape);
+        dualPlat1.addPlayerCollide(this, playerShape, 5);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');

@@ -89,7 +89,19 @@ class DualDropPlatform{ //DOUBLE DROP PLATFORM
         scene.physics.add.collider(this.dropPlatform2, object);
     }
 
-    addPlayerCollide(scene, playerShape){   //Player collider
+    resetPlatforms(scene, sec){
+        scene.time.delayedCall(1000 * sec, function(){
+            this.dropPlatformPhysics2.body.setAllowGravity(false);
+            this.dropPlatform2.setPosition(this.starting2X, this.starting2Y);
+            this.dropPlatformPhysics2.body.setImmovable(true);
+
+            this.dropPlatformPhysics1.body.setAllowGravity(false);
+            this.dropPlatform1.setPosition(this.starting1X, this.starting1Y);
+            this.dropPlatformPhysics1.body.setImmovable(true);
+        }, [], this);
+    }
+
+    addPlayerCollide(scene, playerShape, sec){   //Player collider
         scene.physics.add.collider(playerShape, this.dropPlatform1, function(){
             if(this.dropPlatformPhysics1.body.allowGravity === false) {
                 this.dropPlatformPhysics1.body.setImmovable(false);
@@ -97,9 +109,8 @@ class DualDropPlatform{ //DOUBLE DROP PLATFORM
 
                 this.dropPlatformPhysics2.body.setImmovable(false);
                 this.dropPlatformPhysics2.body.setAllowGravity(true);
-
-                //this.resetPlatforms(); //Delay para que se ejecute esto despues de X segundos
             }
+            this.resetPlatforms(scene, sec);
         }, null, this);
 
         scene.physics.add.collider(playerShape, this.dropPlatform2, function(){
@@ -109,27 +120,12 @@ class DualDropPlatform{ //DOUBLE DROP PLATFORM
 
                 this.dropPlatformPhysics1.body.setImmovable(false);
                 this.dropPlatformPhysics1.body.setAllowGravity(true);
-
-                //this.resetPlatforms(); //Delay para que se ejecute esto despues de X segundos
             }
-
+            this.resetPlatforms(scene, sec);
 
 
 
         }, null, this);
-    }
-
-    resetPlatforms(){
-        this.dropPlatformPhysics2.body.setAllowGravity(false);
-        this.dropPlatform1.setPosition(this.starting1X, this.starting1Y);
-        this.dropPlatformPhysics2.body.setImmovable(true);
-
-        this.dropPlatformPhysics1.body.setAllowGravity(false);
-        this.dropPlatform2.setPosition(this.starting2X, this.starting2Y);
-        this.dropPlatformPhysics1.body.setImmovable(true);
-
-
-
     }
 
     rotate(angle){
