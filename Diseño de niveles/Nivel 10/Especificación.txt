@@ -1,0 +1,6 @@
+
+En este nivel es un laberinto en horizontal
+
+La cámara se tiene que acercar para que no se vea el recorrido correcto
+
+Si se va por caminos equivocados en ciertas ocasiones no se podrá retrocedes y el jugador perderá una vida
