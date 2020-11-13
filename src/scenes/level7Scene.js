@@ -171,7 +171,7 @@ class level7Scene extends Phaser.Scene{
         spikesd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //PLATAFORMAS
-        //Estáticas
+        //Estáticas 
         var spd = new StaticPlatform(this, 2258, 1199 + displaceY, 'plataforma');
         spd.addPlayerCollide(this, playerShape2);
 
