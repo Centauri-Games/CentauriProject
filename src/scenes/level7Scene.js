@@ -11,7 +11,7 @@ class level7Scene extends Phaser.Scene{
     preload(){
         this.load.image('bg', 'assets/backgrounds/west.png');
 
-        this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
+        this.load.image('plataforma', 'assets/sprites/plataforma.png');
         this.load.image('diamond', 'assets/sprites/diamanteR.png');
         this.load.image('laser', 'assets/sprites/laser.png');
 
@@ -29,15 +29,26 @@ class level7Scene extends Phaser.Scene{
             frameHeight: 128
         });
 
-        this.load.spritesheet('door', 'assets/sprites/laserDoor.png', {
-            frameWidth: 64,
-            frameHeight: 288
+        this.load.spritesheet('door', 'assets/sprites/puerta.png', {
+            frameWidth: 140,
+            frameHeight: 1004
+        });
+
+        this.load.spritesheet('greenButton', 'assets/sprites/botonVerde.png', {
+            frameWidth: 59,
+            frameHeight: 150
+        });
+
+        this.load.spritesheet('redButton', 'assets/sprites/botonRojo.png', {
+            frameWidth: 59,
+            frameHeight: 150
         });
 
         this.load.image('andamio', 'assets/sprites/andamio.png');
 
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
         this.load.image('portalR', 'assets/sprites/portalRojo.png');
+        this.load.image('doorStart', 'assets/sprites/borde_puerta.png');
 
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
         this.load.tilemapTiledJSON('map','assets/levels/level7.json');
@@ -117,7 +128,7 @@ class level7Scene extends Phaser.Scene{
         this.map.createStaticLayer('Suelo2', tileset, 0, 0);
         this.map.createStaticLayer('Pinchos', tileset, 0, 0);
 
-        walls.setCollision([12, 13, 14, 19, 20]);
+        walls.setCollision([12, 13, 19, 20]);
 
         this.physics.add.collider(walls, playerShape);
         this.physics.add.collider(walls, playerShape2);
@@ -152,28 +163,101 @@ class level7Scene extends Phaser.Scene{
         var displaceY = 1440;
 
         //*Añadir pinchos*/
+        var spikesl = new Spike(this, 2900, 1195, 3800, 100, 0xff0000, hp);
+        spikesl.setAlpha(0);
+        spikesl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+        var spikesd = new Spike(this, 2258, 1199 + displaceY, 384, 96, 0xff0000, hp);
+        spikesd.setAlpha(0);
+        spikesd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        //PLATAFORMAS
+        //Estáticas
+        var spd = new StaticPlatform(this, 2258, 1199 + displaceY, 'plataforma');
+        spd.addPlayerCollide(this, playerShape2);
+
+        //Móviles
+        var mpl = new MovingPlatform(this, 650, 1150, 'plataforma');
+        mpl.addPlayerCollide(this, playerShape);
+        mpl.setMovement(this, 0, -250);
 
         //SUELO
-        //J Superior    //Modificar suelos//
-        var floor1 = this.add.rectangle(2000, 1450, 3800, 100, 0xff0000);
-        floor1.setAlpha(0);
-        this.physics.add.existing(floor1, 1);
-        this.physics.add.collider(playerShape, floor1);
+        //J Superior
+        var floor1L = this.add.rectangle(2000, 1295, 3800, 100, 0xff0000);
+        floor1L.setAlpha(0);
+        this.physics.add.existing(floor1L, 1);
+        this.physics.add.collider(playerShape, floor1L);
 
-        var floor2 = this.add.rectangle(2000, 1450 + displaceY, 3800, 100, 0xff0000);
-        floor2.setAlpha(0);
-        this.physics.add.existing(floor2, 1);
-        this.physics.add.collider(playerShape2, floor2);
+        var floor2L = this.add.rectangle(2000, 1295, 3800, 100, 0xff0000);
+        floor2L.setAlpha(0);
+        this.physics.add.existing(floor2L, 1);
+        this.physics.add.collider(playerShape, floor2L);
 
-        var floor3 = this.add.rectangle(3750, 975, 500, 100, 0xff0000);
-        floor3.setAlpha(0);
-        this.physics.add.existing(floor3, 1);
-        this.physics.add.collider(playerShape, floor3);
+        var floor3L = this.add.rectangle(1778, 670, 2016, 192, 0xff0000);
+        floor3L.setAlpha(0);
+        this.physics.add.existing(floor3L, 1);
+        this.physics.add.collider(playerShape, floor3L);
 
-        var floor4 = this.add.rectangle(3750, 975 + displaceY, 500, 100, 0xff0000);
-        floor4.setAlpha(0);
-        this.physics.add.existing(floor4, 1);
-        this.physics.add.collider(playerShape2, floor4);
+        var floor4L = this.add.rectangle(3750, 975, 500, 100, 0xff0000);
+        floor4L.setAlpha(0);
+        this.physics.add.existing(floor4L, 1);
+        this.physics.add.collider(playerShape, floor4L);
+
+        //J Inferior
+        var floor1S = this.add.rectangle(2000, 1295 + displaceY, 3800, 100, 0xff0000);
+        floor1S.setAlpha(0);
+        this.physics.add.existing(floor1S, 1);
+        this.physics.add.collider(playerShape2, floor1S);
+
+        var floor2S = this.add.rectangle(1010, 1199 + displaceY, 96, 96, 0xff0000);
+        floor2S.setAlpha(0);
+        this.physics.add.existing(floor2S, 1);
+        this.physics.add.collider(playerShape2, floor2S);
+
+        var floor3S = this.add.rectangle(1202, 1103 + displaceY, 288, 96, 0xff0000);
+        floor3S.setAlpha(0);
+        this.physics.add.existing(floor3S, 1);
+        this.physics.add.collider(playerShape2, floor3S);
+
+        var floor4S = this.add.rectangle(1442, 1007 + displaceY, 192, 96, 0xff0000);
+        floor4S.setAlpha(0);
+        this.physics.add.existing(floor4S, 1);
+        this.physics.add.collider(playerShape2, floor4S);
+
+        var floor5S = this.add.rectangle(1682, 911 + displaceY, 288, 96, 0xff0000);
+        floor5S.setAlpha(0);
+        this.physics.add.existing(floor5S, 1);
+        this.physics.add.collider(playerShape2, floor5S);
+
+        var floor6S = this.add.rectangle(1874, 815 + displaceY, 96, 96, 0xff0000);
+        floor6S.setAlpha(0);
+        this.physics.add.existing(floor6S, 1);
+        this.physics.add.collider(playerShape2, floor6S);
+
+        var floor7S = this.add.rectangle(1970, 719 + displaceY, 96, 96, 0xff0000);
+        floor7S.setAlpha(0);
+        this.physics.add.existing(floor7S, 1);
+        this.physics.add.collider(playerShape2, floor7S);
+
+        var floor8S = this.add.rectangle(2546, 719 + displaceY, 96, 96, 0xff0000);
+        floor8S.setAlpha(0);
+        this.physics.add.existing(floor8S, 1);
+        this.physics.add.collider(playerShape2, floor8S);
+
+        var floor9S = this.add.rectangle(3750, 975 + displaceY, 500, 100, 0xff0000);
+        floor9S.setAlpha(0);
+        this.physics.add.existing(floor9S, 1);
+        this.physics.add.collider(playerShape2, floor9S);
+
+        //PUERTA
+        var doorStart = this.add.sprite(1500, 360, 'doorStart');
+        doorStart.setScale(0.5, 0.5);
+        doorStart.setDepth(100);
+        var doorButton = new Button(this, 650, 1150 + displaceY, 1550, 350, 'greenButton', 'door');
+        doorButton.addCollideDoor(this, playerShape);
+        doorButton.addCollideButton(this, playerShape2);
+
+        //BOTÓN QUE SUBE LA PLATAFORMA
+
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
