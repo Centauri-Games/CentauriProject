@@ -15,14 +15,8 @@ class level6Scene extends Phaser.Scene{
         this.load.image('diamond', 'assets/sprites/diamanteR.png');
         this.load.image('laser', 'assets/sprites/laser.png');
 
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
+        this.load.image('light', 'assets/players/HyperionPlatform.png');
+        this.load.image('shadow', 'assets/players/ErebosPlatform.png');
 
         this.load.spritesheet('mirror', 'assets/sprites/espejo.png', {
             frameWidth: 104,
@@ -49,48 +43,16 @@ class level6Scene extends Phaser.Scene{
 
         //JUGADORES
         var iniXL = 300;
-        var iniYL = 875;
-        var playerShape = this.add.sprite(iniXL, iniYL, 'light');
-        this.anims.create({
-            key: 'stopL',
-            frames: this.anims.generateFrameNumbers('light', {start: 0, end: 0}),
-            frameRate: 10
-        });
-        this.anims.create({
-            key: 'runL',
-            frames: this.anims.generateFrameNumbers('light', {start: 1, end: 10}),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'jumpL',
-            frames: this.anims.generateFrameNumbers('light', {start: 11, end: 11}),
-            frameRate: 10,
-            repeat: -1
-        });
+        var iniYL = 650;
+        var playerShape = this.add.sprite(iniXL, iniYL, 'light').setScale(0.8,0.8);
         var playerPhysics = this.physics.add.existing(playerShape, 0);
+        playerPhysics.body.setSize(80, 120);
 
         var iniXS = 300;
-        var iniYS = 2300;
-        var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
-        this.anims.create({
-            key: 'stopS',
-            frames: this.anims.generateFrameNumbers('shadow', {start: 0, end: 0}),
-            frameRate: 10
-        });
-        this.anims.create({
-            key: 'runS',
-            frames: this.anims.generateFrameNumbers('shadow', {start: 1, end: 10}),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'jumpS',
-            frames: this.anims.generateFrameNumbers('shadow', {start: 11, end: 11}),
-            frameRate: 10,
-            repeat: -1
-        });
+        var iniYS = 2090;
+        var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow').setScale(0.8,0.8);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
+        playerPhysics2.body.setSize(80, 120);
 
         playerShape.setDepth(10);
         playerShape2.setDepth(10);
@@ -119,10 +81,11 @@ class level6Scene extends Phaser.Scene{
         this.map.createStaticLayer('Pinchos', tileset, 0,0);
 
         walls.setCollision([12,14,20]);
-        walls2.setCollision([5,7,14,20,21]);
 
         this.physics.add.collider(walls, playerShape);
         this.physics.add.collider(walls, playerShape2);
+        this.physics.add.collider(walls2, playerShape);
+        this.physics.add.collider(walls2, playerShape2);
 
         //CÁMARAS
         var cameraMain = this.cameras.main;
@@ -136,46 +99,168 @@ class level6Scene extends Phaser.Scene{
         cameraMain.setBounds(0,0,4032,1440);
         camera2.setBounds(0,1440,4032, 1440);
 
+        var displaceY = 1440;
         //ANDAMIOS
-        var andl = new Scaffold(this, 300, 1125, 'andamio', 350, 500, 20, 80);
+        var andl = new Scaffold(this, 300, 935, 'andamio', 350, 500, 20, 80);
         andl.addCollide(this, playerShape); //Inicio superior
 
-        var andd = new Scaffold(this, 300, 2570, 'andamio', 350, 500, 20, 80);
+        var andd = new Scaffold(this, 300, 935+displaceY, 'andamio', 350, 500, 20, 80);
         andd.addCollide(this, playerShape2);    //Inicio inferior
 
-        var andl2 = new Scaffold(this, 3350, 1125, 'andamio', 350, 500, 20, 80);
+        var andl2 = new Scaffold(this, 3750, 935, 'andamio', 350, 500, 20, 80);
         andl2.addCollide(this, playerShape);
 
-        var andd2 = new Scaffold(this, 3350, 2570, 'andamio', 350, 500, 20, 80);
+        var andd2 = new Scaffold(this, 3750, 935+displaceY, 'andamio', 350, 500, 20, 80);
         andd2.addCollide(this, playerShape2);
 
         //VIDA + PINCHOS
         var hp = new Life(this, this.English, playerShape, playerShape2);
-        var displaceY = 1440;
 
-        //*Añadir pinchos*/
+        //Superior
+        var spikesUp1 = new Spike(this, 2000, 1210, 3800, 100, 0xff0000, hp);
+        spikesUp1.setAlpha(0);
+        spikesUp1.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikesUp2 = new Spike(this, 2000, 90, 3800, 100, 0xff0000, hp);
+        spikesUp2.setAlpha(0);
+        spikesUp2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes1 = new Spike(this, 740, 370, 150, 600, 0xff0000, hp);
+        spikes1.setAlpha(0);
+        spikes1.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes2 = new Spike(this, 1125, 230, 150, 300, 0xff0000, hp);
+        spikes2.setAlpha(0);
+        spikes2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes3 = new Spike(this, 1510, 325, 150, 500, 0xff0000, hp);
+        spikes3.setAlpha(0);
+        spikes3.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes4 = new Spike(this, 1895, 375, 150, 600, 0xff0000, hp);
+        spikes4.setAlpha(0);
+        spikes4.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        //Symmetry
+        var spikes5 = new Spike(this, 2185, 375, 150, 600, 0xff0000, hp);
+        spikes5.setAlpha(0);
+        spikes5.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes6 = new Spike(this, 2570, 325, 150, 500, 0xff0000, hp);
+        spikes6.setAlpha(0);
+        spikes6.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes7 = new Spike(this, 2955, 275, 150, 400, 0xff0000, hp);
+        spikes7.setAlpha(0);
+        spikes7.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes8 = new Spike(this, 3340, 370, 150, 600, 0xff0000, hp);
+        spikes8.setAlpha(0);
+        spikes8.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        //
+        var spikes9 = new Spike(this, 1125, 1000, 150, 500, 0xff0000, hp);
+        spikes9.setAlpha(0);
+        spikes9.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes10 = new Spike(this, 1510, 1040, 150, 400, 0xff0000, hp);
+        spikes10.setAlpha(0);
+        spikes10.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes11 = new Spike(this, 1895, 1090, 150, 300, 0xff0000, hp);
+        spikes11.setAlpha(0);
+        spikes11.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes12 = new Spike(this, 2185, 1090, 150, 300, 0xff0000, hp);
+        spikes12.setAlpha(0);
+        spikes12.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes13 = new Spike(this, 2570, 1040, 150, 400, 0xff0000, hp);
+        spikes13.setAlpha(0);
+        spikes13.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes14 = new Spike(this, 2955, 1000, 150, 500, 0xff0000, hp);
+        spikes14.setAlpha(0);
+        spikes14.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        //Inferior
+
+        var spikesDown1 = new Spike(this, 2000, 1210+displaceY, 3800, 100, 0xff0000, hp);
+        spikesDown1.setAlpha(0);
+        spikesDown1.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        var spikesDown2 = new Spike(this, 2000, 90+displaceY, 3800, 100, 0xff0000, hp);
+        spikesDown2.setAlpha(0);
+        spikesDown2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes1d = new Spike(this, 740, 370+displaceY, 150, 600, 0xff0000, hp);
+        spikes1d.setAlpha(0);
+        spikes1d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes2d = new Spike(this, 1125, 230+displaceY, 150, 300, 0xff0000, hp);
+        spikes2d.setAlpha(0);
+        spikes2d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes3d = new Spike(this, 1510, 325+displaceY, 150, 500, 0xff0000, hp);
+        spikes3d.setAlpha(0);
+        spikes3d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes4d = new Spike(this, 1895, 375+displaceY, 150, 600, 0xff0000, hp);
+        spikes4d.setAlpha(0);
+        spikes4d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        //Symmetry
+        var spikes5d = new Spike(this, 2185, 375+displaceY, 150, 600, 0xff0000, hp);
+        spikes5d.setAlpha(0);
+        spikes5d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes6d = new Spike(this, 2570, 325+displaceY, 150, 500, 0xff0000, hp);
+        spikes6d.setAlpha(0);
+        spikes6d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes7d = new Spike(this, 2955, 275+displaceY, 150, 400, 0xff0000, hp);
+        spikes7d.setAlpha(0);
+        spikes7d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes8d = new Spike(this, 3340, 370+displaceY, 150, 600, 0xff0000, hp);
+        spikes8d.setAlpha(0);
+        spikes8d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        //
+        var spikes9d = new Spike(this, 1125, 1000+displaceY, 150, 500, 0xff0000, hp);
+        spikes9d.setAlpha(0);
+        spikes9d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes10d = new Spike(this, 1510, 1040+displaceY, 150, 400, 0xff0000, hp);
+        spikes10d.setAlpha(0);
+        spikes10d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes11d = new Spike(this, 1895, 1090+displaceY, 150, 300, 0xff0000, hp);
+        spikes11d.setAlpha(0);
+        spikes11d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes12d = new Spike(this, 2185, 1090+displaceY, 150, 300, 0xff0000, hp);
+        spikes12d.setAlpha(0);
+        spikes12d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes13d = new Spike(this, 2570, 1040+displaceY, 150, 400, 0xff0000, hp);
+        spikes13d.setAlpha(0);
+        spikes13d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes14d = new Spike(this, 2955, 1000+displaceY, 150, 500, 0xff0000, hp);
+        spikes14d.setAlpha(0);
+        spikes14d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
 
         //SUELO
-        //J Superior    //Modificar suelos//
-        var floor1 = this.add.rectangle(2000, 1450, 3800, 100, 0xff0000);
+        //J Superior
+        var floor1 = this.add.rectangle(2000, 1258, 3800, 100, 0xff0000);
         floor1.setAlpha(0);
         this.physics.add.existing(floor1, 1);
         this.physics.add.collider(playerShape, floor1);
 
-        var floor2 = this.add.rectangle(2000, 1450+displaceY, 3800, 100, 0xff0000);
+        var floor2 = this.add.rectangle(2000, 1258+displaceY, 3800, 100, 0xff0000);
         floor2.setAlpha(0);
         this.physics.add.existing(floor2, 1);
         this.physics.add.collider(playerShape2, floor2);
 
-        var floor3 = this.add.rectangle(3750, 975, 500, 100, 0xff0000);
-        floor3.setAlpha(0);
-        this.physics.add.existing(floor3, 1);
-        this.physics.add.collider(playerShape, floor3);
-
-        var floor4 = this.add.rectangle(3750, 975+displaceY, 500, 100, 0xff0000);
-        floor4.setAlpha(0);
-        this.physics.add.existing(floor4, 1);
-        this.physics.add.collider(playerShape2, floor4);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
@@ -191,57 +276,31 @@ class level6Scene extends Phaser.Scene{
         keyMovement.D.on('down', function(e) {
             pressedD = true;
             if (playerProta){
-                playerPhysics.body.setVelocityX(175);
+                playerPhysics.body.setVelocityX(100);
                 playerShape.flipX = false;
-                if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
-                    playerShape.anims.play('jumpL', false);
-                } else {
-                    playerShape.anims.play('runL', true);
-                }
             } else {
-                playerPhysics2.body.setVelocityX(175);
+                playerPhysics2.body.setVelocityX(100);
                 playerShape2.flipX = false;
-                if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
-                    playerShape2.anims.play('jumpS', false);
-                } else {
-                    playerShape2.anims.play('runS', true);
-                }
             }
         });
 
         keyMovement.A.on('down', function(e) {
             pressedA = true;
             if (playerProta){
-                playerPhysics.body.setVelocityX(-175);
+                playerPhysics.body.setVelocityX(-100);
                 playerShape.flipX = true;
-                if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
-                    playerShape.anims.play('jumpL', false);
-                } else {
-                    playerShape.anims.play('runL', true);
-                }
             } else {
-                playerPhysics2.body.setVelocityX(-175);
+                playerPhysics2.body.setVelocityX(-100);
                 playerShape2.flipX = true;
-                if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
-                    playerShape2.anims.play('jumpS', false);
-                } else {
-                    playerShape2.anims.play('runS', true);
-                }
             }
         });
 
         keyMovement.W.on('down', function(e) {
             pressedW = true;
             if (playerProta){
-                if (playerPhysics.body.touching.down){
-                    playerPhysics.body.setVelocityY(-200);
-                    playerShape.anims.play('jumpL', false);
-                }
+                playerPhysics.body.setVelocityY(-200);
             } else {
-                if (playerPhysics2.body.touching.down){
-                    playerPhysics2.body.setVelocityY(-200);
-                    playerShape2.anims.play('jumpS', false);
-                }
+                playerPhysics2.body.setVelocityY(-200);
             }
         });
 
@@ -254,28 +313,16 @@ class level6Scene extends Phaser.Scene{
             if (playerProta){
                 if (!pressedA){
                     playerPhysics.body.setVelocityX(0);
-                    playerShape.anims.play('stopL', false);
                 } else {
-                    playerPhysics.body.setVelocityX(-175);
+                    playerPhysics.body.setVelocityX(-100);
                     playerShape.flipX = true;
-                    if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
-                        playerShape.anims.play('jumpL', false);
-                    } else {
-                        playerShape.anims.play('runL', true);
-                    }
                 }
             } else {
                 if (!pressedA){
                     playerPhysics2.body.setVelocityX(0);
-                    playerShape2.anims.play('stopS', false);
                 } else {
-                    playerPhysics2.body.setVelocityX(-175);
+                    playerPhysics2.body.setVelocityX(-100);
                     playerShape2.flipX = true;
-                    if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
-                        playerShape2.anims.play('jumpS', false);
-                    } else {
-                        playerShape2.anims.play('runS', true);
-                    }
                 }
             }
         });
@@ -285,33 +332,21 @@ class level6Scene extends Phaser.Scene{
             if (playerProta) {
                 if (!pressedD) {
                     playerPhysics.body.setVelocityX(0);
-                    playerShape.anims.play('stopL', false);
                 } else {
-                    playerPhysics.body.setVelocityX(175);
+                    playerPhysics.body.setVelocityX(100);
                     playerShape.flipX = false;
-                    if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
-                        playerShape.anims.play('jumpL', false);
-                    } else {
-                        playerShape.anims.play('runL', true);
-                    }
                 }
             } else {
                 if (!pressedD) {
                     playerPhysics2.body.setVelocityX(0);
-                    playerShape2.anims.play('stopS', false);
                 } else {
-                    playerPhysics2.body.setVelocityX(-175);
+                    playerPhysics2.body.setVelocityX(-100);
                     playerShape2.flipX = false;
-                    if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
-                        playerShape2.anims.play('jumpS', false);
-                    } else {
-                        playerShape2.anims.play('runS', true);
-                    }
                 }
             }
         });
     }
     update(){
-        
+
     }
 }
