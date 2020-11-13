@@ -9,7 +9,7 @@ class level6Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/space.png');
+        this.load.image('bg', 'assets/backgrounds/west.png');
 
         this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
         this.load.image('diamond', 'assets/sprites/diamanteR.png');
