@@ -177,13 +177,47 @@ class DropPlatform{
     }
 }
 
+class pressurePlate{
+
+    constructor(scene, posX, posY, name){
+        this.scene = scene;
+        this.plate = scene.add.sprite(posX,posY, name);
+        this.platePhysics = scene.physics.add.existing(this.plate, 1);
+
+        scene.anims.create({
+            key: 'press',
+            frames: scene.anims.generateFrameNumbers(name, { start: 1, end: 1 }),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        scene.anims.create({
+            key: 'release',
+            frames: scene.anims.generateFrameNumbers(name, { start: 0, end: 0 }),
+            frameRate: 10,
+            repeat: 0
+        });
+    }
+    addPlayerCollide(playerShape){   //Player collider
+        this.playerCollider = this.scene.physics.add.collider(playerShape,this.plate);
+    }
+
+    press(){
+        this.plate.anims.play('press', false);
+    }
+
+    release(){
+        this.plate.anims.play('release', false);
+    }
+
+}
 class Door{
     constructor(scene, posX, posY, name){
         this.scene = scene;
         this.door = scene.add.sprite(posX,posY, name);
-        this.door.setScale(1.25,1.25);
         this.doorPhysics = scene.physics.add.existing(this.door, 1);
-        this.playerCollider = null;
+        this.playerColliders = new Array(null,null);
+        this.players = 0;
 
         scene.anims.create({
             key: 'open',
@@ -193,13 +227,21 @@ class Door{
         });
     }
 
+    scale(sX, sY){
+        this.door.setScale(sx,sy);
+    }
     open(){
         this.door.anims.play('open', false);
-        this.playerCollider.destroy();
+        var i;
+        for(i=0; i<this.players; i++)
+            this.scene.physics.world.removeCollider(this.playerColliders[i]);
+
+        this.players =0;
     }
 
     addPlayerCollide(playerShape){   //Player collider
-        this.playerCollider = this.scene.physics.add.collider(playerShape,this.door);
+        this.playerColliders[this.players] = this.scene.physics.add.collider(playerShape,this.door);
+        this.players++;
     }
 }
 class Mirror{

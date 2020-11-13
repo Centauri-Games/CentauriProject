@@ -25,6 +25,15 @@ class level9Scene extends Phaser.Scene{
             frameHeight: 288
         });
 
+        this.load.spritesheet('pinkDoor', 'assets/sprites/pinkDoor.png', {
+            frameWidth: 112,
+            frameHeight: 480
+        });
+        this.load.spritesheet('blueDoor', 'assets/sprites/blueDoor.png', {
+            frameWidth: 112,
+            frameHeight: 480
+        });
+
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
 
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
@@ -172,7 +181,13 @@ class level9Scene extends Phaser.Scene{
             playerPhysics2.body.moves =false;
         });
 
-
+        //PUERTAS
+        var pinkDoor = new Door(this, 800, 2448, 'pinkDoor');
+        pinkDoor.addPlayerCollide(playerShape);
+        pinkDoor.addPlayerCollide(playerShape2);
+        var blueDoor = new Door(this, 800, 1008, 'blueDoor');
+        blueDoor.addPlayerCollide(playerShape2);
+        blueDoor.addPlayerCollide(playerShape);
         //PLATAFORMAS Y PLACAS
         /*Rellenar*/
 
@@ -232,10 +247,10 @@ class level9Scene extends Phaser.Scene{
         keyMovement.W.on('down', function (e) {
             pressedW = true;
             if (playerProta) {
-                //if (playerPhysics.body.touching.down) {
+                if (playerPhysics.body.touching.down) {
                     playerPhysics.body.setVelocityY(-200);
                     playerShape.anims.play('jumpL', false);
-                //}
+                }
             } else {
                 if (playerPhysics2.body.touching.down) {
                     playerPhysics2.body.setVelocityY(-200);

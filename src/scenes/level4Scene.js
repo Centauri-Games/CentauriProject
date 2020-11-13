@@ -334,8 +334,10 @@ class level4Scene extends Phaser.Scene{
 
         //PUERTAS
         var doorUp = new Door(this, 3625, 850, 'door');
+        doorUp.scale(1.25,1.25);
         doorUp.addPlayerCollide(playerShape);
         var doorDown = new Door(this, 3625, 850+displaceY, 'door');
+        doorDown.scale(1.25,1.25);
         doorDown.addPlayerCollide(playerShape2);
 
         mirror7.addDoors(doorUp, doorDown);
