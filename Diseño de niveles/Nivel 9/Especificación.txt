@@ -1,0 +1,20 @@
+
+
+Este nivel es de cooperación de los dos jugadores en un mismo mundo
+
+Para poder avanzar deberán seguir una serie de pasos en orden ayudandose a medida que avanzan
+
+Las placas de presión activas puertas y plataformas
+
+Placa verde --> mueve a la plataforma hacia la izquierda mientras esté presionada
+
+Placas azules y roja --> abren la puerta durante un par de segundos
+
+Placa de presión naranja --> eleva la plataforma naranja
+
+
+Si las placas de presión dejan de ser presionadas las plataformas retroceden a su posición orignal
+y las puertas se cierran (pasados un par de segundos)
+
+Tendrán que resolver este nivel/puzzle de una manera determianda al final ya que un portal
+llevará a un mundo y otro a otro, ir al mundo equivocado te mata
