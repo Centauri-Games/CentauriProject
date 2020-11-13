@@ -255,7 +255,7 @@ class level1Scene extends Phaser.Scene{
         keyMovement.D.on('down', function(e) {
             pressedD = true;
             if (playerProta){
-                playerPhysics.body.setVelocityX(100);
+                playerPhysics.body.setVelocityX(175);
                 playerShape.flipX = false;
                 if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
                     playerShape.anims.play('jumpL', false);
@@ -263,7 +263,7 @@ class level1Scene extends Phaser.Scene{
                     playerShape.anims.play('runL', true);
                 }
             } else {
-                playerPhysics2.body.setVelocityX(100);
+                playerPhysics2.body.setVelocityX(175);
                 playerShape2.flipX = false;
                 if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
                     playerShape2.anims.play('jumpS', false);
@@ -276,7 +276,7 @@ class level1Scene extends Phaser.Scene{
         keyMovement.A.on('down', function(e) {
             pressedA = true;
             if (playerProta){
-                playerPhysics.body.setVelocityX(-100);
+                playerPhysics.body.setVelocityX(-175);
                 playerShape.flipX = true;
                 if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
                     playerShape.anims.play('jumpL', false);
@@ -284,7 +284,7 @@ class level1Scene extends Phaser.Scene{
                     playerShape.anims.play('runL', true);
                 }
             } else {
-                playerPhysics2.body.setVelocityX(-100);
+                playerPhysics2.body.setVelocityX(-175);
                 playerShape2.flipX = true;
                 if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
                     playerShape2.anims.play('jumpS', false);
@@ -334,7 +334,7 @@ class level1Scene extends Phaser.Scene{
                     playerPhysics.body.setVelocityX(0);
                     playerShape.anims.play('stopL', false);
                 } else {
-                    playerPhysics.body.setVelocityX(-100);
+                    playerPhysics.body.setVelocityX(-175);
                     playerShape.flipX = true;
                     if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
                         playerShape.anims.play('jumpL', false);
@@ -347,7 +347,7 @@ class level1Scene extends Phaser.Scene{
                     playerPhysics2.body.setVelocityX(0);
                     playerShape2.anims.play('stopS', false);
                 } else {
-                    playerPhysics2.body.setVelocityX(-100);
+                    playerPhysics2.body.setVelocityX(-175);
                     playerShape2.flipX = true;
                     if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
                         playerShape2.anims.play('jumpS', false);
@@ -365,7 +365,7 @@ class level1Scene extends Phaser.Scene{
                     playerPhysics.body.setVelocityX(0);
                     playerShape.anims.play('stopL', false);
                 } else {
-                    playerPhysics.body.setVelocityX(100);
+                    playerPhysics.body.setVelocityX(175);
                     playerShape.flipX = false;
                     if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
                         playerShape.anims.play('jumpL', false);
@@ -378,7 +378,7 @@ class level1Scene extends Phaser.Scene{
                     playerPhysics2.body.setVelocityX(0);
                     playerShape2.anims.play('stopS', false);
                 } else {
-                    playerPhysics2.body.setVelocityX(-100);
+                    playerPhysics2.body.setVelocityX(-175);
                     playerShape2.flipX = false;
                     if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
                         playerShape2.anims.play('jumpS', false);
