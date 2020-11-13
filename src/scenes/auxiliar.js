@@ -25,6 +25,7 @@ class StaticPlatform{
 
     scale(sizeX, sizeY){
         this.staticPlatform.setScale(sizeX, sizeY);
+        //this.staticPlatformPhysics.body.setSize(sizeX, sizeY);
     }
 }
 
@@ -564,13 +565,23 @@ class Scaffold{
 }
 
 class Button{
+    constructor(scene, buttonX, buttonY, doorX, doorY, nameB, nameD){
+        this.button = scene.add.sprite(buttonX, buttonY, nameB);
+        scene.physics.add.existing(this.button, 1);
+        scene.anims.create({
+            key: 'pressed',
+            frames: scene.anims.generateFrameNumbers(nameB, {start: 0, end: 2}),
+            frameRate: 10
+        });
 
-    constructor(scene, buttonX, buttonY, doorX, doorY, color, color2){
-        this.button = scene.add.rectangle(buttonX, buttonY, 100, 100, color);
-        scene.add.physics.existing(this.button, 1);
-
-        this.door = scene.add.rectangle(doorX, doorY,100, 200, color2);
-        scene.add.physics.existing(this.door, 1);
+        this.door = scene.add.sprite(doorX, doorY, nameD);
+        this.door.setScale(0.5, 0.445);
+        scene.anims.create({
+            key: 'open',
+            frames: scene.anims.generateFrameNumbers(nameD, {start: 1, end: 1}),
+            frameRate: 10
+        });
+        scene.physics.add.existing(this.door, 1);
     }
 
     addCollideDoor(scene, playerShape){
@@ -579,9 +590,8 @@ class Button{
 
     addCollideButton(scene, playerShape){
         scene.physics.add.collider(playerShape, this.button, function(){
-            scene.world.physics.removeCollider(this.doorCollider);
-            this.door.setFillStyle(this.door.color, 0);
-            this.dest.setStrokeStyle(3, this.door.color, 1);
+            this.door.anims.play('open', false);
+            scene.physics.world.removeCollider(this.doorCollider);
         }, null, this);
     }
 }
