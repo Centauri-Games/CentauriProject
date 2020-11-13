@@ -99,13 +99,13 @@ class level6Scene extends Phaser.Scene{
 
         this.physics.add.overlap(playerPhysics,nextLevel,function(){
             if (this.physics.world.overlap(playerPhysics2,nextLevel)){
-                this.scene.start("level4Scene");
+                this.scene.start("level7Scene");
             }
         });
 
         this.physics.add.overlap(playerPhysics2,nextLevel,function(){
             if (this.physics.world.overlap(playerPhysics,nextLevel)){
-                this.scene.start("level4Scene");
+                this.scene.start("level7Scene");
             }
         });
 
