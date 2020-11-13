@@ -336,7 +336,7 @@ class level8Scene extends Phaser.Scene{
         this.playerPhysics2 = playerPhysics2;
     }
     update(){
-        /*if(this.physics.world.overlap(this.playerPhysics2,this.nextLevel2) && this.physics.world.overlap(this.playerPhysics,this.nextLevel1))
-            this.scene.start("level6Scene", {english: this.English});*/
+        if(this.physics.world.overlap(this.playerPhysics2,this.nextLevel2) && this.physics.world.overlap(this.playerPhysics,this.nextLevel1))
+            this.scene.start("menuScene", {english: this.English});
     }
 }
