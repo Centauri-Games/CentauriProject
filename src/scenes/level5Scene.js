@@ -189,6 +189,19 @@ class level5Scene extends Phaser.Scene{
         dualPlat10.addPlayerCollide(this, playerShape, 5);
         dualPlat10.addPlayerCollide(this, playerShape2, 5);
 
+        var limitL = this.add.rectangle(2000, 1500, 4000, 100, 0x000000);
+        this.physics.add.existing(limitL, 1);
+        dualPlat1.addWorldCollider(this, limitL);
+        dualPlat2.addWorldCollider(this, limitL);
+        dualPlat3.addWorldCollider(this, limitL);
+        dualPlat4.addWorldCollider(this, limitL);
+        dualPlat5.addWorldCollider(this, limitL);
+        dualPlat6.addWorldCollider(this, limitL);
+        dualPlat7.addWorldCollider(this, limitL);
+        dualPlat8.addWorldCollider(this, limitL);
+        dualPlat9.addWorldCollider(this, limitL);
+        dualPlat10.addWorldCollider(this, limitL);
+
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
 
