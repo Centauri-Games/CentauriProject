@@ -38,7 +38,21 @@ class MovingPlatform{
     }
 
     addPlayerCollide(scene, playerShape){   //Player collider
-        scene.physics.add.collider(playerShape,this.movingPlatform);
+        scene.physics.add.collider(playerShape, this.movingPlatform, function(){
+            if (!playerShape.locked){
+                playerShape.locked = true;
+                playerShape.lockedTo = this.movingPlatform;
+                playerShape.body.velocity.y = 0;
+            } else {
+                if (playerShape.body.right < playerShape.lockedTo.body.x || playerShape.body.x < playerShape.lockedTo.body.right){
+                    playerShape.locked = false;
+                    playerShape.lockedTo = null;
+                } else {
+                    playerShape.x += playerShape.lockedTo.deltaX;
+                    playerShape.y += playerShape.lockedTo.deltaY;
+                }
+            }
+        }, null, this);
     }
 
     setAlpha(value){
@@ -633,6 +647,7 @@ class Button{
     addCollideButton(scene, playerShape){
         scene.physics.add.collider(playerShape, this.button, function(){
             this.door.anims.play('open', false);
+            this.button.anims.play('pressed', false);
             scene.physics.world.removeCollider(this.doorCollider);
         }, null, this);
     }
