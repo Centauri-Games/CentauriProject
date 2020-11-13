@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no" ?>
 <!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
-<project xmlns="http://audacity.sourceforge.net/xml/" projname="Efecto de sonido - Conseguir diamante_data" version="1.3.0" audacityversion="2.4.2" sel0="64.2237868481" sel1="70.1010430839" vpos="432" h="64.2380045351" zoom="86.1328125000" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="Efecto de sonido - Conseguir diamante_data" version="1.3.0" audacityversion="2.4.2" sel0="1.0797278912" sel1="1.0797278912" vpos="432" h="0.0000000000" zoom="86.1328125000" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
 	<tags>
 		<tag name="ARTIST" value="Sergio Arévalo Gil"/>
 		<tag name="TITLE" value="Efecto de sonido - Conseguir diamante"/>
@@ -212,8 +212,8 @@
 			<envelope numpoints="0"/>
 		</waveclip>
 	</wavetrack>
-	<wavetrack name="Pista de audio" isSelected="1" height="150" minimized="0" channel="0" linked="1" mute="0" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
-		<waveclip offset="64.22378685" colorindex="0">
+	<wavetrack name="Pista de audio" isSelected="1" height="123" minimized="0" channel="0" linked="1" mute="0" solo="1" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
 			<sequence maxsamples="262144" sampleformat="262159" numsamples="215717">
 				<waveblock start="0">
 					<simpleblockfile filename="e08082e5.au" len="215717" min="-0.145892" max="0.121373" rms="0.011159"/>
@@ -222,8 +222,8 @@
 			<envelope numpoints="0"/>
 		</waveclip>
 	</wavetrack>
-	<wavetrack name="Pista de audio" isSelected="1" height="150" minimized="0" channel="1" linked="0" mute="0" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
-		<waveclip offset="64.22378685" colorindex="0">
+	<wavetrack name="Pista de audio" isSelected="1" height="177" minimized="0" channel="1" linked="0" mute="0" solo="1" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
 			<sequence maxsamples="262144" sampleformat="262159" numsamples="215717">
 				<waveblock start="0">
 					<simpleblockfile filename="e0808f8f.au" len="215717" min="-0.145892" max="0.121373" rms="0.011159"/>
