@@ -171,7 +171,7 @@ class level7Scene extends Phaser.Scene{
         spikesd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //PLATAFORMAS
-        //Estáticas
+        //Estáticas 
         var spd = new StaticPlatform(this, 2258, 1199 + displaceY, 'plataforma');
         spd.addPlayerCollide(this, playerShape2);
 
@@ -257,7 +257,17 @@ class level7Scene extends Phaser.Scene{
         doorButton.addCollideButton(this, playerShape2);
 
         //BOTÓN QUE SUBE LA PLATAFORMA
-
+        var bridgeButton = this.add.sprite(2000, 600, 'redButton');
+        this.physics.add.existing(bridgeButton, 1);
+        this.anims.create({
+            key: 'pressed',
+            frames: this.anims.generateFrameNumbers('redButton', {start: 0, end: 2}),
+            frameRate: 10
+        });
+        this.physics.add.collider(playerShape, bridgeButton, function(){
+            bridgeButton.anims.play('pressed', false);
+            spd.setPosition()
+        });
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');

@@ -242,7 +242,7 @@ class level1Scene extends Phaser.Scene{
         spikesDownR.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //CONTROL Y MOVIMIENTO
-        var keyMovement = this.input.keyboard.addKeys('A, S, D, W, SPACE');
+        var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
 
         var pressedA = false;
         var pressedD = false;
@@ -305,20 +305,6 @@ class level1Scene extends Phaser.Scene{
                 if (playerPhysics2.body.touching.down){
                     playerPhysics2.body.setVelocityY(-200);
                     playerShape2.anims.play('jumpS', false);
-                }
-            }
-        });
-
-        //HASTA QUE SE SOLUCIONE EL PROBLEMA DEL IMPULSO DE LA PLATAFORMA
-        keyMovement.S.on('down', function(e) {
-            pressedW = true;
-            if (playerProta){
-                if (!playerPhysics.body.touching.down){
-                    playerPhysics.body.setVelocityY(200);
-                }
-            } else {
-                if (!playerPhysics2.body.touching.down){
-                    playerPhysics2.body.setVelocityY(200);
                 }
             }
         });
