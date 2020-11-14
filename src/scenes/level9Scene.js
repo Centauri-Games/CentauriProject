@@ -111,18 +111,6 @@ class level9Scene extends Phaser.Scene{
         playerShape.setDepth(10);
         playerShape2.setDepth(10);
 
-        this.physics.add.overlap(playerPhysics,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics2,nextLevel)){
-                this.scene.start("level10Scene");
-            }
-        }, this);
-
-        this.physics.add.overlap(playerPhysics2,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics,nextLevel)){
-                this.scene.start("level10Scene");
-            }
-        }, this);
-
         //TILEMAP
         this.map = this.add.tilemap('map9');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
@@ -188,6 +176,8 @@ class level9Scene extends Phaser.Scene{
         //PORTAL
         var nextLevel = this.add.zone(400,1400,100,100);
         this.physics.add.existing(nextLevel, 1);
+        this.physics.add.overlap(nextLevel, playerPhysics);
+        this.physics.add.overlap(nextLevel, playerPhysics2);
 
         var portal1 = this.add.sprite(400, 1400, 'portalA').setDepth(15);
         portal1.setScale(3,3);
@@ -615,7 +605,7 @@ class level9Scene extends Phaser.Scene{
 
         //Final nivel
         if(this.physics.world.overlap(this.playerPhysics,this.nextLevel) && this.physics.world.overlap(this.playerPhysics2,this.nextLevel))
-            this.scene.start("menuScene", {english: this.English});
+            this.scene.start("level10Scene", {english: this.English});
 
     }
 }

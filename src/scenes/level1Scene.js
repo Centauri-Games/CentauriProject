@@ -72,7 +72,6 @@ class level1Scene extends Phaser.Scene{
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
         var spikes = this.map.createStaticLayer('Pinchos',tileset,0,0);
 
-
         ground.setCollision([58]);
         walls.setCollision([37,44]);
 
@@ -80,6 +79,7 @@ class level1Scene extends Phaser.Scene{
         this.physics.add.collider(ground, playerShape2);
         this.physics.add.collider(walls, playerShape);
         this.physics.add.collider(walls, playerShape2);
+
 
         //ANDAMIOS
         var andl = new Scaffold(this, 300, 1125, 'andamio', 350, 80, 20, 80);
@@ -93,31 +93,6 @@ class level1Scene extends Phaser.Scene{
 
         var andd2 = new Scaffold(this, 3750, 2570, 'andamio', 350, 80, 20, 80);
         andd2.addCollide(this, playerShape2);
-
-
-        //COLOCAR BIEN //
-        var goal = this.add.rectangle(3750, 1125, 10, 5000, 0x000000);
-        goal.setAlpha(0);
-        var goalPhysics = this.physics.add.existing(goal, 1);
-        var overlappedL = false;
-        var overlappedS = false;
-        console.log(overlappedL);
-        console.log(overlappedS);
-
-        this.physics.add.overlap(playerPhysics,goalPhysics,function(){
-            overlappedL = true;
-            if (overlappedS === true){
-                this.scene.start("level2Scene");
-            }
-        });
-
-        this.physics.add.overlap(playerPhysics2,goalPhysics,function(){
-            overlappedS = true;
-            if (overlappedL === true){
-                this.scene.start("level2Scene");
-            }
-        });
-
 
 
         //CÁMARAS
@@ -359,8 +334,22 @@ class level1Scene extends Phaser.Scene{
                 }
             }
         });
+
+        //Meta
+        var goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
+        goal.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(goal, 1);
+        this.physics.add.overlap(playerPhysics,goalPhysics);
+        this.physics.add.overlap(playerPhysics2,goalPhysics);
+
+        this.playerPhysics = playerPhysics;
+        this.playerPhysics2 = playerPhysics2;
+        this.goal = goal;
     }
     update(){
+
+        if(this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal))
+            this.scene.start("level2Scene", {english: this.English});
 
     }
 }

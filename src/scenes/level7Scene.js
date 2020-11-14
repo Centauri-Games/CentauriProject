@@ -64,20 +64,6 @@ class level7Scene extends Phaser.Scene{
         playerShape.setDepth(10);
         playerShape2.setDepth(10);
 
-        var nextLevel = this.add.zone(1970, 0, 10, 1920);  //NEXT LEVEL
-
-        this.physics.add.overlap(playerPhysics, nextLevel, function () {
-            if (this.physics.world.overlap(playerPhysics2, nextLevel)) {
-                this.scene.start("level8Scene");
-            }
-        });
-
-        this.physics.add.overlap(playerPhysics2, nextLevel, function () {
-            if (this.physics.world.overlap(playerPhysics, nextLevel)) {
-                this.scene.start("level8Scene");
-            }
-        });
-
         //TILEMAP
         this.map = this.add.tilemap('map7');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
@@ -405,9 +391,22 @@ class level7Scene extends Phaser.Scene{
                 }
             }
         });
-    }
 
+        //Meta
+        var goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
+        goal.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(goal, 1);
+        this.physics.add.overlap(playerPhysics,goalPhysics);
+        this.physics.add.overlap(playerPhysics2,goalPhysics);
+
+        this.playerPhysics = playerPhysics;
+        this.playerPhysics2 = playerPhysics2;
+        this.goal = goal;
+    }
     update(){
+        if(this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal))
+            this.scene.start("level8Scene", {english: this.English});
+
         if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
             this.leverLeft.anims.play('pull', false);
             this.leverRight.anims.play('unpull', false);

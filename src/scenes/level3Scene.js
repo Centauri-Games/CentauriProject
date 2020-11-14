@@ -64,19 +64,6 @@ class level3Scene extends Phaser.Scene{
         playerShape.setDepth(10);
         playerShape2.setDepth(10);
 
-        var nextLevel = this.add.zone(1970,0,10,1920);  //NEXT LEVEL
-
-        this.physics.add.overlap(playerPhysics,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics2,nextLevel)){
-                this.scene.start("level4Scene");
-            }
-        });
-
-        this.physics.add.overlap(playerPhysics2,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics,nextLevel)){
-                this.scene.start("level4Scene");
-            }
-        });
 
         //TILEMAP
         this.map = this.add.tilemap('map3');
@@ -408,8 +395,20 @@ class level3Scene extends Phaser.Scene{
                 }
             }
         });
+
+        //Meta
+        var goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
+        goal.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(goal, 1);
+        this.physics.add.overlap(playerPhysics,goalPhysics);
+        this.physics.add.overlap(playerPhysics2,goalPhysics);
+
+        this.playerPhysics = playerPhysics;
+        this.playerPhysics2 = playerPhysics2;
+        this.goal = goal;
     }
     update(){
-        
+        if(this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal))
+            this.scene.start("level4Scene", {english: this.English});
     }
 }

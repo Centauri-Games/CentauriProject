@@ -70,8 +70,6 @@ class level8Scene extends Phaser.Scene{
         var nextLevel2 = this.add.zone(1900,800+displaceY,100,100);  //NEXT LEVEL
         this.physics.add.existing(nextLevel1, 1);
         this.physics.add.existing(nextLevel2, 1);
-        //this.physics.world.enable(nextLevel1);
-        //this.physics.world.enable(nextLevel2);
 
         this.physics.add.overlap(playerPhysics,nextLevel1);
 
