@@ -181,14 +181,18 @@ class level7Scene extends Phaser.Scene{
         spikesd.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //PLATAFORMAS
-        //Estáticas 
-        var spl = new StaticPlatform(this, 2258, 1050, 'plataforma');
-        spl.addPlayerCollide(this, playerShape);
+        //Estáticas
 
         //Móviles
-        var mpl = new MovingPlatform(this, 650, 1150, 'plataforma');
+        var mpl = new MovingPlatform(this, 650, 1200, 'plataforma');
         mpl.addPlayerCollide(this, playerShape);
         mpl.setMovement(this, 0, -250);
+        var mpl2 = new MovingPlatform(this, 2258, 1000, 'plataforma');
+        mpl2.addPlayerCollide(this, playerShape);
+        this.mpl2 = mpl2;
+        var mpl3 = new MovingPlatform(this, 3026, 1200 + displaceY, 'plataforma');
+        mpl3.addPlayerCollide(this, playerShape2);
+        mpl3.setMovement(this, 0, -150);
 
         //SUELO
         //J Superior
@@ -301,21 +305,24 @@ class level7Scene extends Phaser.Scene{
         });
         this.anims.create({
             key: 'pull',
-            frames: this.anims.generateFrameNumbers('lever', {start: 0, end: 3}),
+            frames: this.anims.generateFrameNumbers('lever', {start: 3, end: 3}),
             frameRate: 10
         });
 
-        this.physics.add.collider(playerShape2, leverLeft, function(){
+        this.physics.add.overlap(playerShape2, leverLeft, function(){
             leverLeft.anims.play('pull', false);
             leverRight.anims.play('unpull', false);
-            this.add.tween(spl.staticPlatform).to({
-                x: -800
-            }, 3000);
         }, null, this);
-        this.physics.add.collider(playerShape2, leverRight, function(){
+        this.physics.add.overlap(playerShape2, leverRight, function(){
             leverRight.anims.play('pull', false);
             leverLeft.anims.play('unpull', false);
         }, null, this);
+
+        this.leverLeft = leverLeft;
+        this.leverRight = leverRight;
+
+        this.playerShape = playerShape;
+        this.playerShape2 = playerShape2;
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
@@ -451,7 +458,20 @@ class level7Scene extends Phaser.Scene{
             }
         });
     }
+
     update(){
-        
+        if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
+            this.leverLeft.anims.play('pull', false);
+            this.leverRight.anims.play('unpull', false);
+            this.mpl2.movingPlatformPhysics.body.setVelocityX(-200);
+        } else if (this.physics.world.overlap(this.playerShape2, this.leverRight)){
+            this.leverLeft.anims.play('unpull', false);
+            this.leverRight.anims.play('pull', false);
+            this.mpl2.movingPlatformPhysics.body.setVelocityX(200);
+        } else {
+            this.leverLeft.anims.play('unpull', false);
+            this.leverRight.anims.play('unpull', false);
+            this.mpl2.movingPlatformPhysics.body.setVelocityX(0);
+        }
     }
 }
