@@ -44,6 +44,16 @@ class level7Scene extends Phaser.Scene{
             frameHeight: 150
         });
 
+        this.load.spritesheet('bridge', 'assets/sprites/puente.png', {
+            frameWidth: 480,
+            frameHeight: 96
+        });
+
+        this.load.spritesheet('lever', 'assets/sprites/palanca.png', {
+            frameWidth: 102,
+            frameHeight: 122
+        });
+
         this.load.image('andamio', 'assets/sprites/andamio.png');
 
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
@@ -172,8 +182,8 @@ class level7Scene extends Phaser.Scene{
 
         //PLATAFORMAS
         //Estáticas 
-        var spd = new StaticPlatform(this, 2258, 1199 + displaceY, 'plataforma');
-        spd.addPlayerCollide(this, playerShape2);
+        var spl = new StaticPlatform(this, 2258, 1050, 'plataforma');
+        spl.addPlayerCollide(this, playerShape);
 
         //Móviles
         var mpl = new MovingPlatform(this, 650, 1150, 'plataforma');
@@ -256,18 +266,56 @@ class level7Scene extends Phaser.Scene{
         doorButton.addCollideDoor(this, playerShape);
         doorButton.addCollideButton(this, playerShape2);
 
-        //BOTÓN QUE SUBE LA PLATAFORMA
+        //BOTÓN QUE ACTIVA EL PUENTE
         var bridgeButton = this.add.sprite(2000, 600, 'redButton');
         this.physics.add.existing(bridgeButton, 1);
         this.anims.create({
-            key: 'pressed',
+            key: 'pressedR',
             frames: this.anims.generateFrameNumbers('redButton', {start: 0, end: 2}),
             frameRate: 10
         });
-        this.physics.add.collider(playerShape, bridgeButton, function(){
-            bridgeButton.anims.play('pressed', false);
-            spd.setPosition()
+        var bridge = this.add.sprite(2258, 719 + displaceY, 'bridge');
+        var bridgePhysics = this.physics.add.existing(bridge, 1);
+        bridgePhysics.body.setSize(480, 66);
+        this.anims.create({
+            key: 'activated',
+            frames: this.anims.generateFrameNumbers('bridge', {start: 0, end: 4}),
+            frameRate: 10
         });
+        this.physics.add.collider(playerShape, bridgeButton, function(){
+            bridge.anims.play('activated', false);
+            bridgeButton.anims.play('pressedR', false);
+            this.physics.add.collider(playerShape2, bridge);
+        }, null, this);
+
+        //PALANCAS QUE MUEVEN LA PLATAFORMA
+        var leverLeft = this.add.sprite(2690, 1179 + displaceY, 'lever');
+        this.physics.add.existing(leverLeft, 1);
+        var leverRight = this.add.sprite(2930, 1179 + displaceY, 'lever');
+        this.physics.add.existing(leverRight, 1);
+        leverRight.flipX = true;
+        this.anims.create({
+            key: 'unpull',
+            frames: this.anims.generateFrameNumbers('lever', {start: 0, end: 0}),
+            frameRate: 10
+        });
+        this.anims.create({
+            key: 'pull',
+            frames: this.anims.generateFrameNumbers('lever', {start: 0, end: 3}),
+            frameRate: 10
+        });
+
+        this.physics.add.collider(playerShape2, leverLeft, function(){
+            leverLeft.anims.play('pull', false);
+            leverRight.anims.play('unpull', false);
+            this.add.tween(spl.staticPlatform).to({
+                x: -800
+            }, 3000);
+        }, null, this);
+        this.physics.add.collider(playerShape2, leverRight, function(){
+            leverRight.anims.play('pull', false);
+            leverLeft.anims.play('unpull', false);
+        }, null, this);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
