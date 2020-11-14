@@ -39,7 +39,7 @@ class MovingPlatform{
 
     addPlayerCollide(scene, playerShape){   //Player collider
         scene.physics.add.collider(playerShape, this.movingPlatform, function(){
-            if (!playerShape.locked){
+            /*if (!playerShape.locked){
                 playerShape.locked = true;
                 playerShape.lockedTo = this.movingPlatform;
                 playerShape.body.velocity.y = 0;
@@ -51,9 +51,12 @@ class MovingPlatform{
                     playerShape.x += playerShape.lockedTo.deltaX;
                     playerShape.y += playerShape.lockedTo.deltaY;
                 }
-            }
+            }*/
         }, null, this);
     }
+
+    active(){}
+    deactivate(){}
 
     setAlpha(value){
         this.movingPlatform.setAlpha(value);
@@ -93,6 +96,7 @@ class MovingPlatform{
         this.movingPlatform.setScale(sizeX, sizeY);
     }
 }
+
 
 class DualDropPlatform{ //DOUBLE DROP PLATFORM
     constructor(scene, pos1X, pos1Y, pos2X, pos2Y, name){   //Sprite constructor
@@ -199,34 +203,38 @@ class pressurePlate{
         this.platePhysics = scene.physics.add.existing(this.plate, 1);
         this.player1 = player1;
         this.player2 = player2;
+        this.attachObject = null;
+        this.active = false;
 
         this.addPlayerCollide(player1);
         this.addPlayerCollide(player2);
 
-        scene.anims.create({
-            key: 'press',
-            frames: scene.anims.generateFrameNumbers(name, { start: 1, end: 1 }),
-            frameRate: 10,
-            repeat: 0
-        });
-
-        scene.anims.create({
-            key: 'release',
-            frames: scene.anims.generateFrameNumbers(name, { start: 0, end: 0 }),
-            frameRate: 10,
-            repeat: 0
-        });
+        this.id = name.charAt(8);
     }
     addPlayerCollide(playerShape){   //Player collider
         this.scene.physics.add.overlap(playerShape,this.plate);
     }
 
+    addAttach(object){
+        this.attachObject = object;
+    }
+
     press(){
-        this.plate.anims.play('press', false);
+        this.plate.anims.play('press'+this.id, false);
+        if(this.attachObject!=null && !this.active)
+            this.attachObject.active();
+        this.active = true;
     }
 
     release(){
-        this.plate.anims.play('release', false);
+        if(this.active) {
+            this.active = false;
+            this.scene.time.delayedCall(1000, function () {
+                this.plate.anims.play('release'+this.id, false);
+
+                this.attachObject.deactivate();
+            }, [], this);
+        }
     }
 
 }
@@ -236,21 +244,23 @@ class Door{
         this.door = scene.add.sprite(posX,posY, name);
         this.doorPhysics = scene.physics.add.existing(this.door, 1);
         this.playerColliders = new Array(null,null);
+        this.playersList = new Array(null,null);
         this.players = 0;
-
-        scene.anims.create({
-            key: 'open',
-            frames: scene.anims.generateFrameNumbers(name, { start: 0, end: 5 }),
-            frameRate: 10,
-            repeat: 0
-        });
+        this.id = name.charAt(0);
     }
 
     scale(sX, sY){
         this.door.setScale(sx,sy);
     }
+    active(){
+        this.open();
+    }
+
+    deactivate(){
+        this.close();
+    }
     open(){
-        this.door.anims.play('open', false);
+        this.door.anims.play('open'+this.id, true);
         var i;
         for(i=0; i<this.players; i++)
             this.scene.physics.world.removeCollider(this.playerColliders[i]);
@@ -258,7 +268,16 @@ class Door{
         this.players =0;
     }
 
+    close(){
+        this.door.anims.play('close'+this.id, true);
+        var i;
+        for(i = 0; i<2; i++){
+            this.addPlayerCollide(this.playersList[i]);
+        }
+    }
+
     addPlayerCollide(playerShape){   //Player collider
+        this.playersList[this.players] = playerShape;
         this.playerColliders[this.players] = this.scene.physics.add.collider(playerShape,this.door);
         this.players++;
     }
