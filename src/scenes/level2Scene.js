@@ -9,38 +9,13 @@ class level2Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.spritesheet('greenButton', 'assets/sprites/botonVerde.png', {
-            frameWidth: 59,
-            frameHeight: 150
-        });
-        this.load.spritesheet('redButton', 'assets/sprites/botonRojo.png', {
-            frameWidth: 59,
-            frameHeight: 150
-        });
-
-        this.load.image('bg', 'assets/backgrounds/space.png');
-
-        this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
-        this.load.image('andamio', 'assets/sprites/andamio.png');
-
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level2.json');
     }
     create(){
-        var bg = this.add.sprite(960,540,'bg');
+        var bg = this.add.sprite(960,540,'bg3');
         bg.setScrollFactor(0);
 
         var iniXL = 300;
-        var iniYL = 1000;
+        var iniYL = 1350;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         this.anims.create({
             key: 'stopL',
@@ -86,7 +61,7 @@ class level2Scene extends Phaser.Scene{
         playerShape.setDepth(10);
         playerShape2.setDepth(10);
 
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map2');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
 
         var ground = this.map.createStaticLayer('Suelo',tileset,0,0);
@@ -104,7 +79,6 @@ class level2Scene extends Phaser.Scene{
         this.physics.add.collider(walls, playerShape);
         this.physics.add.collider(walls, playerShape2);
 
-        //FALTA PONER EL COLLIDER DE LAS SPIKES Y CAMBIAR PINCHOS Y PLATAFORMAS//
 
         //ANDAMIOS
         var andd = new Scaffold(this, 300, 2570, 'andamio', 350, 80, 20, 80);
@@ -175,45 +149,45 @@ class level2Scene extends Phaser.Scene{
         this.physics.add.collider(playerShape, limit2);*/
 
         //PLATAFORMAS
-        var sp = new StaticPlatform(this, 600, 2600, 'plataforma');
+        var sp = new StaticPlatform(this, 600, 2600, 'blueP');
         sp.addPlayerCollide(this, playerShape2);
 
-        var sp2 = new StaticPlatform(this, 800, 1700, 'plataforma');
+        var sp2 = new StaticPlatform(this, 800, 1700, 'blueP');
         sp2.rotate(Math.PI);
         sp2.addPlayerCollide(this, playerShape2);
 
-        var sp3 = new StaticPlatform(this, 1100, 2750, 'plataforma');
+        var sp3 = new StaticPlatform(this, 1100, 2750, 'blueP');
         sp3.addPlayerCollide(this, playerShape2);
 
-        var sp4 = new StaticPlatform(this, 1400, 2750, 'plataforma');
+        var sp4 = new StaticPlatform(this, 1400, 2750, 'blueP');
         sp4.addPlayerCollide(this, playerShape2);
 
-        var sp5 = new StaticPlatform(this, 1600, 2400, 'plataforma');
+        var sp5 = new StaticPlatform(this, 1600, 2400, 'blueP');
         sp5.rotate(Math.PI);
         sp5.addPlayerCollide(this, playerShape2);
 
-        var sp6 = new StaticPlatform(this, 1800, 1800, 'plataforma');
+        var sp6 = new StaticPlatform(this, 1800, 1800, 'blueP');
         sp6.rotate(Math.PI);
         sp6.addPlayerCollide(this, playerShape2);
 
-        var sp7 = new StaticPlatform(this, 2000, 2700, 'plataforma');
+        var sp7 = new StaticPlatform(this, 2000, 2700, 'blueP');
         sp7.addPlayerCollide(this, playerShape2);
 
-        var sp8 = new StaticPlatform(this, 2200, 1800, 'plataforma');
+        var sp8 = new StaticPlatform(this, 2200, 1800, 'blueP');
         sp8.rotate(Math.PI);
         sp8.addPlayerCollide(this, playerShape2);
 
-        var sp9 = new StaticPlatform(this, 2400, 2700, 'plataforma');
+        var sp9 = new StaticPlatform(this, 2400, 2700, 'blueP');
         sp9.addPlayerCollide(this, playerShape2);
 
-        var sp10 = new StaticPlatform(this, 2700, 2750, 'plataforma');
+        var sp10 = new StaticPlatform(this, 2700, 2750, 'blueP');
         sp10.addPlayerCollide(this, playerShape2);
 
-        var sp11 = new StaticPlatform(this, 2900, 1700, 'plataforma');
+        var sp11 = new StaticPlatform(this, 2900, 1700, 'blueP');
         sp11.rotate(Math.PI);
         sp11.addPlayerCollide(this, playerShape2);
 
-        var sp12 = new StaticPlatform(this, 3250, 2200, 'plataforma');
+        var sp12 = new StaticPlatform(this, 3250, 2200, 'blueP');
         sp12.addPlayerCollide(this, playerShape2);
 
         //VIDA

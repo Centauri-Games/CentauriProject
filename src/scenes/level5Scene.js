@@ -9,25 +9,10 @@ class level5Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/space.png');
-
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-
-        this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
-
-        this.load.image('andamio', 'assets/sprites/andamio.png');
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level5.json');
     }
+
     create(){
-        var bg = this.add.sprite(960,540,'bg');
+        var bg = this.add.sprite(960,540,'bg3');
         bg.setScrollFactor(0);
 
         //JUGADORES
@@ -93,7 +78,7 @@ class level5Scene extends Phaser.Scene{
         });
 
         //TILEMAP
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map5');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
         this.map.createStaticLayer('Pinchos',tileset,0,0);
@@ -145,47 +130,47 @@ class level5Scene extends Phaser.Scene{
 
 
         //DROP PLATFORMS
-        var dualPlat1 = new DualDropPlatform(this, 600, 1100, 600, 2540, 'plataforma');
+        var dualPlat1 = new DualDropPlatform(this, 600, 1100, 600, 2540, 'blueP');
         dualPlat1.addPlayerCollide(this, playerShape, 5);
         dualPlat1.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat2 = new DualDropPlatform(this, 900, 1100, 900, 2540, 'plataforma');
+        var dualPlat2 = new DualDropPlatform(this, 900, 1100, 900, 2540, 'blueP');
         dualPlat2.addPlayerCollide(this, playerShape, 5);
         dualPlat2.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat3 = new DualDropPlatform(this, 1200, 1300, 1200, 2740, 'plataforma');
+        var dualPlat3 = new DualDropPlatform(this, 1200, 1300, 1200, 2740, 'blueP');
         dualPlat3.addPlayerCollide(this, playerShape, 5);
         dualPlat3.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat4 = new DualDropPlatform(this, 1500, 1250, 1500, 2690, 'plataforma');
+        var dualPlat4 = new DualDropPlatform(this, 1500, 1250, 1500, 2690, 'blueP');
         dualPlat4.addPlayerCollide(this, playerShape, 5);
         dualPlat4.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat5 = new DualDropPlatform(this, 1800, 1200, 1800, 2640, 'plataforma');
+        var dualPlat5 = new DualDropPlatform(this, 1800, 1200, 1800, 2640, 'blueP');
         dualPlat5.addPlayerCollide(this, playerShape, 5);
         dualPlat5.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat6 = new DualDropPlatform(this, 2100, 1150, 2100, 2590, 'plataforma');
+        var dualPlat6 = new DualDropPlatform(this, 2100, 1150, 2100, 2590, 'blueP');
         dualPlat6.addPlayerCollide(this, playerShape, 5);
         dualPlat6.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat7 = new DualDropPlatform(this, 2400, 1225, 2400, 2665, 'plataforma');
+        var dualPlat7 = new DualDropPlatform(this, 2400, 1225, 2400, 2665, 'blueP');
         dualPlat7.addPlayerCollide(this, playerShape, 5);
         dualPlat7.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat8 = new DualDropPlatform(this, 2700, 1200, 2700, 2640, 'plataforma');
+        var dualPlat8 = new DualDropPlatform(this, 2700, 1200, 2700, 2640, 'blueP');
         dualPlat8.addPlayerCollide(this, playerShape, 5);
         dualPlat8.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat9 = new DualDropPlatform(this, 3000, 1150, 3000, 2590, 'plataforma');
+        var dualPlat9 = new DualDropPlatform(this, 3000, 1150, 3000, 2590, 'blueP');
         dualPlat9.addPlayerCollide(this, playerShape, 5);
         dualPlat9.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat10 = new DualDropPlatform(this, 3300, 1100, 3300, 2540, 'plataforma');
+        var dualPlat10 = new DualDropPlatform(this, 3300, 1100, 3300, 2540, 'blueP');
         dualPlat10.addPlayerCollide(this, playerShape, 5);
         dualPlat10.addPlayerCollide(this, playerShape2, 5);
 
-        var dualPlat10 = new DualDropPlatform(this, 3450, 1025, 3450, 2465, 'plataforma');
+        var dualPlat10 = new DualDropPlatform(this, 3450, 1025, 3450, 2465, 'blueP');
         dualPlat10.addPlayerCollide(this, playerShape, 5);
         dualPlat10.addPlayerCollide(this, playerShape2, 5);
 

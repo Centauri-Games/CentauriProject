@@ -9,41 +9,10 @@ class level4Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/space.png');
-
-        this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
-        this.load.image('diamond', 'assets/sprites/diamanteR.png');
-        this.load.image('laser', 'assets/sprites/laser.png');
-
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-
-        this.load.spritesheet('mirror', 'assets/sprites/espejo.png', {
-            frameWidth: 104,
-            frameHeight: 128
-        });
-
-        this.load.spritesheet('door', 'assets/sprites/laserDoor.png', {
-            frameWidth: 64,
-            frameHeight: 288
-        });
-
-        this.load.image('andamio', 'assets/sprites/andamio.png');
-
-        this.load.image('portalA', 'assets/sprites/portalAzul.png');
-        this.load.image('portalR', 'assets/sprites/portalRojo.png');
-
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level4.json');
     }
+
     create(){
-        var bg = this.add.sprite(960,540,'bg');
+        var bg = this.add.sprite(960,540,'bg3');
         bg.setDepth(-2);
         bg.setScrollFactor(0);
 
@@ -110,7 +79,7 @@ class level4Scene extends Phaser.Scene{
         });
 
         //TILEMAP
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map4');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
         this.map.createStaticLayer('Suelo',tileset,0,0);
@@ -175,27 +144,27 @@ class level4Scene extends Phaser.Scene{
         var displaceY = 1440;
 
         //PLATAFORMAS
-        var mp1 = new MovingPlatform(this, 800, 950, 'plataforma'); //Plataforma recorrido medio
+        var mp1 = new MovingPlatform(this, 800, 950, 'blueP'); //Plataforma recorrido medio
         mp1.addPlayerCollide(this, playerShape);
         mp1.setMovementTime(this, 330, 0, 6000);
 
-        var mp2 = new MovingPlatform(this, 600, 950, 'plataforma');
+        var mp2 = new MovingPlatform(this, 600, 950, 'blueP');
         mp2.addPlayerCollide(this, playerShape);
         mp2.setMovement(this, 0, 200);
 
-        var mp3 = new MovingPlatform(this, 3000, 950, 'plataforma');
+        var mp3 = new MovingPlatform(this, 3000, 950, 'blueP');
         mp3.addPlayerCollide(this, playerShape);
         mp3.setMovement(this, 0, 200);
 
-        var mp4 = new MovingPlatform(this, 800, 950+displaceY, 'plataforma'); //Plataforma recorrido medio
+        var mp4 = new MovingPlatform(this, 800, 950+displaceY, 'blueP'); //Plataforma recorrido medio
         mp4.addPlayerCollide(this, playerShape2);
         mp4.setMovementTime(this, 330, 0, 6000);
 
-        var mp5 = new MovingPlatform(this, 600, 950+displaceY, 'plataforma');
+        var mp5 = new MovingPlatform(this, 600, 950+displaceY, 'blueP');
         mp5.addPlayerCollide(this, playerShape2);
         mp5.setMovement(this, 0, 200);
 
-        var mp6 = new MovingPlatform(this, 3000, 950+displaceY, 'plataforma');
+        var mp6 = new MovingPlatform(this, 3000, 950+displaceY, 'blueP');
         mp6.addPlayerCollide(this, playerShape2);
         mp6.setMovement(this, 0, 200);
 
@@ -243,8 +212,8 @@ class level4Scene extends Phaser.Scene{
         this.setInteractiveMirror(mirror9, 5);
 
         var diam = this.add.sprite(1900, 1370+displaceY, 'diamond').setDepth(13);
-        this.add.sprite(1370, 750+displaceY, 'plataforma').setRotation(Math.PI/2);
-        this.add.sprite(1840, 1050+displaceY, 'plataforma').setScale(1.2,1.2).setRotation(Math.PI/2);
+        this.add.sprite(1370, 750+displaceY, 'blueP').setRotation(Math.PI/2);
+        this.add.sprite(1840, 1050+displaceY, 'blueP').setScale(1.2,1.2).setRotation(Math.PI/2);
         var laser = this.add.sprite(1400, 760+displaceY, 'laser');
         laser.setRotation(Math.PI/2);
         laser.setDepth(13);
@@ -333,10 +302,10 @@ class level4Scene extends Phaser.Scene{
         laser12.setAlpha(0);
 
         //PUERTAS
-        var doorUp = new Door(this, 3625, 850, 'door');
+        var doorUp = new Door(this, 3625, 850, 'laserDoor');
         doorUp.scale(1.25,1.25);
         doorUp.addPlayerCollide(playerShape);
-        var doorDown = new Door(this, 3625, 850+displaceY, 'door');
+        var doorDown = new Door(this, 3625, 850+displaceY, 'laserDoor');
         doorDown.scale(1.25,1.25);
         doorDown.addPlayerCollide(playerShape2);
 

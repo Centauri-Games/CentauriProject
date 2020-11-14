@@ -9,45 +9,15 @@ class level8Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/west.png');
-
-        this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
-        this.load.image('diamond', 'assets/sprites/diamanteR.png');
-        this.load.image('laser', 'assets/sprites/laser.png');
-
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-
-        this.load.spritesheet('mirror', 'assets/sprites/espejo.png', {
-            frameWidth: 104,
-            frameHeight: 128
-        });
-
-        this.load.spritesheet('door', 'assets/sprites/laserDoor.png', {
-            frameWidth: 64,
-            frameHeight: 288
-        });
-
-        this.load.image('andamio', 'assets/sprites/andamio.png');
-
-        this.load.image('portalR', 'assets/sprites/portalRojo.png');
-
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level8.json');
     }
+
     create(){
-        var bg = this.add.sprite(960,540,'bg');
+        var bg = this.add.sprite(960,540,'bg4');
         bg.setScrollFactor(0);
 
         //JUGADORES
-        var iniXL = 1900;
-        var iniYL = 650;
+        var iniXL = 300;
+        var iniYL = 675;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         this.anims.create({
             key: 'stopL',
@@ -68,8 +38,8 @@ class level8Scene extends Phaser.Scene{
         });
         var playerPhysics = this.physics.add.existing(playerShape, 0);
 
-        var iniXS = 1900;
-        var iniYS = 2090;
+        var iniXS = 300;
+        var iniYS = 2100;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
         this.anims.create({
             key: 'stopS',
@@ -108,7 +78,7 @@ class level8Scene extends Phaser.Scene{
         this.physics.add.overlap(playerPhysics2,nextLevel2);
 
         //TILEMAP
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map8');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
         this.map.createStaticLayer('Suelo',tileset,0,0);
@@ -160,19 +130,19 @@ class level8Scene extends Phaser.Scene{
         this.physics.add.collider(playerShape2, floor2);
 
         //PLATAFORMAS
-        var mp1 = new MovingPlatform(this, 1500, 800, 'plataforma');
+        var mp1 = new MovingPlatform(this, 1500, 800, 'blueP');
         mp1.addPlayerCollide(this, playerShape);
         mp1.setMovement(this, 0, 200);
 
-        var mp2 = new MovingPlatform(this, 2300, 800, 'plataforma');
+        var mp2 = new MovingPlatform(this, 2300, 800, 'blueP');
         mp2.addPlayerCollide(this, playerShape);
         mp2.setMovement(this, 0, 200);
 
-        var mp3 = new MovingPlatform(this, 1500, 800+displaceY, 'plataforma');
+        var mp3 = new MovingPlatform(this, 1500, 800+displaceY, 'blueP');
         mp3.addPlayerCollide(this, playerShape2);
         mp3.setMovement(this, 0, 200);
 
-        var mp4 = new MovingPlatform(this, 2300, 800+displaceY, 'plataforma');
+        var mp4 = new MovingPlatform(this, 2300, 800+displaceY, 'blueP');
         mp4.addPlayerCollide(this, playerShape2);
         mp4.setMovement(this, 0, 200);
 

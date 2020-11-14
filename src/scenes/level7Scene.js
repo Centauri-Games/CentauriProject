@@ -9,62 +9,10 @@ class level7Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/west.png');
-
-        this.load.image('plataforma', 'assets/sprites/plataforma.png');
-        this.load.image('diamond', 'assets/sprites/diamanteR.png');
-        this.load.image('laser', 'assets/sprites/laser.png');
-
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-
-        this.load.spritesheet('mirror', 'assets/sprites/espejo.png', {
-            frameWidth: 104,
-            frameHeight: 128
-        });
-
-        this.load.spritesheet('door', 'assets/sprites/puerta.png', {
-            frameWidth: 140,
-            frameHeight: 1004
-        });
-
-        this.load.spritesheet('greenButton', 'assets/sprites/botonVerde.png', {
-            frameWidth: 59,
-            frameHeight: 150
-        });
-
-        this.load.spritesheet('redButton', 'assets/sprites/botonRojo.png', {
-            frameWidth: 59,
-            frameHeight: 150
-        });
-
-        this.load.spritesheet('bridge', 'assets/sprites/puente.png', {
-            frameWidth: 480,
-            frameHeight: 96
-        });
-
-        this.load.spritesheet('lever', 'assets/sprites/palanca.png', {
-            frameWidth: 102,
-            frameHeight: 122
-        });
-
-        this.load.image('andamio', 'assets/sprites/andamio.png');
-
-        this.load.image('portalA', 'assets/sprites/portalAzul.png');
-        this.load.image('portalR', 'assets/sprites/portalRojo.png');
-        this.load.image('doorStart', 'assets/sprites/borde_puerta.png');
-
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level7.json');
     }
+
     create() {
-        var bg = this.add.sprite(960, 540, 'bg');
+        var bg = this.add.sprite(960, 540, 'bg4');
         bg.setDepth(-2);
         bg.setScrollFactor(0);
 
@@ -131,7 +79,7 @@ class level7Scene extends Phaser.Scene{
         });
 
         //TILEMAP
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map7');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
         var walls = this.map.createStaticLayer('Pared', tileset, 0, 0);
         this.map.createStaticLayer('Suelo', tileset, 0, 0);
@@ -184,13 +132,13 @@ class level7Scene extends Phaser.Scene{
         //Estáticas
 
         //Móviles
-        var mpl = new MovingPlatform(this, 650, 1200, 'plataforma');
+        var mpl = new MovingPlatform(this, 650, 1200, 'woodP');
         mpl.addPlayerCollide(this, playerShape);
         mpl.setMovement(this, 0, -250);
-        var mpl2 = new MovingPlatform(this, 2258, 1000, 'plataforma');
+        var mpl2 = new MovingPlatform(this, 2258, 1000, 'woodP');
         mpl2.addPlayerCollide(this, playerShape);
         this.mpl2 = mpl2;
-        var mpl3 = new MovingPlatform(this, 3026, 1200 + displaceY, 'plataforma');
+        var mpl3 = new MovingPlatform(this, 3026, 1200 + displaceY, 'woodP');
         mpl3.addPlayerCollide(this, playerShape2);
         mpl3.setMovement(this, 0, -150);
 

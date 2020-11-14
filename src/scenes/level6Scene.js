@@ -9,48 +9,23 @@ class level6Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/west.png');
-
-        this.load.image('plataforma', 'assets/sprites/plataformaEspacioAzul.png');
-        this.load.image('diamond', 'assets/sprites/diamanteR.png');
-        this.load.image('laser', 'assets/sprites/laser.png');
-
-        this.load.image('light', 'assets/players/HyperionPlatform.png');
-        this.load.image('shadow', 'assets/players/ErebosPlatform.png');
-
-        this.load.spritesheet('mirror', 'assets/sprites/espejo.png', {
-            frameWidth: 104,
-            frameHeight: 128
-        });
-
-        this.load.spritesheet('door', 'assets/sprites/laserDoor.png', {
-            frameWidth: 64,
-            frameHeight: 288
-        });
-
-        this.load.image('andamio', 'assets/sprites/andamio.png');
-
-        this.load.image('portalA', 'assets/sprites/portalAzul.png');
-        this.load.image('portalR', 'assets/sprites/portalRojo.png');
-
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level6.json');
     }
+
     create(){
-        var bg = this.add.sprite(960,540,'bg');
+        var bg = this.add.sprite(960,540,'bg4');
         bg.setDepth(-2);
         bg.setScrollFactor(0);
 
         //JUGADORES
         var iniXL = 300;
         var iniYL = 650;
-        var playerShape = this.add.sprite(iniXL, iniYL, 'light').setScale(0.8,0.8);
+        var playerShape = this.add.sprite(iniXL, iniYL, 'light6').setScale(0.8,0.8);
         var playerPhysics = this.physics.add.existing(playerShape, 0);
         playerPhysics.body.setSize(80, 120);
 
         var iniXS = 300;
         var iniYS = 2090;
-        var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow').setScale(0.8,0.8);
+        var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow6').setScale(0.8,0.8);
         var playerPhysics2 = this.physics.add.existing(playerShape2, 0);
         playerPhysics2.body.setSize(80, 120);
 
@@ -72,7 +47,7 @@ class level6Scene extends Phaser.Scene{
         });
 
         //TILEMAP
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map6');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
         this.map.createStaticLayer('Suelo',tileset,0,0);

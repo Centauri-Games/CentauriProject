@@ -9,29 +9,11 @@ class level3Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/factory.png');
-        this.load.image('plataforma', 'assets/sprites/plataforma.png');
-        this.load.image('andamio', 'assets/sprites/andamio.png');
-
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-
-        this.load.image('portalA', 'assets/sprites/portalAzul.png');
-        this.load.image('portalR', 'assets/sprites/portalRojo.png');
-        this.load.image('caja', 'assets/sprites/caja.png');
-
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level3.json');
     }
+
     create(){
 
-        var bg = this.add.sprite(960,540,'bg');
+        var bg = this.add.sprite(960,540,'bg1');
         bg.setScrollFactor(0);
 
         //JUGADORES
@@ -97,7 +79,7 @@ class level3Scene extends Phaser.Scene{
         });
 
         //TILEMAP
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map3');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
         var ground = this.map.createStaticLayer('Suelo',tileset,0,0);
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
@@ -199,23 +181,23 @@ class level3Scene extends Phaser.Scene{
         this.physics.add.existing(floor10, 1);
         this.physics.add.collider(playerShape, floor10);
 
-        var sp = new StaticPlatform(this, 1050, 1125, 'plataforma');
+        var sp = new StaticPlatform(this, 1050, 1125, 'woodP');
         sp.addPlayerCollide(this, playerShape);
 
-        var mp1 = new MovingPlatform(this, 3100, 790, 'plataforma'); //Plataforma final
+        var mp1 = new MovingPlatform(this, 3100, 790, 'woodP'); //Plataforma final
         mp1.addPlayerCollide(this, playerShape);
         mp1.setMovement(this, 200, 0, playerPhysics);
 
         //J Inferior
 
-        var mp2 = new MovingPlatform(this, 700, 2400, 'plataforma'); //Plataforma 1
+        var mp2 = new MovingPlatform(this, 700, 2400, 'woodP'); //Plataforma 1
         mp2.addPlayerCollide(this, playerShape2);
         mp2.setMovement(this, 0, 150, playerPhysics2);
 
-        var sp2 = new StaticPlatform(this, 1200, 2700, 'plataforma');
+        var sp2 = new StaticPlatform(this, 1200, 2700, 'woodP');
         sp2.addPlayerCollide(this, playerShape2);
 
-        var mp3 = new MovingPlatform(this, 1500, 2700, 'plataforma'); //Plataforma 2
+        var mp3 = new MovingPlatform(this, 1500, 2700, 'woodP'); //Plataforma 2
         mp3.addPlayerCollide(this, playerShape2);
         mp3.setMovement(this, 0, -300, playerPhysics2);
 
@@ -242,11 +224,11 @@ class level3Scene extends Phaser.Scene{
         this.physics.add.existing(floor14, 1);
         this.physics.add.collider(playerShape2, floor14);
 
-        var mp4 = new MovingPlatform(this, 3400, 2200, 'plataforma'); //Plataforma 2
+        var mp4 = new MovingPlatform(this, 3400, 2200, 'woodP'); //Plataforma 2
         mp4.addPlayerCollide(this, playerShape2);
         mp4.setMovement(this, 0, 200, playerPhysics2);
 
-        var mp5 = new MovingPlatform(this, 3100, 2400, 'plataforma'); //Plataforma 2
+        var mp5 = new MovingPlatform(this, 3100, 2400, 'woodP'); //Plataforma 2
         mp5.addPlayerCollide(this, playerShape2);
         mp5.setMovement(this, 0, -200, playerPhysics2);
 

@@ -60,7 +60,7 @@ class level9Scene extends Phaser.Scene{
         this.load.tilemapTiledJSON('map','assets/levels/level9.json');
     }
     create(){
-        var bg = this.add.sprite(960,540,'bg');
+        var bg = this.add.sprite(960,540,'bg2');
         bg.setScrollFactor(0);
 
         //JUGADORES
@@ -124,7 +124,7 @@ class level9Scene extends Phaser.Scene{
         }, this);
 
         //TILEMAP
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map9');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
         this.map.createStaticLayer('Suelo',tileset,0,0);
@@ -288,13 +288,13 @@ class level9Scene extends Phaser.Scene{
         //PLATAFORMAS
 
         //Estáticas
-        var sp1 = new StaticPlatform(this, 1100, 2600, 'platform');
-        var sp2 = new StaticPlatform(this, 1200, 2525, 'platform');
-        var sp3 = new StaticPlatform(this, 1300, 2475, 'platform');
-        var sp4 = new StaticPlatform(this, 1400, 2425, 'platform');
-        var sp5 = new StaticPlatform(this, 1500, 2475, 'platform');
-        var sp6 = new StaticPlatform(this, 1600, 2525, 'platform');
-        var sp7 = new StaticPlatform(this, 1700, 2600, 'platform');
+        var sp1 = new StaticPlatform(this, 1100, 2600, 'woodP');
+        var sp2 = new StaticPlatform(this, 1200, 2525, 'woodP');
+        var sp3 = new StaticPlatform(this, 1300, 2475, 'woodP');
+        var sp4 = new StaticPlatform(this, 1400, 2425, 'woodP');
+        var sp5 = new StaticPlatform(this, 1500, 2475, 'woodP');
+        var sp6 = new StaticPlatform(this, 1600, 2525, 'woodP');
+        var sp7 = new StaticPlatform(this, 1700, 2600, 'woodP');
 
         sp1.addPlayerCollide(this, playerShape);
         sp2.addPlayerCollide(this, playerShape);

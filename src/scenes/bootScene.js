@@ -11,14 +11,14 @@ class bootScene extends Phaser.Scene{
     preload(){
 
         //Backgrounds
-        this.load.image('bg1', 'assets/backgrounds/factory.png');   //---------
+        this.load.image('bg1', 'assets/backgrounds/factory.png');
         this.load.image('bg2', 'assets/backgrounds/space.png');
         this.load.image('bg3', 'assets/backgrounds/west.png');
         this.load.image('bg4', 'assets/backgrounds/jungle.png');
 
         //Tilemaps
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map1','assets/levels/level1.json'); //--------------
+        this.load.tilemapTiledJSON('map1','assets/levels/level1.json');
         this.load.tilemapTiledJSON('map2','assets/levels/level2.json');
         this.load.tilemapTiledJSON('map3','assets/levels/level3.json');
         this.load.tilemapTiledJSON('map4','assets/levels/level4.json');
@@ -40,7 +40,7 @@ class bootScene extends Phaser.Scene{
         });
 
         this.load.image('light6', 'assets/players/HyperionPlatform.png');   //Personajes con plataforma
-        this.load.image('shadow6', 'assets/players/ErebosPlatform.png');    //--------
+        this.load.image('shadow6', 'assets/players/ErebosPlatform.png');
 
         //Sprites
         this.load.image('andamio', 'assets/sprites/andamio.png');   //Andamio
@@ -77,7 +77,7 @@ class bootScene extends Phaser.Scene{
             frameHeight: 128
         });
 
-        this.load.spritesheet('laserDoor', 'assets/sprites/laserDoor.png', {    //Puerta laser ---
+        this.load.spritesheet('laserDoor', 'assets/sprites/laserDoor.png', {    //Puerta laser
             frameWidth: 64,
             frameHeight: 288
         });
@@ -133,6 +133,7 @@ class bootScene extends Phaser.Scene{
     }
 
     create(){
+        this.scene.start("menuScene", {english: this.English});
     }
 
     update(){
