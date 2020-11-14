@@ -247,7 +247,7 @@ class Door{
     }
 
     scale(sX, sY){
-        this.door.setScale(sx,sy);
+        this.door.setScale(sX,sY);
     }
     open(){
         this.door.anims.play('open', false);
