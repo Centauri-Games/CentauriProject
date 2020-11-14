@@ -21,11 +21,6 @@ class level9Scene extends Phaser.Scene{
             frameHeight: 80
         });
 
-        this.load.spritesheet('door', 'assets/sprites/laserDoor.png', {
-            frameWidth: 64,
-            frameHeight: 288
-        });
-
         this.load.spritesheet('pinkDoor', 'assets/sprites/pinkDoor.png', {
             frameWidth: 112,
             frameHeight: 480
