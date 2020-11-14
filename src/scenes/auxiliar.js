@@ -193,10 +193,15 @@ class DropPlatform{
 
 class pressurePlate{
 
-    constructor(scene, posX, posY, name){
+    constructor(scene, posX, posY, name, player1, player2){
         this.scene = scene;
         this.plate = scene.add.sprite(posX,posY, name);
         this.platePhysics = scene.physics.add.existing(this.plate, 1);
+        this.player1 = player1;
+        this.player2 = player2;
+
+        this.addPlayerCollide(player1);
+        this.addPlayerCollide(player2);
 
         scene.anims.create({
             key: 'press',
@@ -213,7 +218,7 @@ class pressurePlate{
         });
     }
     addPlayerCollide(playerShape){   //Player collider
-        this.playerCollider = this.scene.physics.add.collider(playerShape,this.plate);
+        this.scene.physics.add.overlap(playerShape,this.plate);
     }
 
     press(){

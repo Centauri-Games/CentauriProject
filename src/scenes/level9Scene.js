@@ -34,6 +34,26 @@ class level9Scene extends Phaser.Scene{
             frameHeight: 480
         });
 
+        this.load.spritesheet('pressurePink', 'assets/sprites/pressurePink.png', {
+            frameWidth: 82,
+            frameHeight: 48
+        });
+
+        this.load.spritesheet('pressureBlue', 'assets/sprites/pressureBlue.png', {
+            frameWidth: 82,
+            frameHeight: 48
+        });
+
+        this.load.spritesheet('pressureYellow', 'assets/sprites/pressureYellow.png', {
+            frameWidth: 82,
+            frameHeight: 48
+        });
+
+        this.load.spritesheet('pressureGreen', 'assets/sprites/pressureGreen.png', {
+            frameWidth: 82,
+            frameHeight: 48
+        });
+
         this.load.image('portalA', 'assets/sprites/portalAzul.png');
 
         this.load.image('tiles', 'assets/tileset/Tilemap.png')
@@ -188,8 +208,12 @@ class level9Scene extends Phaser.Scene{
         var blueDoor = new Door(this, 800, 1008, 'blueDoor');
         blueDoor.addPlayerCollide(playerShape2);
         blueDoor.addPlayerCollide(playerShape);
+
+
         //PLATAFORMAS Y PLACAS
-        /*Rellenar*/
+        var p1 = new pressurePlate(this, 400, 2650, 'pressurePink', playerShape, playerShape2);
+        p1.addPlayerCollide(playerShape);
+        p1.addPlayerCollide(playerShape2);
 
         //CONTROL Y MOVIMIENTO
         var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
@@ -328,9 +352,18 @@ class level9Scene extends Phaser.Scene{
         this.nextLevel = nextLevel;
         this.playerPhysics = playerPhysics;
         this.playerPhysics2 = playerPhysics2;
+
+        this.p1 = p1;
+        this.door1 = pinkDoor;
     
     }
     update(){
+        if(this.physics.world.overlap(this.p1.player1,this.p1.plate) || this.physics.world.overlap(this.p1.player2,this.p1.plate)) {
+            this.p1.press();
+        }
+        else
+            this.p1.release();
+
         if(this.physics.world.overlap(this.playerPhysics,this.nextLevel) && this.physics.world.overlap(this.playerPhysics2,this.nextLevel))
             this.scene.start("menuScene", {english: this.English});
 
