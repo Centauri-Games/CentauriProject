@@ -236,15 +236,20 @@ class level10Scene extends Phaser.Scene{
         this.playerPhysics = playerPhysics;
         this.playerPhysics2 = playerPhysics2;
 
-        var goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
+        var goal = this.add.rectangle(3750, 1125, 300, 500, 0x000000);
         goal.setAlpha(0);
         var goalPhysics = this.physics.add.existing(goal, 1);
         this.physics.add.overlap(playerPhysics,goalPhysics);
-        this.physics.add.overlap(playerPhysics2,goalPhysics);
         this.goal = goal;
+
+        var goal2 = this.add.rectangle(3750, 1125 + displaceY, 300, 500, 0x000000);
+        goal2.setAlpha(0);
+        var goalPhysics2 = this.physics.add.existing(goal2, 1);
+        this.physics.add.overlap(playerPhysics2,goalPhysics2);
+        this.goal2 = goal2;
     }
     update(){
-        if (this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal)){
+        if (this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal2)){
             this.scene.start("menuScene", {english: this.English});
         }
 
