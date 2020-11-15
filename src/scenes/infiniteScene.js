@@ -5,6 +5,9 @@ class infiniteScene extends Phaser.Scene {
 
     init(data){
         this.English = data.english;
+        this.am = data.am;
+
+        console.log(this.am);
     }
     
     levelGenerator(difficulty,level){

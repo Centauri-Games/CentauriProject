@@ -220,10 +220,13 @@ class pressurePlate{
     }
 
     press(){
-        this.plate.anims.play('press'+this.id, false);
-        if(this.attachObject!=null && !this.active)
-            this.attachObject.active();
-        this.active = true;
+        if(!this.active) {
+            this.plate.anims.play('press' + this.id, false);
+            this.scene.sound.add("leverFX", {volume: 1, loop: false}).play();
+            if (this.attachObject != null && !this.active)
+                this.attachObject.active();
+            this.active = true;
+        }
     }
 
     release(){
@@ -231,7 +234,7 @@ class pressurePlate{
             this.active = false;
             this.scene.time.delayedCall(1000, function () {
                 this.plate.anims.play('release'+this.id, false);
-
+                this.scene.sound.add("leverFX", { volume: 1, loop: false }).play();
                 this.attachObject.deactivate();
             }, [], this);
         }
@@ -261,6 +264,7 @@ class Door{
     }
     open(){
         this.door.anims.play('open'+this.id, true);
+        this.scene.sound.add("door1FX", { volume: 1, loop: false }).play();
         var i;
         for(i=0; i<this.players; i++)
             this.scene.physics.world.removeCollider(this.playerColliders[i]);
@@ -296,6 +300,7 @@ class Mirror{
         this.mirrorPhysics = scene.physics.add.existing(this.mirror, 0);
         this.mirrorPosition = 0;
         this.mirrorPhysics.body.setAllowGravity(false);
+        this.scene = scene;
 
         scene.anims.create({
             key: 'pos1',
@@ -405,15 +410,18 @@ class Mirror{
                     for (i = 0; i < this.objectCount; i++) {
                         this.objectsList[i].setAlpha(100)
                     }
+                    this.scene.sound.add("laserFX", { volume: 1, loop: false }).play();
                     if(this.next == null) {
                         this.doorList[0].open();
                         this.doorList[1].open();
+                        this.scene.sound.add("electricFX", { volume: 1, loop: false }).play();
                     }
                 }
             }else{
                 for (i = 0; i < this.objectCount; i++) {
                     this.objectsList[i].setAlpha(100)
                 }
+                this.scene.sound.add("laserFX", { volume: 1, loop: false }).play();
             }
         }
         else{
@@ -437,6 +445,8 @@ class Mirror{
 class GravitySwitch{
     constructor(scene, onX, onY, offX, offY, nameOn, nameOff){
         this.upsideDown = false;
+        this.scene = scene;
+        this.gravity = true;
 
         this.switchOn = scene.add.sprite(onX, onY, nameOn);
         scene.physics.add.existing(this.switchOn, 1);
@@ -472,21 +482,34 @@ class GravitySwitch{
 
     addTrigger(scene, playerShape, playerShape2, playerPhysics, playerPhysics2){
         scene.physics.add.collider(playerShape, this.switchOn, function(){
-            this.switchOn.anims.play('onUp', false);
-            this.switchOff.anims.play('offDown', false);
-            this.upsideDown = true;
-            playerShape.flipY = true;
-            playerShape2.flipY = true;
-            scene.physics.world.gravity.y *= -1;
+            if(this.gravity) {
+                this.switchOn.anims.play('onUp', false);
+                this.switchOff.anims.play('offDown', false);
+                this.scene.sound.add("buttonFX", {volume: 1, loop: false}).play();
+                this.scene.sound.add("door2FX", {volume: 1, loop: false}).play();
+
+                this.upsideDown = true;
+                playerShape.flipY = true;
+                playerShape2.flipY = true;
+                scene.physics.world.gravity.y *= -1;
+
+                this.gravity = false;
+            }
         }, null, this);
 
         scene.physics.add.collider(playerShape, this.switchOff, function(){
-            this.switchOff.anims.play('onDown', false);
-            this.switchOn.anims.play('offUp', false);
-            this.upsideDown = false;
-            playerShape.flipY = false;
-            playerShape2.flipY = false;
-            scene.physics.world.gravity.y *= -1;
+            if(!this.gravity) {
+                this.switchOff.anims.play('onDown', false);
+                this.switchOn.anims.play('offUp', false);
+                this.scene.sound.add("buttonFX", {volume: 1, loop: false}).play();
+                this.scene.sound.add("door2FX", {volume: 1, loop: false}).play();
+                this.upsideDown = false;
+                playerShape.flipY = false;
+                playerShape2.flipY = false;
+                scene.physics.world.gravity.y *= -1;
+
+                this.gravity = true;
+            }
         }, null, this);
     }
 
@@ -510,6 +533,7 @@ class Spike{
                 this.hp.takeDamage();
                 playerShape.setPosition(startX, startY);
             } else {
+                scene.sound.add("deathFX", { volume: 1, loop: false }).play();
                 scene.scene.start('gameOverScene', {english: eng,level : scene.level });
             }
         }, null, this);
@@ -651,7 +675,7 @@ class Button{
             frames: scene.anims.generateFrameNumbers(nameB, {start: 0, end: 2}),
             frameRate: 10
         });
-
+        this.scene = scene;
         this.door = scene.add.sprite(doorX, doorY, nameD);
         this.door.setScale(0.5, 0.445);
         scene.anims.create({
@@ -669,8 +693,40 @@ class Button{
     addCollideButton(scene, playerShape){
         scene.physics.add.collider(playerShape, this.button, function(){
             this.door.anims.play('open', false);
+            this.scene.sound.add("door1FX", { volume: 1, loop: false }).play();
             this.button.anims.play('pressed', false);
             scene.physics.world.removeCollider(this.doorCollider);
         }, null, this);
+    }
+}
+
+class AudioManager {
+    constructor() {
+        this._musicOn = true;
+        this._bgMusicPlaying = false;
+        this._bgMusic = null;
+    }
+    set bgMusic(value){
+        this._bgMusic = value;
+    }
+
+    get bgMusic(){
+        return this._bgMusic;
+    }
+
+    set musicOn(value) {
+        this._musicOn = value;
+    }
+
+    get musicOn() {
+        return this._musicOn;
+    }
+
+    set bgMusicPlaying(value) {
+        this._bgMusicPlaying = value;
+    }
+
+    get bgMusicPlaying() {
+        return this._bgMusicPlaying;
     }
 }

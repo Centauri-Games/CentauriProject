@@ -7,12 +7,25 @@ class level7Scene extends Phaser.Scene{
         this.level = "level7Scene";
         this.English = data.english;
         this.lastDown = false;
+        this.am = data.am;
     }
 
     preload(){
     }
 
     create() {
+
+        //Reset música
+        this.am.bgMusic.stop();
+        this.am.bgMusicPlaying = false;
+
+        //Audio Manager
+        if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
+            this.bgMusic = this.sound.add("ingameMS", { volume: 0.7, loop: true });
+            this.bgMusic.play();
+            this.am.bgMusicPlaying = true;
+        }
+
         var bg = this.add.sprite(960, 540, 'bg4');
         bg.setDepth(-2);
         bg.setScrollFactor(0);
@@ -107,7 +120,6 @@ class level7Scene extends Phaser.Scene{
         var hp = new Life(this, this.English, playerShape, playerShape2);
         var displaceY = 1440;
 
-        //*Añadir pinchos*/
         var spikesl = new Spike(this, 2900, 1195, 3800, 100, 0xff0000, hp);
         spikesl.setAlpha(0);
         spikesl.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
@@ -196,6 +208,7 @@ class level7Scene extends Phaser.Scene{
         floor9S.setAlpha(0);
         this.physics.add.existing(floor9S, 1);
         this.physics.add.collider(playerShape2, floor9S);
+        this.sc = this;
 
         //PUERTA
         var doorStart = this.add.sprite(1500, 360, 'doorStart');
@@ -224,6 +237,7 @@ class level7Scene extends Phaser.Scene{
         this.physics.add.collider(playerShape, bridgeButton, function(){
             bridge.anims.play('activated', false);
             bridgeButton.anims.play('pressedR', false);
+            this.sc.sound.add("door1FX", { volume: 1, loop: false }).play();
             this.physics.add.collider(playerShape2, bridge);
         }, null, this);
 
@@ -233,6 +247,7 @@ class level7Scene extends Phaser.Scene{
         var leverRight = this.add.sprite(2930, 1179 + displaceY, 'lever');
         this.physics.add.existing(leverRight, 1);
         leverRight.flipX = true;
+
         this.anims.create({
             key: 'unpull',
             frames: this.anims.generateFrameNumbers('lever', {start: 0, end: 0}),
@@ -261,14 +276,7 @@ class level7Scene extends Phaser.Scene{
 
         //CONTROL Y MOVIMIENTO
         this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
-
-        
-
         this.playerProta = true;
-
-        //Codigo de "teclas" para el movimiento. Habria que cambiar el codigo de dentro por el mensaje que se enviará al servidor para decir que movimiento ha realizado el personaje
-
-       
 
         //Meta
         var goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
@@ -282,10 +290,14 @@ class level7Scene extends Phaser.Scene{
         this.playerPhysics = playerPhysics;
         this.playerPhysics2 = playerPhysics2;
         this.goal = goal;
+
+        this.overlapped1 = false;
+        this.overlapped2 = false;
     }
     update() {
         if (this.physics.world.overlap(this.playerPhysics, this.goal) && this.physics.world.overlap(this.playerPhysics2, this.goal)){
-            this.scene.start("level8Scene", {english: this.English});
+            this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+            this.scene.start("level8Scene", {english: this.English, am: this.am});
         }
 
         if (this.keyMovement.SPACE.isUp && this.lastDown){
@@ -377,10 +389,21 @@ class level7Scene extends Phaser.Scene{
 
         if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
             this.mpl2.movingPlatformPhysics.body.setVelocityX(-100);
+            if(!this.overlapped1){
+                this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
+                this.overlapped1=true;
+            }
+
         } else if (this.physics.world.overlap(this.playerShape2, this.leverRight)){
             this.mpl2.movingPlatformPhysics.body.setVelocityX(100);
+            if(!this.overlapped2){
+                this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
+                this.overlapped2=true;
+            }
         } else {
             this.mpl2.movingPlatformPhysics.body.setVelocityX(0);
+            this.overlapped1 = false;
+            this.overlapped2 = false;
         }
     }
 }

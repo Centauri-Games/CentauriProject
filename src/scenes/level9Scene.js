@@ -7,6 +7,7 @@ class level9Scene extends Phaser.Scene{
         this.level = "level9Scene";
         this.English = data.english;
         this.lastDown = false;
+        this.am = data.am;
     }
 
     preload(){
@@ -61,6 +62,18 @@ class level9Scene extends Phaser.Scene{
         this.load.tilemapTiledJSON('map','assets/levels/level9.json');
     }
     create(){
+
+        //Reset música
+        this.am.bgMusic.stop();
+        this.am.bgMusicPlaying = false;
+
+        //Audio Manager
+        if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
+            this.bgMusic = this.sound.add("ingameMS", { volume: 0.7, loop: true });
+            this.bgMusic.play();
+            this.am.bgMusicPlaying = true;
+        }
+
         var bg = this.add.sprite(960,540,'bg2');
         bg.setScrollFactor(0);
 
@@ -367,14 +380,7 @@ class level9Scene extends Phaser.Scene{
 
         //CONTROL Y MOVIMIENTO
         this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
-
-       
-
         this.playerProta = true;
-
-        //Codigo de "teclas" para el movimiento. Habria que cambiar el codigo de dentro por el mensaje que se enviará al servidor para decir que movimiento ha realizado el personaje
-
-       
 
         this.nextLevel = nextLevel;
         this.playerShape = playerShape;
@@ -479,7 +485,8 @@ class level9Scene extends Phaser.Scene{
 
         //Final nivel
         if (this.physics.world.overlap(this.playerPhysics, this.nextLevel) && this.physics.world.overlap(this.playerPhysics2, this.nextLevel)){
-            this.scene.start("level10Scene", {english: this.English});
+            this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+            this.scene.start("level10Scene", {english: this.English, am: this.am});
         }
 
         if (this.keyMovement.SPACE.isUp && this.lastDown){
