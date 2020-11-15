@@ -18,7 +18,7 @@ class level6Scene extends Phaser.Scene{
         bg.setScrollFactor(0);
 
         //JUGADORES
-        var iniXL = 3000;
+        var iniXL = 300;
         var iniYL = 650;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light6').setScale(0.8,0.8);
         var playerPhysics = this.physics.add.existing(playerShape, 0);
@@ -318,23 +318,19 @@ class level6Scene extends Phaser.Scene{
         //////////////////////////////////////////
         if (this.keyMovement.W.isDown) {
             if (this.playerProta) {
-                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
-                        this.playerPhysics.body.setVelocityY(-250);
-                    } else {
-                        this.playerPhysics.body.setVelocityY(250);
-                    }
-                    this.playerShape.anims.play('jumpL', false);
+                if (this.physics.world.gravity.y > 0){
+                    this.playerPhysics.body.setVelocityY(-200);
+                } else {
+                    this.playerPhysics.body.setVelocityY(200);
                 }
+                this.playerShape.anims.play('jumpL', false);
             } else {
-                if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
-                        this.playerPhysics2.body.setVelocityY(-250);
-                    } else {
-                        this.playerPhysics2.body.setVelocityY(250);
-                    }
-                    this.playerShape2.anims.play('jumpS', false);
+                if (this.physics.world.gravity.y > 0){
+                    this.playerPhysics2.body.setVelocityY(-200);
+                } else {
+                    this.playerPhysics2.body.setVelocityY(200);
                 }
+                this.playerShape2.anims.play('jumpS', false);
             }
         }
     }
