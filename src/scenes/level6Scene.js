@@ -246,101 +246,96 @@ class level6Scene extends Phaser.Scene{
         this.playerPhysics2 = playerPhysics2;
         this.goal = goal;
     }
-    update(){
-        if(this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal))
+    update() {
+        if (this.physics.world.overlap(this.playerPhysics, this.goal) && this.physics.world.overlap(this.playerPhysics2, this.goal)){
             this.scene.start("level7Scene", {english: this.English});
+        }
 
-            if(this.keyMovement.SPACE.isUp && this.lastDown){
-                this.playerProta = !this.playerProta;
-                this.lastDown = false;
-            }else if(this.keyMovement.SPACE.isDown){
-                this.lastDown = true;
-    
-            }
-    
-            if (this.keyMovement.A.isDown) {
-                if (this.playerProta){
-                    this.playerPhysics.body.setVelocityX(-175);
-                    this.playerShape.flipX = true;
-                    if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                        this.playerShape.anims.play('jumpL', false);
-                    } else {
-                        this.playerShape.anims.play('runL', true);
-                    }
+        if (this.keyMovement.SPACE.isUp && this.lastDown){
+            this.playerProta = !this.playerProta;
+            this.lastDown = false;
+        } else if (this.keyMovement.SPACE.isDown){
+            this.lastDown = true;
+        }
+
+        if (this.keyMovement.A.isDown) {
+            if (this.playerProta){
+                this.playerPhysics.body.setVelocityX(-175);
+                this.playerShape.flipX = true;
+                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
+                    this.playerShape.anims.play('jumpL', false);
                 } else {
-                    this.playerPhysics2.body.setVelocityX(-175);
-                    this.playerShape2.flipX = true;
-                    if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                        this.playerShape2.anims.play('jumpS', false);
-                    } else {
-                        this.playerShape2.anims.play('runS', true);
-                    }
+                    this.playerShape.anims.play('runL', true);
                 }
-            } else if(this.keyMovement.D.isUp){
-                if (this.playerProta) {
-                    this.playerPhysics.body.setVelocityX(0);
-                    this.playerShape.anims.play('stopL', false);
+            } else {
+                this.playerPhysics2.body.setVelocityX(-175);
+                this.playerShape2.flipX = true;
+                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
+                    this.playerShape2.anims.play('jumpS', false);
                 } else {
-                    this.playerPhysics2.body.setVelocityX(0);
-                    this.playerShape2.anims.play('stopS', false);
+                    this.playerShape2.anims.play('runS', true);
                 }
             }
-            /////////////////////////////////////////
-            /////////////////////////////////////////
-            if (this.keyMovement.D.isDown) {
-                if (this.playerProta){
-                    this.playerPhysics.body.setVelocityX(175);
-                    this.playerShape.flipX = false;
-                    if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                        this.playerShape.anims.play('jumpL', false);
-                    } else {
-                        this.playerShape.anims.play('runL', true);
-                    }
+        } else if (this.keyMovement.D.isUp){
+            if (this.playerProta) {
+                this.playerPhysics.body.setVelocityX(0);
+                this.playerShape.anims.play('stopL', false);
+            } else {
+                this.playerPhysics2.body.setVelocityX(0);
+                this.playerShape2.anims.play('stopS', false);
+            }
+        }
+        /////////////////////////////////////////
+        /////////////////////////////////////////
+        if (this.keyMovement.D.isDown) {
+            if (this.playerProta){
+                this.playerPhysics.body.setVelocityX(175);
+                this.playerShape.flipX = false;
+                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
+                    this.playerShape.anims.play('jumpL', false);
                 } else {
-                    this.playerPhysics2.body.setVelocityX(175);
-                    this.playerShape2.flipX = false;
-                    if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                        this.playerShape2.anims.play('jumpS', false);
-                    } else {
-                        this.playerShape2.anims.play('runS', true);
-                    }
+                    this.playerShape.anims.play('runL', true);
                 }
-            } else if(this.keyMovement.A.isUp) {
-                if (this.playerProta) {
-                    this.playerPhysics.body.setVelocityX(0);
-                    this.playerShape.anims.play('stopL', false);
+            } else {
+                this.playerPhysics2.body.setVelocityX(175);
+                this.playerShape2.flipX = false;
+                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
+                    this.playerShape2.anims.play('jumpS', false);
                 } else {
-                    this.playerPhysics2.body.setVelocityX(0);
-                    this.playerShape2.anims.play('stopS', false);
+                    this.playerShape2.anims.play('runS', true);
                 }
             }
-            ///////////////////////////////////////////
-            //////////////////////////////////////////
-            if (this.keyMovement.W.isDown) {
-                if (this.playerProta) {
-                    if (this.playerPhysics.body.touching.down  || this.playerPhysics2.body.touching.up) {
-                        if(this.physics.world.gravity.y > 0){
-                            this.playerPhysics.body.setVelocityY(-200);
-                        }
-                        else{
-                            this.playerPhysics.body.setVelocityY(200);
-                        }
-                        this.playerShape.anims.play('jumpL', false);
+        } else if(this.keyMovement.A.isUp) {
+            if (this.playerProta) {
+                this.playerPhysics.body.setVelocityX(0);
+                this.playerShape.anims.play('stopL', false);
+            } else {
+                this.playerPhysics2.body.setVelocityX(0);
+                this.playerShape2.anims.play('stopS', false);
+            }
+        }
+        ///////////////////////////////////////////
+        //////////////////////////////////////////
+        if (this.keyMovement.W.isDown) {
+            if (this.playerProta) {
+                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics.body.setVelocityY(250);
                     }
-                } else {
-                    
-                    if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
-                        
-                        if(this.physics.world.gravity.y > 0){
-                            
-                            this.playerPhysics2.body.setVelocityY(-200);
-                        }
-                        else{
-                            this.playerPhysics2.body.setVelocityY(200);
-                        }
-                        this.playerShape2.anims.play('jumpS', false);
+                    this.playerShape.anims.play('jumpL', false);
+                }
+            } else {
+                if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics2.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics2.body.setVelocityY(250);
                     }
+                    this.playerShape2.anims.play('jumpS', false);
                 }
             }
+        }
     }
 }

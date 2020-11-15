@@ -10,25 +10,9 @@ class level10Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/jungle.png');
-
-        this.load.image('plataforma', 'assets/sprites/plataforma.png');
-        this.load.image('andamio', 'assets/sprites/andamio.png');
-
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level10.json');
     }
     create(){
-        var bg = this.add.sprite(960,540,'bg');
+        var bg = this.add.sprite(960,540,'bg4');
         bg.setScrollFactor(0);
 
         //JUGADORES
@@ -92,7 +76,7 @@ class level10Scene extends Phaser.Scene{
         }, this);
 
         //TILEMAP
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map10');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
         this.map.createStaticLayer('Suelo',tileset,0,0);
@@ -112,6 +96,32 @@ class level10Scene extends Phaser.Scene{
 
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
+
+
+        var displaceY = 1440;
+
+        //PLATAFORMAS
+        //Estáticas
+        var spl = new StaticPlatform(this, 500, 1300, 'woodP');
+        spl.addPlayerCollide(this, playerShape);
+
+        //SUELO
+        //J Superior
+        var floor1L = this.add.rectangle(2000, 1488, 3800, 100, 0xff0000);
+        floor1L.setAlpha(0);
+        this.physics.add.existing(floor1L, 1);
+        this.physics.add.collider(playerShape, floor1L);
+
+        var floor2L = this.add.rectangle(2000, 1200, 3800, 100, 0xff0000);
+        floor2L.setAlpha(0);
+        this.physics.add.existing(floor2L, 1);
+        this.physics.add.collider(playerShape, floor2L);
+
+        //J Inferior
+        var floor1D = this.add.rectangle(2000, 1488 + displaceY, 3800, 100, 0xff0000);
+        floor1D.setAlpha(0);
+        this.physics.add.existing(floor1D, 1);
+        this.physics.add.collider(playerShape2, floor1D);
 
         //CONTROL Y MOVIMIENTO
         this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
@@ -141,12 +151,11 @@ class level10Scene extends Phaser.Scene{
         });
     }
     update(){
-        if(this.keyMovement.SPACE.isUp && this.lastDown){
+        if (this.keyMovement.SPACE.isUp && this.lastDown){
             this.playerProta = !this.playerProta;
             this.lastDown = false;
-        }else if(this.keyMovement.SPACE.isDown){
+        } else if (this.keyMovement.SPACE.isDown){
             this.lastDown = true;
-
         }
 
         if (this.keyMovement.A.isDown) {
@@ -167,7 +176,7 @@ class level10Scene extends Phaser.Scene{
                     this.playerShape2.anims.play('runS', true);
                 }
             }
-        } else if(this.keyMovement.D.isUp){
+        } else if (this.keyMovement.D.isUp){
             if (this.playerProta) {
                 this.playerPhysics.body.setVelocityX(0);
                 this.playerShape.anims.play('stopL', false);
@@ -209,25 +218,20 @@ class level10Scene extends Phaser.Scene{
         //////////////////////////////////////////
         if (this.keyMovement.W.isDown) {
             if (this.playerProta) {
-                if (this.playerPhysics.body.touching.down  || this.playerPhysics2.body.touching.up) {
-                    if(this.physics.world.gravity.y > 0){
-                        this.playerPhysics.body.setVelocityY(-200);
-                    }
-                    else{
-                        this.playerPhysics.body.setVelocityY(200);
+                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics.body.setVelocityY(250);
                     }
                     this.playerShape.anims.play('jumpL', false);
                 }
             } else {
-                
                 if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
-                    
-                    if(this.physics.world.gravity.y > 0){
-                        
-                        this.playerPhysics2.body.setVelocityY(-200);
-                    }
-                    else{
-                        this.playerPhysics2.body.setVelocityY(200);
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics2.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics2.body.setVelocityY(250);
                     }
                     this.playerShape2.anims.play('jumpS', false);
                 }

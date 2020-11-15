@@ -283,30 +283,16 @@ class level7Scene extends Phaser.Scene{
         this.playerPhysics2 = playerPhysics2;
         this.goal = goal;
     }
-    update(){
-        if(this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal))
+    update() {
+        if (this.physics.world.overlap(this.playerPhysics, this.goal) && this.physics.world.overlap(this.playerPhysics2, this.goal)){
             this.scene.start("level8Scene", {english: this.English});
-
-        if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
-            this.leverLeft.anims.play('pull', false);
-            this.leverRight.anims.play('unpull', false);
-            this.mpl2.movingPlatformPhysics.body.setVelocityX(-200);
-        } else if (this.physics.world.overlap(this.playerShape2, this.leverRight)){
-            this.leverLeft.anims.play('unpull', false);
-            this.leverRight.anims.play('pull', false);
-            this.mpl2.movingPlatformPhysics.body.setVelocityX(200);
-        } else {
-            this.leverLeft.anims.play('unpull', false);
-            this.leverRight.anims.play('unpull', false);
-            this.mpl2.movingPlatformPhysics.body.setVelocityX(0);
         }
 
-        if(this.keyMovement.SPACE.isUp && this.lastDown){
+        if (this.keyMovement.SPACE.isUp && this.lastDown){
             this.playerProta = !this.playerProta;
             this.lastDown = false;
-        }else if(this.keyMovement.SPACE.isDown){
+        } else if (this.keyMovement.SPACE.isDown){
             this.lastDown = true;
-
         }
 
         if (this.keyMovement.A.isDown) {
@@ -327,7 +313,7 @@ class level7Scene extends Phaser.Scene{
                     this.playerShape2.anims.play('runS', true);
                 }
             }
-        } else if(this.keyMovement.D.isUp){
+        } else if (this.keyMovement.D.isUp){
             if (this.playerProta) {
                 this.playerPhysics.body.setVelocityX(0);
                 this.playerShape.anims.play('stopL', false);
@@ -369,25 +355,20 @@ class level7Scene extends Phaser.Scene{
         //////////////////////////////////////////
         if (this.keyMovement.W.isDown) {
             if (this.playerProta) {
-                if (this.playerPhysics.body.touching.down  || this.playerPhysics2.body.touching.up) {
-                    if(this.physics.world.gravity.y > 0){
-                        this.playerPhysics.body.setVelocityY(-200);
-                    }
-                    else{
-                        this.playerPhysics.body.setVelocityY(200);
+                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics.body.setVelocityY(250);
                     }
                     this.playerShape.anims.play('jumpL', false);
                 }
             } else {
-                
                 if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
-                    
-                    if(this.physics.world.gravity.y > 0){
-                        
-                        this.playerPhysics2.body.setVelocityY(-200);
-                    }
-                    else{
-                        this.playerPhysics2.body.setVelocityY(200);
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics2.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics2.body.setVelocityY(250);
                     }
                     this.playerShape2.anims.play('jumpS', false);
                 }
