@@ -48,6 +48,18 @@ class menuScene extends Phaser.Scene{
             mpText.setText("Cooperative online");
             spText.setText("Single player");
         }
+
+        this.music = this.sound.add("menuMS");
+        var musicConfig = {
+            mute: false,
+            volume: 0.5,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        this.music.play(musicConfig);
     }
 
     update(){
