@@ -374,5 +374,13 @@ class level7Scene extends Phaser.Scene{
                 }
             }
         }
+
+        if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
+            this.mpl2.movingPlatformPhysics.body.setVelocityX(-100);
+        } else if (this.physics.world.overlap(this.playerShape2, this.leverRight)){
+            this.mpl2.movingPlatformPhysics.body.setVelocityX(100);
+        } else {
+            this.mpl2.movingPlatformPhysics.body.setVelocityX(0);
+        }
     }
 }

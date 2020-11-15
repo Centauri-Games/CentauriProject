@@ -130,6 +130,23 @@ class bootScene extends Phaser.Scene{
         this.load.image('español', 'assets/UI/España.png');
         this.load.image('english', 'assets/UI/UK.png');
 
+        //Music
+        this.load.audio('menuMS', 'assets/sounds/music/menu.wav');
+        this.load.audio('creditsMS', 'assets/sounds/music/credits.wav');
+        this.load.audio('ingameMS', 'assets/sounds/music/ingame.wav');
+
+        this.load.audio('barrierFX', 'assets/sounds/effects/barrier.wav');
+        this.load.audio('buttonFX', 'assets/sounds/effects/button.wav');
+        this.load.audio('deathFX', 'assets/sounds/effects/death.wav');
+        this.load.audio('diamondFX', 'assets/sounds/effects/diamond.wav');
+        this.load.audio('door1FX', 'assets/sounds/effects/door1.wav');
+        this.load.audio('door2FX', 'assets/sounds/effects/door2.wav');
+        this.load.audio('electricFX', 'assets/sounds/effects/electric.wav');
+        this.load.audio('laserFX', 'assets/sounds/effects/laser.wav');
+        this.load.audio('leverFX', 'assets/sounds/effects/lever.wav');
+        this.load.audio('mirrorFX', 'assets/sounds/effects/mirror.wav');
+        this.load.audio('portalFX', 'assets/sounds/effects/portal.wav');
+
     }
 
     create(){
