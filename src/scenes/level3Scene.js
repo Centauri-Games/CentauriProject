@@ -6,32 +6,15 @@ class level3Scene extends Phaser.Scene{
     init(data){
         this.level = "level3Scene";
         this.English = data.english;
+        this.lastDown = false;
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/factory.png');
-        this.load.image('plataforma', 'assets/sprites/plataforma.png');
-        this.load.image('andamio', 'assets/sprites/andamio.png');
-
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-
-        this.load.image('portalA', 'assets/sprites/portalAzul.png');
-        this.load.image('portalR', 'assets/sprites/portalRojo.png');
-        this.load.image('caja', 'assets/sprites/caja.png');
-
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level3.json');
     }
+
     create(){
 
-        var bg = this.add.sprite(960,540,'bg');
+        var bg = this.add.sprite(960,540,'bg1');
         bg.setScrollFactor(0);
 
         //JUGADORES
@@ -82,22 +65,9 @@ class level3Scene extends Phaser.Scene{
         playerShape.setDepth(10);
         playerShape2.setDepth(10);
 
-        var nextLevel = this.add.zone(1970,0,10,1920);  //NEXT LEVEL
-
-        this.physics.add.overlap(playerPhysics,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics2,nextLevel)){
-                this.scene.start("level4Scene");
-            }
-        });
-
-        this.physics.add.overlap(playerPhysics2,nextLevel,function(){
-            if (this.physics.world.overlap(playerPhysics,nextLevel)){
-                this.scene.start("level4Scene");
-            }
-        });
 
         //TILEMAP
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('map3');
         var tileset = this.map.addTilesetImage('tileset', 'tiles');
         var ground = this.map.createStaticLayer('Suelo',tileset,0,0);
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
@@ -199,23 +169,23 @@ class level3Scene extends Phaser.Scene{
         this.physics.add.existing(floor10, 1);
         this.physics.add.collider(playerShape, floor10);
 
-        var sp = new StaticPlatform(this, 1050, 1125, 'plataforma');
+        var sp = new StaticPlatform(this, 1050, 1125, 'woodP');
         sp.addPlayerCollide(this, playerShape);
 
-        var mp1 = new MovingPlatform(this, 3100, 790, 'plataforma'); //Plataforma final
+        var mp1 = new MovingPlatform(this, 3100, 790, 'woodP'); //Plataforma final
         mp1.addPlayerCollide(this, playerShape);
         mp1.setMovement(this, 200, 0, playerPhysics);
 
         //J Inferior
 
-        var mp2 = new MovingPlatform(this, 700, 2400, 'plataforma'); //Plataforma 1
+        var mp2 = new MovingPlatform(this, 700, 2400, 'woodP'); //Plataforma 1
         mp2.addPlayerCollide(this, playerShape2);
         mp2.setMovement(this, 0, 150, playerPhysics2);
 
-        var sp2 = new StaticPlatform(this, 1200, 2700, 'plataforma');
+        var sp2 = new StaticPlatform(this, 1200, 2700, 'woodP');
         sp2.addPlayerCollide(this, playerShape2);
 
-        var mp3 = new MovingPlatform(this, 1500, 2700, 'plataforma'); //Plataforma 2
+        var mp3 = new MovingPlatform(this, 1500, 2700, 'woodP'); //Plataforma 2
         mp3.addPlayerCollide(this, playerShape2);
         mp3.setMovement(this, 0, -300, playerPhysics2);
 
@@ -242,11 +212,11 @@ class level3Scene extends Phaser.Scene{
         this.physics.add.existing(floor14, 1);
         this.physics.add.collider(playerShape2, floor14);
 
-        var mp4 = new MovingPlatform(this, 3400, 2200, 'plataforma'); //Plataforma 2
+        var mp4 = new MovingPlatform(this, 3400, 2200, 'woodP'); //Plataforma 2
         mp4.addPlayerCollide(this, playerShape2);
         mp4.setMovement(this, 0, 200, playerPhysics2);
 
-        var mp5 = new MovingPlatform(this, 3100, 2400, 'plataforma'); //Plataforma 2
+        var mp5 = new MovingPlatform(this, 3100, 2400, 'woodP'); //Plataforma 2
         mp5.addPlayerCollide(this, playerShape2);
         mp5.setMovement(this, 0, -200, playerPhysics2);
 
@@ -294,140 +264,119 @@ class level3Scene extends Phaser.Scene{
 
 
         //CONTROL Y MOVIMIENTO
-        var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
+        this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
 
-        var pressedA = false;
-        var pressedD = false;
-        var pressedW = false;
+       
 
-        var playerProta = true;
+        this.playerProta = true;
 
         //Codigo de "teclas" para el movimiento. Habria que cambiar el codigo de dentro por el mensaje que se enviará al servidor para decir que movimiento ha realizado el personaje
 
-        keyMovement.D.on('down', function(e) {
-            pressedD = true;
-            if (playerProta){
-                playerPhysics.body.setVelocityX(175);
-                playerShape.flipX = false;
-                if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
-                    playerShape.anims.play('jumpL', false);
-                } else {
-                    playerShape.anims.play('runL', true);
-                }
-            } else {
-                playerPhysics2.body.setVelocityX(175);
-                playerShape2.flipX = false;
-                if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
-                    playerShape2.anims.play('jumpS', false);
-                } else {
-                    playerShape2.anims.play('runS', true);
-                }
-            }
-        });
+  
 
-        keyMovement.A.on('down', function(e) {
-            pressedA = true;
-            if (playerProta){
-                playerPhysics.body.setVelocityX(-175);
-                playerShape.flipX = true;
-                if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
-                    playerShape.anims.play('jumpL', false);
-                } else {
-                    playerShape.anims.play('runL', true);
-                }
-            } else {
-                playerPhysics2.body.setVelocityX(-175);
-                playerShape2.flipX = true;
-                if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
-                    playerShape2.anims.play('jumpS', false);
-                } else {
-                    playerShape2.anims.play('runS', true);
-                }
-            }
-        });
+        //Meta
+        var goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
+        goal.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(goal, 1);
+        this.physics.add.overlap(playerPhysics,goalPhysics);
+        this.physics.add.overlap(playerPhysics2,goalPhysics);
 
-        keyMovement.W.on('down', function(e) {
-            pressedW = true;
-            if (playerProta){
-                if (playerPhysics.body.touching.down){
-                    playerPhysics.body.setVelocityY(-200);
-                    playerShape.anims.play('jumpL', false);
-                }
-            } else {
-                if (playerPhysics2.body.touching.down){
-                    playerPhysics2.body.setVelocityY(-200);
-                    playerShape2.anims.play('jumpS', false);
-                }
-            }
-        });
-
-        keyMovement.SPACE.on('down', function(e){
-            playerProta = !playerProta;
-        });
-
-        keyMovement.D.on('up', function(e){
-            pressedD = false;
-            if (playerProta){
-                if (!pressedA){
-                    playerPhysics.body.setVelocityX(0);
-                    playerShape.anims.play('stopL', false);
-                } else {
-                    playerPhysics.body.setVelocityX(-175);
-                    playerShape.flipX = true;
-                    if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
-                        playerShape.anims.play('jumpL', false);
-                    } else {
-                        playerShape.anims.play('runL', true);
-                    }
-                }
-            } else {
-                if (!pressedA){
-                    playerPhysics2.body.setVelocityX(0);
-                    playerShape2.anims.play('stopS', false);
-                } else {
-                    playerPhysics2.body.setVelocityX(-175);
-                    playerShape2.flipX = true;
-                    if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
-                        playerShape2.anims.play('jumpS', false);
-                    } else {
-                        playerShape2.anims.play('runS', true);
-                    }
-                }
-            }
-        });
-
-        keyMovement.A.on('up', function(e) {
-            pressedA = false;
-            if (playerProta) {
-                if (!pressedD) {
-                    playerPhysics.body.setVelocityX(0);
-                    playerShape.anims.play('stopL', false);
-                } else {
-                    playerPhysics.body.setVelocityX(175);
-                    playerShape.flipX = false;
-                    if (playerPhysics.body.velocity.y < 0 || (playerPhysics.body.velocity.y > 0 && !playerPhysics.body.touching.down)){
-                        playerShape.anims.play('jumpL', false);
-                    } else {
-                        playerShape.anims.play('runL', true);
-                    }
-                }
-            } else {
-                if (!pressedD) {
-                    playerPhysics2.body.setVelocityX(0);
-                    playerShape2.anims.play('stopS', false);
-                } else {
-                    playerPhysics2.body.setVelocityX(-175);
-                    playerShape2.flipX = false;
-                    if (playerPhysics2.body.velocity.y < 0 || (playerPhysics2.body.velocity.y > 0 && !playerPhysics2.body.touching.down)){
-                        playerShape2.anims.play('jumpS', false);
-                    } else {
-                        playerShape2.anims.play('runS', true);
-                    }
-                }
-            }
-        });
+        this.playerShape = playerShape;
+        this.playerShape2 = playerShape2;
+        this.playerPhysics = playerPhysics;
+        this.playerPhysics2 = playerPhysics2;
+        this.goal = goal;
     }
-    update(){
-        
+    update() {
+        if (this.physics.world.overlap(this.playerPhysics, this.goal) && this.physics.world.overlap(this.playerPhysics2, this.goal)){
+            this.scene.start("level4Scene", {english: this.English});
+        }
+
+        if (this.keyMovement.SPACE.isUp && this.lastDown){
+            this.playerProta = !this.playerProta;
+            this.lastDown = false;
+        } else if (this.keyMovement.SPACE.isDown){
+            this.lastDown = true;
+        }
+
+        if (this.keyMovement.A.isDown) {
+            if (this.playerProta){
+                this.playerPhysics.body.setVelocityX(-175);
+                this.playerShape.flipX = true;
+                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
+                    this.playerShape.anims.play('jumpL', false);
+                } else {
+                    this.playerShape.anims.play('runL', true);
+                }
+            } else {
+                this.playerPhysics2.body.setVelocityX(-175);
+                this.playerShape2.flipX = true;
+                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
+                    this.playerShape2.anims.play('jumpS', false);
+                } else {
+                    this.playerShape2.anims.play('runS', true);
+                }
+            }
+        } else if (this.keyMovement.D.isUp){
+            if (this.playerProta) {
+                this.playerPhysics.body.setVelocityX(0);
+                this.playerShape.anims.play('stopL', false);
+            } else {
+                this.playerPhysics2.body.setVelocityX(0);
+                this.playerShape2.anims.play('stopS', false);
+            }
+        }
+        /////////////////////////////////////////
+        /////////////////////////////////////////
+        if (this.keyMovement.D.isDown) {
+            if (this.playerProta){
+                this.playerPhysics.body.setVelocityX(175);
+                this.playerShape.flipX = false;
+                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
+                    this.playerShape.anims.play('jumpL', false);
+                } else {
+                    this.playerShape.anims.play('runL', true);
+                }
+            } else {
+                this.playerPhysics2.body.setVelocityX(175);
+                this.playerShape2.flipX = false;
+                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
+                    this.playerShape2.anims.play('jumpS', false);
+                } else {
+                    this.playerShape2.anims.play('runS', true);
+                }
+            }
+        } else if(this.keyMovement.A.isUp) {
+            if (this.playerProta) {
+                this.playerPhysics.body.setVelocityX(0);
+                this.playerShape.anims.play('stopL', false);
+            } else {
+                this.playerPhysics2.body.setVelocityX(0);
+                this.playerShape2.anims.play('stopS', false);
+            }
+        }
+        ///////////////////////////////////////////
+        //////////////////////////////////////////
+        if (this.keyMovement.W.isDown) {
+            if (this.playerProta) {
+                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics.body.setVelocityY(250);
+                    }
+                    this.playerShape.anims.play('jumpL', false);
+                }
+            } else {
+                if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics2.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics2.body.setVelocityY(250);
+                    }
+                    this.playerShape2.anims.play('jumpS', false);
+                }
+            }
+        }
     }
 }

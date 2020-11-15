@@ -477,8 +477,7 @@ class GravitySwitch{
             this.upsideDown = true;
             playerShape.flipY = true;
             playerShape2.flipY = true;
-            playerPhysics.body.setGravityY(-400);
-            playerPhysics2.body.setGravityY(-400);
+            this.physics.world.gravity.y *= -1;
         }, null, this);
 
         scene.physics.add.collider(playerShape, this.switchOff, function(){
@@ -487,8 +486,7 @@ class GravitySwitch{
             this.upsideDown = false;
             playerShape.flipY = false;
             playerShape2.flipY = false;
-            playerPhysics.body.setGravityY(0);
-            playerPhysics2.body.setGravityY(0);
+            this.physics.world.gravity.y *= -1;
         }, null, this);
     }
 

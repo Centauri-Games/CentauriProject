@@ -10,11 +10,11 @@ var gameConfig = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 200 },
+            gravity: { y: 265 },
             debug: true
         }
     },  
-    scene: [menuScene,settings,selectLevel,selectMode,level1Scene,level2Scene,
+    scene: [bootScene, menuScene,settings,selectLevel,selectMode,level1Scene,level2Scene,
         level3Scene, level4Scene, level5Scene, level6Scene, level7Scene,
         level8Scene, level9Scene,level10Scene, infiniteScene,gameOverScene,matchmakingScene]
 }
