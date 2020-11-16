@@ -51,6 +51,9 @@ class menuScene extends Phaser.Scene{
         }
 
         //Audio Manager
+        if(this.am == null){
+            this.am = new AudioManager();
+        }
         if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
             this.bgMusic = this.sound.add("menuMS", { volume: 0.5, loop: true });
             this.bgMusic.play();

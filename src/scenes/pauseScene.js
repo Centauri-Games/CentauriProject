@@ -22,14 +22,16 @@ class pauseScene extends Phaser.Scene{
             this.rText.setText("Resume");
             this.bText.setText("Back to menu");
         }
-    }
 
-    update(){
         this.rText.setInteractive().on("pointerup",()=>{
             this.scene.resume(this.Level);
         });
         this.bText.setInteractive().on("pointerup",()=>{
             this.scene.start("menuScene", {english: this.English, am: this.am});
         });
+    }
+
+    update(){
+
     }
 }
