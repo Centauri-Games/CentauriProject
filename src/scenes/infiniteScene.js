@@ -227,7 +227,7 @@ class infiniteScene extends Phaser.Scene {
         this.physics.add.existing(floorUpl3, 1);
         this.physics.add.collider(this.playerShape, floorUpl3);
 
-        var floorUpl4 = this.add.rectangle(4464+levelDisplace, 815, 2000, 100, 0x000000);
+        var floorUpl4 = this.add.rectangle(3950+levelDisplace, 815, 1000, 100, 0x000000);
         floorUpl4.setAlpha(0);
         this.physics.add.existing(floorUpl4, 1);
         this.physics.add.collider(this.playerShape, floorUpl4);
@@ -242,7 +242,7 @@ class infiniteScene extends Phaser.Scene {
         this.physics.add.existing(floorUpl6, 1);
         this.physics.add.collider(this.playerShape, floorUpl6);
 
-        var floorUpl7 = this.add.rectangle(-414+levelDisplace, 815, 2000, 100, 0x000000);
+        var floorUpl7 = this.add.rectangle(100+levelDisplace, 815, 1000, 100, 0x000000);
         floorUpl7.setAlpha(0);
         this.physics.add.existing(floorUpl7, 1);
         this.physics.add.collider(this.playerShape, floorUpl7);
@@ -609,8 +609,8 @@ class infiniteScene extends Phaser.Scene {
 
 
         this.generateLevel1(0);
-        this.generateLevel2(3840);
-        this.generateLevel3(7680);
+        this.generateLevel2(5000);
+        //this.generateLevel3(10000);
     }
 
     update(){
