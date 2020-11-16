@@ -5,6 +5,12 @@ class bootScene extends Phaser.Scene{
 
     init(data){
         this.English = data.english;
+        if (this.sys.game.device.os.desktop){
+            this.device = "desktop";
+}
+    else{
+           this.device = "mobile";
+}
     }
 
     preload(){
