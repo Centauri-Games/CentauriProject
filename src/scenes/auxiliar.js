@@ -534,7 +534,7 @@ class Spike{
                 playerShape.setPosition(startX, startY);
             } else {
                 scene.sound.add("deathFX", { volume: 1, loop: false }).play();
-                scene.scene.start('gameOverScene', {english: eng,level : scene.level });
+                scene.scene.start('gameOverScene', {english: eng,level : scene.level, am: this.am});
             }
         }, null, this);
     }
