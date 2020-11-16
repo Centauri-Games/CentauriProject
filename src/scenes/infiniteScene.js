@@ -203,6 +203,14 @@ class infiniteScene extends Phaser.Scene {
         spd6.setAlpha(0);
         spd6.addPlayerCollide(this, this.playerShape2);
 
+        var spl7 = new StaticPlatform(this, 3200 +levelDisplace, 200, 'woodP');
+        spl7.rotate(Math.PI);
+        spl7.addPlayerCollide(this, playerShape);
+
+        var spd7 = new StaticPlatform(this, 3200+levelDisplace, 200+displaceY, 'woodP');
+        spd7.rotate(Math.PI);
+        spd7.addPlayerCollide(this, playerShape);
+
         //PINCHOS
         var spikesUp = new Spike(this, 2000+levelDisplace, 1380, 3800, 100, 0xff0000, this.hp);
         spikesUp.setAlpha(0);

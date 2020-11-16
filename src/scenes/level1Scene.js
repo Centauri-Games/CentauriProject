@@ -196,6 +196,14 @@ class level1Scene extends Phaser.Scene{
         spd6.setAlpha(0);
         spd6.addPlayerCollide(this, playerShape2);
 
+        var spl7 = new StaticPlatform(this, 3200, 200, 'woodP');
+        spl7.rotate(Math.PI);
+        spl7.addPlayerCollide(this, playerShape);
+
+        var spd7 = new StaticPlatform(this, 3200, 200+displaceY, 'woodP');
+        spd7.rotate(Math.PI);
+        spd7.addPlayerCollide(this, playerShape);
+
         //VIDA + PINCHOS
         var hp = new Life(this, iniXL, iniYL, this.English);
 
