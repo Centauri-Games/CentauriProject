@@ -527,14 +527,14 @@ class Spike{
         this.hp = hp;
     }
 
-    addPlayerCollide(scene, playerShape, playerShape2, eng, startX, startY, startX2, startY2){
+    addPlayerCollide(scene, playerShape, playerShape2, eng, startX, startY){
         scene.physics.add.collider(playerShape, this.spikes, function(){
             if (this.hp.getHP() > 0){
                 this.hp.takeDamage();
                 playerShape.setPosition(startX, startY);
             } else {
                 scene.sound.add("deathFX", { volume: 1, loop: false }).play();
-                scene.scene.start('gameOverScene', {english: eng,level : scene.level, am: this.am});
+                scene.scene.start("gameOverScene", {english: eng,level : scene.level, am: this.am});
             }
         }, null, this);
     }

@@ -112,7 +112,14 @@ class level10Scene extends Phaser.Scene{
         var andd2 = new Scaffold(this, 3750, 2570, 'andamio', 350, 500, 20, 80);
         andd2.addCollide(this, playerShape2);
 
+
+        //VIDA + PINCHOS
+        var hp = new Life(this, this.English, playerShape, playerShape2);
         var displaceY = 1440;
+
+        var spikesD = new Spike(this, 1295, 1200 + displaceY, 480, 100, 0xff0000, hp);
+        spikesD.setAlpha(0);
+        spikesD.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS);
 
         //PLATAFORMAS
         //Móviles
@@ -211,11 +218,6 @@ class level10Scene extends Phaser.Scene{
         this.physics.add.existing(floor1D, 1);
         this.physics.add.collider(playerShape2, floor1D);
 
-        var floor2D = this.add.rectangle(1295, 1200 + displaceY, 480, 100, 0xff0000);
-        floor2D.setAlpha(0);
-        this.physics.add.existing(floor2D, 1);
-        this.physics.add.collider(playerShape2, floor2D);
-
         var floor3D = this.add.rectangle(2303, 1104 + displaceY, 384, 100, 0xff0000);
         floor3D.setAlpha(0);
         this.physics.add.existing(floor3D, 1);
@@ -237,7 +239,7 @@ class level10Scene extends Phaser.Scene{
         this.physics.add.collider(playerShape2, floor6D);
 
         //CONTROL Y MOVIMIENTO
-        this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
+        this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
         this.playerProta = true;
 
         this.playerShape = playerShape;
@@ -348,6 +350,9 @@ class level10Scene extends Phaser.Scene{
                     this.playerShape2.anims.play('jumpS', false);
                 }
             }
+        }
+        if (this.keyMovement.ESC.isDown) {
+            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
         }
     }
 }

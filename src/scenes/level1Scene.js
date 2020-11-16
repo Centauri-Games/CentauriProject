@@ -215,7 +215,7 @@ class level1Scene extends Phaser.Scene{
         spikesDownR.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //CONTROL Y MOVIMIENTO
-        this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
+        this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
         this.playerProta = true;
 
         //Meta
@@ -322,6 +322,9 @@ class level1Scene extends Phaser.Scene{
                     this.playerShape2.anims.play('jumpS', false);
                 }
             }
+        }
+        if (this.keyMovement.ESC.isDown) {
+            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
         }
     }
 }

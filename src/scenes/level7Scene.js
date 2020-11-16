@@ -270,7 +270,7 @@ class level7Scene extends Phaser.Scene{
         this.playerShape2 = playerShape2;
 
         //CONTROL Y MOVIMIENTO
-        this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
+        this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
         this.playerProta = true;
 
         //Meta
@@ -380,6 +380,9 @@ class level7Scene extends Phaser.Scene{
                     this.playerShape2.anims.play('jumpS', false);
                 }
             }
+        }
+        if (this.keyMovement.ESC.isDown) {
+            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
         }
 
         if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){

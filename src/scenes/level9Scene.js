@@ -379,7 +379,7 @@ class level9Scene extends Phaser.Scene{
 
 
         //CONTROL Y MOVIMIENTO
-        this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
+        this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
         this.playerProta = true;
 
         this.nextLevel = nextLevel;
@@ -574,6 +574,9 @@ class level9Scene extends Phaser.Scene{
                     this.playerShape2.anims.play('jumpS', false);
                 }
             }
+        }
+        if (this.keyMovement.ESC.isDown) {
+            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
         }
     }
 }
