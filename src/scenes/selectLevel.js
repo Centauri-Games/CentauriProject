@@ -6,7 +6,7 @@ class selectLevel extends Phaser.Scene{
     init(data){
         this.English = data.english;
         this.online = data.online;
-        
+        this.am = data.am;
     }
 
     preload(){
@@ -18,14 +18,14 @@ class selectLevel extends Phaser.Scene{
         
         var bText = this.add.text(100,1000,"Atrás",{font : "24px"}).setInteractive().on("pointerup",()=>{
            
-            this.scene.start("selectMode", {english: this.English});
+            this.scene.start("selectMode", {english: this.English, am: this.am});
         });
 
         this.add.rectangle(320,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 1});
+                this.scene.start("matchmakingScene", {level : 1, am: this.am});
             }else{
-                this.scene.start("level1Scene", {english: this.English});
+                this.scene.start("level1Scene", {english: this.English, am: this.am});
             }
             
         });
@@ -36,9 +36,9 @@ class selectLevel extends Phaser.Scene{
         
         this.add.rectangle(640,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 2});
+                this.scene.start("matchmakingScene", {level : 2, am: this.am});
             }else{
-            this.scene.start("level2Scene", {english: this.English});
+            this.scene.start("level2Scene", {english: this.English, am: this.am});
             }
             
         });
@@ -49,9 +49,9 @@ class selectLevel extends Phaser.Scene{
 
         this.add.rectangle(960,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 3});
+                this.scene.start("matchmakingScene", {level : 3, am: this.am});
             }else{
-            this.scene.start("level3Scene", {english: this.English});
+            this.scene.start("level3Scene", {english: this.English, am: this.am});
             }
         });
 
@@ -61,9 +61,9 @@ class selectLevel extends Phaser.Scene{
 
         this.add.rectangle(1280,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 4});
+                this.scene.start("matchmakingScene", {level : 4, am: this.am});
             }else{
-            this.scene.start("level4Scene", {english: this.English});
+            this.scene.start("level4Scene", {english: this.English, am: this.am});
             }
         });
 
@@ -73,9 +73,9 @@ class selectLevel extends Phaser.Scene{
 
         this.add.rectangle(1600,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 5});
+                this.scene.start("matchmakingScene", {level : 5, am: this.am});
             }else{
-            this.scene.start("level5Scene", {english: this.English});
+            this.scene.start("level5Scene", {english: this.English, am: this.am});
             }
         });
 
@@ -85,9 +85,9 @@ class selectLevel extends Phaser.Scene{
 
         this.add.rectangle(320,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 6});
+                this.scene.start("matchmakingScene", {level : 6, am: this.am});
             }else{
-            this.scene.start("level6Scene", {english: this.English});
+            this.scene.start("level6Scene", {english: this.English, am: this.am});
             }
         });
 
@@ -97,9 +97,9 @@ class selectLevel extends Phaser.Scene{
 
         this.add.rectangle(640,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 7});
+                this.scene.start("matchmakingScene", {level : 7, am: this.am});
             }else{
-            this.scene.start("level7Scene", {english: this.English});
+            this.scene.start("level7Scene", {english: this.English, am: this.am});
             }
         });
 
@@ -109,9 +109,9 @@ class selectLevel extends Phaser.Scene{
 
         this.add.rectangle(960,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 8});
+                this.scene.start("matchmakingScene", {level : 8, am: this.am});
             }else{
-            this.scene.start("level8Scene", {english: this.English});
+            this.scene.start("level8Scene", {english: this.English, am: this.am});
             }
         });
 
@@ -121,9 +121,9 @@ class selectLevel extends Phaser.Scene{
 
         this.add.rectangle(1280,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 9});
+                this.scene.start("matchmakingScene", {level : 9, am: this.am});
             }else{
-            this.scene.start("level9Scene", {english: this.English});
+            this.scene.start("level9Scene", {english: this.English, am: this.am});
             }
         });
 
@@ -133,9 +133,9 @@ class selectLevel extends Phaser.Scene{
 
         this.add.rectangle(1600,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
-                this.scene.start("matchmakingScene", {level : 10});
+                this.scene.start("matchmakingScene", {level : 10, am: this.am});
             }else{
-            this.scene.start("level10Scene", {english: this.English});
+            this.scene.start("level10Scene", {english: this.English, am: this.am});
             }
         });
 

@@ -4,8 +4,13 @@ class bootScene extends Phaser.Scene{
     }
 
     init(data){
-        this.level = data.level;
         this.English = data.english;
+        if (this.sys.game.device.os.desktop){
+            this.device = "desktop";
+}
+    else{
+           this.device = "mobile";
+}
     }
 
     preload(){
@@ -133,7 +138,7 @@ class bootScene extends Phaser.Scene{
         //Music
         this.load.audio('menuMS', 'assets/sounds/music/menu.wav');
         this.load.audio('creditsMS', 'assets/sounds/music/credits.wav');
-        this.load.audio('ingameMS', 'assets/sounds/music/ingame.wav');
+        this.load.audio('ingameMS', 'assets/sounds/music/ingame.mp3');
 
         this.load.audio('barrierFX', 'assets/sounds/effects/barrier.wav');
         this.load.audio('buttonFX', 'assets/sounds/effects/button.wav');
@@ -150,7 +155,8 @@ class bootScene extends Phaser.Scene{
     }
 
     create(){
-        this.scene.start("menuScene", {english: this.English});
+        this.am = new AudioManager();
+        this.scene.start("menuScene", {english: this.English, am: this.am});
     }
 
     update(){

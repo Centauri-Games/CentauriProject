@@ -5,6 +5,9 @@ class infiniteScene extends Phaser.Scene {
 
     init(data){
         this.English = data.english;
+        this.am = data.am;
+
+        console.log(this.am);
     }
     
     levelGenerator(difficulty,level){
@@ -207,7 +210,8 @@ class infiniteScene extends Phaser.Scene {
 
 
         //CONTROL Y MOVIMIENTO
-        var keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
+        var keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
+        this.keyMovement = keyMovement;
 
         var pressedA = false;
         var pressedD = false;
@@ -373,6 +377,9 @@ class infiniteScene extends Phaser.Scene {
        /* if (passedlevelcounter)
         updatinglevels = 2;
         */
+        if (this.keyMovement.ESC.isDown) {
+            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
+        }
     }
 
     /*async syncLoadPhysics(playerShape,mode){

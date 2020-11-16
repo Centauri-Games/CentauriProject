@@ -7,12 +7,25 @@ class level4Scene extends Phaser.Scene{
         this.level = "level4Scene";
         this.English = data.english;
         this.lastDown = false;
+        this.am = data.am;
     }
 
     preload(){
     }
 
     create(){
+
+        //Reset música
+        this.am.bgMusic.stop();
+        this.am.bgMusicPlaying = false;
+
+        //Audio Manager
+        if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
+            this.bgMusic = this.sound.add("ingameMS", { volume: 0.7, loop: true });
+            this.bgMusic.play();
+            this.am.bgMusicPlaying = true;
+        }
+
         var bg = this.add.sprite(960,540,'bg3');
         bg.setDepth(-2);
         bg.setScrollFactor(0);
@@ -64,6 +77,19 @@ class level4Scene extends Phaser.Scene{
 
         playerShape.setDepth(10);
         playerShape2.setDepth(10);
+
+        this.anims.create({
+            key: 'openl',
+            frames: this.anims.generateFrameNumbers('pinkDoor', { start: 0, end: 5 }),
+            frameRate: 10,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'closel',
+            frames: this.anims.generateFrameNumbers('pinkDoor', { start: 5, end: 0 }),
+            frameRate: 10,
+            repeat: 0
+        });
 
 
         //TILEMAP
@@ -299,15 +325,8 @@ class level4Scene extends Phaser.Scene{
 
         mirror7.addDoors(doorUp, doorDown);
         //CONTROL Y MOVIMIENTO
-        this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
-
-        
-
+        this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
         this.playerProta = true;
-
-        //Codigo de "teclas" para el movimiento. Habria que cambiar el codigo de dentro por el mensaje que se enviará al servidor para decir que movimiento ha realizado el personaje
-
-        
 
         //Meta
         var goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
@@ -324,7 +343,8 @@ class level4Scene extends Phaser.Scene{
     }
     update() {
         if (this.physics.world.overlap(this.playerPhysics, this.goal) && this.physics.world.overlap(this.playerPhysics2, this.goal)){
-            this.scene.start("level5Scene", {english: this.English});
+            this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+            this.scene.start("level5Scene", {english: this.English, am: this.am});
         }
 
         if (this.keyMovement.SPACE.isUp && this.lastDown){
@@ -413,13 +433,16 @@ class level4Scene extends Phaser.Scene{
                 }
             }
         }
+        if (this.keyMovement.ESC.isDown) {
+            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
+        }
     }
 
     //Función para configurar espejo
     setInteractiveMirror(mirror, correctPosition){
         mirror.mirror.setInteractive().on('pointerup', function(){  //Ciclo del espejo
             mirror.mirrorPosition = (mirror.mirrorPosition +1)%8;
-            console.log(mirror.mirrorPosition);
+            this.scene.sound.add("mirrorFX", { volume: 1, loop: false }).play();
 
             switch(mirror.mirrorPosition){
                 case 0:

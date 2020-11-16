@@ -7,11 +7,24 @@ class level10Scene extends Phaser.Scene{
         this.level = "level10Scene";
         this.English = data.english;
         this.lastDown = false;
+        this.am = data.am;
     }
 
     preload(){
     }
     create(){
+
+        //Reset música
+        this.am.bgMusic.stop();
+        this.am.bgMusicPlaying = false;
+
+        //Audio Manager
+        if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
+            this.bgMusic = this.sound.add("ingameMS", { volume: 0.7, loop: true });
+            this.bgMusic.play();
+            this.am.bgMusicPlaying = true;
+        }
+
         var bg = this.add.sprite(960,540,'bg4');
         bg.setScrollFactor(0);
 
@@ -99,7 +112,14 @@ class level10Scene extends Phaser.Scene{
         var andd2 = new Scaffold(this, 3750, 2570, 'andamio', 350, 500, 20, 80);
         andd2.addCollide(this, playerShape2);
 
+
+        //VIDA + PINCHOS
+        var hp = new Life(this, this.English, playerShape, playerShape2);
         var displaceY = 1440;
+
+        var spikesD = new Spike(this, 1295, 1200 + displaceY, 480, 100, 0xff0000, hp);
+        spikesD.setAlpha(0);
+        spikesD.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS);
 
         //PLATAFORMAS
         //Móviles
@@ -198,11 +218,6 @@ class level10Scene extends Phaser.Scene{
         this.physics.add.existing(floor1D, 1);
         this.physics.add.collider(playerShape2, floor1D);
 
-        var floor2D = this.add.rectangle(1295, 1200 + displaceY, 480, 100, 0xff0000);
-        floor2D.setAlpha(0);
-        this.physics.add.existing(floor2D, 1);
-        this.physics.add.collider(playerShape2, floor2D);
-
         var floor3D = this.add.rectangle(2303, 1104 + displaceY, 384, 100, 0xff0000);
         floor3D.setAlpha(0);
         this.physics.add.existing(floor3D, 1);
@@ -224,28 +239,30 @@ class level10Scene extends Phaser.Scene{
         this.physics.add.collider(playerShape2, floor6D);
 
         //CONTROL Y MOVIMIENTO
-        this.keyMovement = this.input.keyboard.addKeys('A, D, W, SPACE');
-
+        this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
         this.playerProta = true;
-
-        //Codigo de "teclas" para el movimiento. Habria que cambiar el codigo de dentro por el mensaje que se enviará al servidor para decir que movimiento ha realizado el personaje
-
 
         this.playerShape = playerShape;
         this.playerShape2 = playerShape2;
         this.playerPhysics = playerPhysics;
         this.playerPhysics2 = playerPhysics2;
 
-        var goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
+        var goal = this.add.rectangle(3750, 1125, 300, 500, 0x000000);
         goal.setAlpha(0);
         var goalPhysics = this.physics.add.existing(goal, 1);
         this.physics.add.overlap(playerPhysics,goalPhysics);
-        this.physics.add.overlap(playerPhysics2,goalPhysics);
         this.goal = goal;
+
+        var goal2 = this.add.rectangle(3750, 1125 + displaceY, 300, 500, 0x000000);
+        goal2.setAlpha(0);
+        var goalPhysics2 = this.physics.add.existing(goal2, 1);
+        this.physics.add.overlap(playerPhysics2,goalPhysics2);
+        this.goal2 = goal2;
     }
     update(){
-        if (this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal)){
-            this.scene.start("menuScene", {english: this.English});
+        if (this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal2)){
+            this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+            this.scene.start("menuScene", {english: this.English, am: this.am});
         }
 
         if (this.keyMovement.SPACE.isUp && this.lastDown){
@@ -333,6 +350,9 @@ class level10Scene extends Phaser.Scene{
                     this.playerShape2.anims.play('jumpS', false);
                 }
             }
+        }
+        if (this.keyMovement.ESC.isDown) {
+            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
         }
     }
 }

@@ -6,7 +6,7 @@ class matchmakingScene extends Phaser.Scene{
 
     init(data){
         this.level = data.level;
-        
+        this.am = data.am;
     }
 
     preload(){

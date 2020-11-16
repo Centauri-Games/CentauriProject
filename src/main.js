@@ -14,9 +14,9 @@ var gameConfig = {
             debug: true
         }
     },  
-    scene: [bootScene, menuScene,settings,selectLevel,selectMode,level1Scene,level2Scene,
+    scene: [bootScene, menuScene, settings, selectLevel, selectMode, level1Scene, level2Scene,
         level3Scene, level4Scene, level5Scene, level6Scene, level7Scene,
-        level8Scene, level9Scene,level10Scene, infiniteScene,gameOverScene,matchmakingScene]
+        level8Scene, level9Scene,level10Scene, infiniteScene, gameOverScene, matchmakingScene, pauseScene]
 }
 
 var game = new Phaser.Game(gameConfig);
