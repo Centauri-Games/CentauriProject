@@ -122,6 +122,10 @@ class level10Scene extends Phaser.Scene{
         spikesD.setAlpha(0);
         spikesD.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS);
 
+        var spikes2D = new Spike(this, 3023, 1488 + displaceY, 864, 100, 0xff0000, hp);
+        spikes2D.setAlpha(0);
+        spikes2D.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS);
+
         //PLATAFORMAS
         //Móviles
         var mpd = new MovingPlatform(this, 2000, 2800, 'woodP');

@@ -11,15 +11,14 @@ class pauseScene extends Phaser.Scene{
     }
 
     preload(){
-
+        this.load.image('pause', 'assets/screens/Pausa.png');
     }
 
     create(){
-        this.gText = this.add.text(800,250,"PAUSA",{font : "60px"});
+        this.add.sprite(960, 540, 'pause').setScale(2, 2);
         this.rText = this.add.text(960,360,"Reanudar",{font : "48px"});
         this.bText = this.add.text(960,720,"Volver al menú",{font : "48px"});
         if (this.English){
-            this.gText.setText("PAUSED");
             this.rText.setText("Resume");
             this.bText.setText("Back to menu");
         }
