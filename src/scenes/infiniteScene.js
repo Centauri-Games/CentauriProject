@@ -40,8 +40,9 @@ class infiniteScene extends Phaser.Scene {
         var tileset = map.addTilesetImage('tileset', 'tiles');
 
         //Fondo
-        var bg = this.add.sprite(200, 0, 'bg1');
-        bg.setScrollFactor(0);
+        this.bg = this.add.sprite(200, 0, 'bg1');
+        this.bg.setScrollFactor(0);
+        this.bg.setDepth(-2);
 
         var ground = map.createStaticLayer('Suelo',tileset,levelDisplace,0);
         var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
@@ -164,8 +165,9 @@ class infiniteScene extends Phaser.Scene {
 
     generateLevel2(levelDisplace){
 
-        var bg = this.add.sprite(960,540,'bg2');
-        bg.setScrollFactor(0);
+        this.bg = this.add.sprite(960,540,'bg2');
+        this.bg.setScrollFactor(0);
+        this.bg.setDepth(-2);
 
         var iniXL = 300+levelDisplace;
         var iniYL = 1350;
@@ -317,8 +319,9 @@ class infiniteScene extends Phaser.Scene {
     }
 
     generateLevel3(levelDisplace){
-        var bg = this.add.sprite(960,540,'bg1');
-        bg.setScrollFactor(0);
+        this.bg = this.add.sprite(960,540,'bg1');
+        this.bg.setScrollFactor(0);
+        this.bg.setDepth(-2);
 
         var iniXL = 300+levelDisplace;
         var iniYL = 875;
@@ -519,6 +522,257 @@ class infiniteScene extends Phaser.Scene {
         this.goal.setPosition(3750+levelDisplace, 1125);
     }
 
+    generateLevel4(levelDisplace){
+        this.bg = this.add.sprite(960,540,'bg3');
+        this.bg.setDepth(-2);
+        this.bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 875;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2300;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+        this.anims.create({
+            key: 'openl',
+            frames: this.anims.generateFrameNumbers('pinkDoor', { start: 0, end: 5 }),
+            frameRate: 10,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'closel',
+            frames: this.anims.generateFrameNumbers('pinkDoor', { start: 5, end: 0 }),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        //TILEMAP
+        var map = this.add.tilemap('map4');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
+        map.createStaticLayer('Suelo',tileset,levelDisplace,0);
+        map.createStaticLayer('Suelo2',tileset,levelDisplace,0);
+
+        walls.setCollision([10,15,16,17]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace,0,4032,1440);
+        this.camera2.setBounds(levelDisplace,1440,4032, 1440);
+
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 1125, 'andamio', 350, 500, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 2570, 'andamio', 350, 500, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3350+levelDisplace, 1125, 'andamio', 350, 500, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3350+levelDisplace, 2570, 'andamio', 350, 500, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+        var displaceY = 1440;
+
+        //SUELO
+        //J Superior
+        var floor1 = this.add.rectangle(2000+levelDisplace, 1450, 3800, 100, 0xff0000);
+        floor1.setAlpha(0);
+        this.physics.add.existing(floor1, 1);
+        this.physics.add.collider(this.playerShape, floor1);
+
+        var floor2 = this.add.rectangle(2000+levelDisplace, 1450+displaceY, 3800, 100, 0xff0000);
+        floor2.setAlpha(0);
+        this.physics.add.existing(floor2, 1);
+        this.physics.add.collider(this.playerShape2, floor2);
+
+        var floor3 = this.add.rectangle(3750+levelDisplace, 975, 500, 100, 0xff0000);
+        floor3.setAlpha(0);
+        this.physics.add.existing(floor3, 1);
+        this.physics.add.collider(this.playerShape, floor3);
+
+        var floor4 = this.add.rectangle(3750+levelDisplace, 975+displaceY, 500, 100, 0xff0000);
+        floor4.setAlpha(0);
+        this.physics.add.existing(floor4, 1);
+        this.physics.add.collider(this.playerShape2, floor4);
+
+        //PLATAFORMAS
+        var mp1 = new MovingPlatform(this, 800+levelDisplace, 950, 'blueP'); //Plataforma recorrido medio
+        mp1.addPlayerCollide(this, this.playerShape);
+        mp1.setMovementTime(this, 330, 0, 6000);
+
+        var mp2 = new MovingPlatform(this, 600+levelDisplace, 950, 'blueP');
+        mp2.addPlayerCollide(this, this.playerShape);
+        mp2.setMovement(this, 0, 200);
+
+        var mp3 = new MovingPlatform(this, 3000+levelDisplace, 950, 'blueP');
+        mp3.addPlayerCollide(this, this.playerShape);
+        mp3.setMovement(this, 0, 200);
+
+        var mp4 = new MovingPlatform(this, 800+levelDisplace, 950+displaceY, 'blueP'); //Plataforma recorrido medio
+        mp4.addPlayerCollide(this, this.playerShape2);
+        mp4.setMovementTime(this, 330, 0, 6000);
+
+        var mp5 = new MovingPlatform(this, 600+levelDisplace, 950+displaceY, 'blueP');
+        mp5.addPlayerCollide(this, this.playerShape2);
+        mp5.setMovement(this, 0, 200);
+
+        var mp6 = new MovingPlatform(this, 3000+levelDisplace, 950+displaceY, 'blueP');
+        mp6.addPlayerCollide(this, this.playerShape2);
+        mp6.setMovement(this, 0, 200);
+
+        //ESPEJOS
+
+
+        var mirror1 = new Mirror(this, 1000+levelDisplace, 1370, 'mirror');
+        mirror1.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror1, 7);
+
+        var mirror2 = new Mirror(this, 1500+levelDisplace, 1370, 'mirror');
+        mirror2.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror2, 5);
+
+        var mirror3 = new Mirror(this, 2000+levelDisplace, 1370, 'mirror');
+        mirror3.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror3, 7);
+
+        var mirror4 = new Mirror(this, 2500+levelDisplace, 1370, 'mirror');
+        mirror4.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror4, 5);
+
+        var mirror5 = new Mirror(this, 1500+levelDisplace, 700, 'mirror');    //Techo
+        mirror5.rotate(Math.PI);
+        mirror5.mirror.setDepth(-1);
+        this.setInteractiveMirror(mirror5, 6);
+
+        //Inferiores
+        var mirror6 = new Mirror(this, 1400+levelDisplace, 1370+displaceY, 'mirror');
+        mirror6.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror6, 7);
+
+        var mirror7 = new Mirror(this, 1900+levelDisplace, 1050+displaceY, 'mirror');
+        mirror7.rotate(Math.PI/2);
+        mirror7.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror7, 7);
+
+        var mirror8 = new Mirror(this, 2200+levelDisplace, 700+displaceY, 'mirror');   //Techo
+        mirror8.mirror.setDepth(-1);
+        mirror8.rotate(Math.PI);
+        this.setInteractiveMirror(mirror8, 6);
+
+        var mirror9 = new Mirror(this, 2500+levelDisplace, 1370+displaceY, 'mirror');
+        mirror9.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror9, 5);
+
+        var diam = this.add.sprite(1900+levelDisplace, 1370+displaceY, 'diamond').setDepth(13);
+        this.add.sprite(1370+levelDisplace, 750+displaceY, 'blueP').setRotation(Math.PI/2);
+        this.add.sprite(1840+levelDisplace, 1050+displaceY, 'blueP').setScale(1.2,1.2).setRotation(Math.PI/2);
+        var laser = this.add.sprite(1400+levelDisplace, 760+displaceY, 'laser');
+        laser.setRotation(Math.PI/2);
+        laser.setDepth(13);
+        laser.setScale(1.3,1.3);
+
+        var portal1D = this.add.sprite(1700+levelDisplace, 760+displaceY, 'portalA').setDepth(13);
+        var portal2D = this.add.sprite(2700+levelDisplace, 760+displaceY, 'portalR').setDepth(13);
+        var portal1U = this.add.sprite(1000+levelDisplace, 800, 'portalR').setDepth(13);
+        var portal2U = this.add.sprite(2000+levelDisplace, 800, 'portalA').setDepth(13);
+
+
+        var laser1 = this.add.line(0,0, laser.x+10, laser.y, mirror6.mirror.x, mirror6.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser1.setDepth(12);
+
+        var laser2 = this.add.line(0,0, mirror6.mirror.x, mirror6.mirror.y-10, portal1D.x, portal1D.y, 0xff0000).setOrigin(0,0);
+        laser2.setDepth(12);
+        mirror6.addObject(laser2);
+
+        var laser3 = this.add.line(0,0, portal1U.x, portal1U.y, mirror2.mirror.x, mirror2.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser3.setDepth(12);
+        mirror6.addObject(laser3);
+        mirror6.addNext(mirror2);
+        mirror2.addPrevious(mirror6);
+
+        var laser4 = this.add.line(0,0, mirror2.mirror.x, mirror2.mirror.y-10, mirror1.mirror.x, mirror1.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser4.setDepth(12);
+        mirror2.addObject(laser4);
+        mirror2.addNext(mirror1);
+        mirror1.addPrevious(mirror2);
+
+        var laser5 = this.add.line(0,0, mirror1.mirror.x, mirror1.mirror.y-10, mirror5.mirror.x, mirror5.mirror.y+12, 0xff0000).setOrigin(0,0);
+        laser5.setDepth(12);
+        mirror1.addObject(laser5);
+        mirror1.addNext(mirror5);
+        mirror5.addPrevious(mirror1);
+
+        var laser6 = this.add.line(0,0, mirror5.mirror.x, mirror5.mirror.y+12, mirror3.mirror.x, mirror3.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser6.setDepth(12);
+        mirror5.addObject(laser6);
+        mirror5.addNext(mirror3);
+        mirror3.addPrevious(mirror5);
+
+        var laser7 = this.add.line(0,0, mirror3.mirror.x, mirror3.mirror.y-10, mirror4.mirror.x, mirror4.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser7.setDepth(12);
+        mirror3.addObject(laser7);
+        mirror3.addNext(mirror4);
+        mirror4.addPrevious(mirror3);
+
+        var laser8 = this.add.line(0,0, mirror4.mirror.x, mirror4.mirror.y-10, portal2U.x, portal2U.y, 0xff0000).setOrigin(0,0);
+        laser8.setDepth(12);
+        mirror4.addObject(laser8);
+
+        var laser9 = this.add.line(0,0, portal2D.x, portal2D.y, mirror9.mirror.x, mirror9.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser9.setDepth(12);
+        mirror4.addObject(laser9);
+        mirror4.addNext(mirror9);
+        mirror9.addPrevious(mirror4);
+
+        var laser10 = this.add.line(0,0, mirror9.mirror.x, mirror9.mirror.y-10, mirror8.mirror.x, mirror8.mirror.y+12, 0xff0000).setOrigin(0,0);
+        laser10.setDepth(12);
+        mirror9.addObject(laser10);
+        mirror9.addNext(mirror8);
+        mirror8.addPrevious(mirror9);
+
+        var laser11 = this.add.line(0,0, mirror8.mirror.x, mirror8.mirror.y+12, mirror7.mirror.x+12, mirror7.mirror.y, 0xff0000).setOrigin(0,0);
+        laser11.setDepth(12);
+        mirror8.addObject(laser11);
+        mirror8.addNext(mirror7);
+        mirror7.addPrevious(mirror8);
+
+        var laser12 = this.add.line(0,0, mirror7.mirror.x+12, mirror7.mirror.y, diam.x, diam.y, 0xff0000).setOrigin(0,0);
+        laser12.setDepth(12);
+        mirror7.addObject(laser12);
+
+
+        laser2.setAlpha(0);
+        laser3.setAlpha(0);
+        laser4.setAlpha(0);
+        laser5.setAlpha(0);
+        laser6.setAlpha(0);
+        laser7.setAlpha(0);
+        laser8.setAlpha(0);
+        laser9.setAlpha(0);
+        laser10.setAlpha(0);
+        laser11.setAlpha(0);
+        laser12.setAlpha(0);
+
+        //PUERTAS
+        var doorUp = new Door(this, 3625+levelDisplace, 850, 'laserDoor');
+        doorUp.scale(1.25,1.25);
+        doorUp.addPlayerCollide(this.playerShape);
+        var doorDown = new Door(this, 3625+levelDisplace, 850+displaceY, 'laserDoor');
+        doorDown.scale(1.25,1.25);
+        doorDown.addPlayerCollide(this.playerShape2);
+        mirror7.addDoors(doorUp, doorDown);
+
+
+        //Meta
+        this.goal.setPosition(3750+levelDisplace, 1125);
+    }
+
     preload(){
     }
 
@@ -610,7 +864,8 @@ class infiniteScene extends Phaser.Scene {
 
         this.generateLevel1(0);
         this.generateLevel2(5000);
-        //this.generateLevel3(10000);
+        this.generateLevel3(10000);
+        this.generateLevel4(15000);
     }
 
     update(){
@@ -713,4 +968,47 @@ class infiniteScene extends Phaser.Scene {
         
         return await this.physics.add.existing(playerShape, mode);
     }*/
+
+    //Función para configurar espejo
+    setInteractiveMirror(mirror, correctPosition){
+        mirror.mirror.setInteractive().on('pointerup', function(){  //Ciclo del espejo
+            mirror.mirrorPosition = (mirror.mirrorPosition +1)%8;
+            this.scene.sound.add("mirrorFX", { volume: 1, loop: false }).play();
+
+            switch(mirror.mirrorPosition){
+                case 0:
+                    mirror.mirror.anims.play('pos0', false);
+                    break;
+                case 1:
+                    mirror.mirror.anims.play('pos1', false);
+                    break;
+                case 2:
+                    mirror.mirror.anims.play('pos2', false);
+                    break;
+                case 3:
+                    mirror.mirror.anims.play('pos3', false);
+                    break;
+                case 4:
+                    mirror.mirror.anims.play('pos4', false);
+                    break;
+                case 5:
+                    mirror.mirror.anims.play('pos5', false);
+                    break;
+                case 6:
+                    mirror.mirror.anims.play('pos6', false);
+                    break;
+                case 7:
+                    mirror.mirror.anims.play('pos7', true);
+                    break;
+                default:
+            }
+            if(mirror.mirrorPosition == correctPosition){
+                mirror.setActive(true);
+            }
+            else{
+                mirror.setActive(false);
+            }
+
+        });
+    }
 }
