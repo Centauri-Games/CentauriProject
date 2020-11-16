@@ -8,6 +8,7 @@ class level4Scene extends Phaser.Scene{
         this.English = data.english;
         this.lastDown = false;
         this.am = data.am;
+        this.device = data.device;
     }
 
     preload(){

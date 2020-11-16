@@ -6,7 +6,12 @@ class menuScene extends Phaser.Scene{
     init(data){
         this.English = data.english;
         this.am = data.am;
+        if (this.sys.game.device.os.desktop){
+            this.device = "desktop";
+        }else{
+            this.device = "mobile";       
     }
+}
 
     preload(){
         this.load.image('screen', 'assets/UI/FullScreen.png');
@@ -31,7 +36,7 @@ class menuScene extends Phaser.Scene{
         this.add.rectangle(960,360,800,200,0xffff00).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
 
-            this.scene.start("selectMode", {english: this.English, online : true, am: this.am});
+            this.scene.start("selectMode", {english: this.English, online : true, am: this.am, device: this.device});
             console.log("Click");
         });
         var mpText = this.add.text(960,360,"Cooperativo en linea",{font : "24px", color : "black"});
@@ -39,7 +44,7 @@ class menuScene extends Phaser.Scene{
         this.add.rectangle(960,720,800,200,0xffff00).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
             console.log("Click");
-            this.scene.start("selectMode", {english: this.English, online : false, am: this.am});
+            this.scene.start("selectMode", {english: this.English, online : false, am: this.am, device : this.device});
         });
         var spText = this.add.text(960,720,"Un jugador",{font : "24px",color : "black"});
 

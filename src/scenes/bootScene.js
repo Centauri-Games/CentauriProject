@@ -5,12 +5,8 @@ class bootScene extends Phaser.Scene{
 
     init(data){
         this.English = data.english;
-        if (this.sys.game.device.os.desktop){
-            this.device = "desktop";
-}
-    else{
-           this.device = "mobile";
-}
+       
+
     }
 
     preload(){
@@ -134,6 +130,14 @@ class bootScene extends Phaser.Scene{
         this.load.image('settings', 'assets/UI/Settings.png');
         this.load.image('español', 'assets/UI/España.png');
         this.load.image('english', 'assets/UI/UK.png');
+
+        //Interfaz Móvil
+
+        this.load.image('rightIcon', 'assets/UI/rightIcon.png');
+        this.load.image('leftIcon', 'assets/UI/leftIcon.png');
+        this.load.image('jumpIcon', 'assets/UI/jumpIcon.png');
+        this.load.image('swapIcon', 'assets/UI/swapIcon.png');
+        this.load.image('pauseIcon', 'assets/UI/pauseIcon.png');
 
         //Music
         this.load.audio('menuMS', 'assets/sounds/music/menu.wav');
