@@ -9,12 +9,14 @@ class infiniteScene extends Phaser.Scene {
         this.device = data.device;
     }
 
-    levelGenerator(difficulty,level){
+    levelGenerator(level){
         switch(level){
 
             case 1:
+                this.generateLevel1();
                 break;
             case 2:
+                this.generateLevel2();
                 break;
         }
     }
@@ -160,6 +162,160 @@ class infiniteScene extends Phaser.Scene {
         spikesDownR.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
     }
 
+    generateLevel2(levelDisplace){
+
+        var bg = this.add.sprite(960,540,'bg2');
+        bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 1350;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2300;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+
+        var map = this.add.tilemap('map2');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+
+        var ground = map.createStaticLayer('Suelo',tileset,levelDisplace,0);
+        var ground2 = map.createStaticLayer('Suelo2',tileset,levelDisplace,0);
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
+        map.createStaticLayer('Pinchos',tileset,levelDisplace,0);
+
+        ground.setCollision([29,30]);
+        ground2.setCollision([58, 3221225530]);
+        walls.setCollision([37,44]);
+
+        this.physics.add.collider(ground2, this.playerShape);
+        this.physics.add.collider(ground2, this.playerShape2);
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+
+        //ANDAMIOS
+        var andd = new Scaffold(this, 300+levelDisplace, 2570, 'andamio', 350, 80, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andd2 = new Scaffold(this, 3750+levelDisplace, 2570, 'andamio', 350, 80, 20, 80);
+        andd2.addCollide(this, this.playerShape2);   //Final inferior
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace,0,4032,1440);
+        this.camera2.setBounds(levelDisplace,1440,4032, 1440);
+
+        //Techo inferior/Suelo superior
+        var floorDownl = this.add.rectangle(2000+levelDisplace, 1440, 4000, 100, 0x000000);
+        floorDownl.setAlpha(0);
+        this.physics.add.existing(floorDownl, 1);
+        this.physics.add.collider(this.playerShape, floorDownl);
+
+        //Techo superior
+        var floorUpl = this.add.rectangle(2000+levelDisplace, 527, 4000, 100, 0x000000);
+        floorUpl.setAlpha(0);
+        this.physics.add.existing(floorUpl, 1);
+        this.physics.add.collider(this.playerShape, floorUpl);
+
+        var floorUpl2 = this.add.rectangle(3600+levelDisplace, 623, 2000, 100, 0x000000);
+        floorUpl2.setAlpha(0);
+        this.physics.add.existing(floorUpl2, 1);
+        this.physics.add.collider(this.playerShape, floorUpl2);
+
+        var floorUpl3 = this.add.rectangle(3984+levelDisplace, 719, 2000, 100, 0x000000);
+        floorUpl3.setAlpha(0);
+        this.physics.add.existing(floorUpl3, 1);
+        this.physics.add.collider(this.playerShape, floorUpl3);
+
+        var floorUpl4 = this.add.rectangle(4464+levelDisplace, 815, 2000, 100, 0x000000);
+        floorUpl4.setAlpha(0);
+        this.physics.add.existing(floorUpl4, 1);
+        this.physics.add.collider(this.playerShape, floorUpl4);
+
+        var floorUpl5 = this.add.rectangle(450+levelDisplace, 623, 2000, 100, 0x000000);
+        floorUpl5.setAlpha(0);
+        this.physics.add.existing(floorUpl5, 1);
+        this.physics.add.collider(this.playerShape, floorUpl5);
+
+        var floorUpl6 = this.add.rectangle(66+levelDisplace, 719, 2000, 100, 0x000000);
+        floorUpl6.setAlpha(0);
+        this.physics.add.existing(floorUpl6, 1);
+        this.physics.add.collider(this.playerShape, floorUpl6);
+
+        var floorUpl7 = this.add.rectangle(-414+levelDisplace, 815, 2000, 100, 0x000000);
+        floorUpl7.setAlpha(0);
+        this.physics.add.existing(floorUpl7, 1);
+        this.physics.add.collider(this.playerShape, floorUpl7);
+
+
+        //PLATAFORMAS
+        var sp = new StaticPlatform(this, 600+levelDisplace, 2600, 'blueP');
+        sp.addPlayerCollide(this, this.playerShape2);
+
+        var sp2 = new StaticPlatform(this, 800+levelDisplace, 1700, 'blueP');
+        sp2.rotate(Math.PI);
+        sp2.addPlayerCollide(this, this.playerShape2);
+
+        var sp3 = new StaticPlatform(this, 1100+levelDisplace, 2750, 'blueP');
+        sp3.addPlayerCollide(this, this.playerShape2);
+
+        var sp4 = new StaticPlatform(this, 1400+levelDisplace, 2750, 'blueP');
+        sp4.addPlayerCollide(this, this.playerShape2);
+
+        var sp5 = new StaticPlatform(this, 1600+levelDisplace, 2400, 'blueP');
+        sp5.rotate(Math.PI);
+        sp5.addPlayerCollide(this, this.playerShape2);
+
+        var sp6 = new StaticPlatform(this, 1800+levelDisplace, 1800, 'blueP');
+        sp6.rotate(Math.PI);
+        sp6.addPlayerCollide(this, this.playerShape2);
+
+        var sp7 = new StaticPlatform(this, 2000+levelDisplace, 2700, 'blueP');
+        sp7.addPlayerCollide(this, this.playerShape2);
+
+        var sp8 = new StaticPlatform(this, 2200+levelDisplace, 1800, 'blueP');
+        sp8.rotate(Math.PI);
+        sp8.addPlayerCollide(this, this.playerShape2);
+
+        var sp9 = new StaticPlatform(this, 2400+levelDisplace, 2700, 'blueP');
+        sp9.addPlayerCollide(this, this.playerShape2);
+
+        var sp10 = new StaticPlatform(this, 2700+levelDisplace, 2750, 'blueP');
+        sp10.addPlayerCollide(this, this.playerShape2);
+
+        var sp11 = new StaticPlatform(this, 2900+levelDisplace, 1700, 'blueP');
+        sp11.rotate(Math.PI);
+        sp11.addPlayerCollide(this, this.playerShape2);
+
+        var sp12 = new StaticPlatform(this, 3250+levelDisplace, 2200, 'blueP');
+        sp12.addPlayerCollide(this, this.playerShape2);
+
+        //PINCHOS
+        var spikesupd = new Spike(this, 2000+levelDisplace, 1560, 4000, 100, 0xff0000, this.hp);
+        spikesupd.setAlpha(0);
+        spikesupd.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        var spikesdownd = new Spike(this, 2000+levelDisplace, 2830, 4000, 100, 0xff0000, this.hp);
+        spikesdownd.setAlpha(0);
+        spikesdownd.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        var spikesupl = new Spike(this, 1970+levelDisplace, 580, 100, 50, 0xff0000, this.hp);
+        spikesupl.setAlpha(0);
+        spikesupl.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+
+        var spikesdownl = new Spike(this, 2110+levelDisplace, 1425, 100, 100, 0xff0000, this.hp);
+        spikesdownl.setAlpha(0);
+        spikesdownl.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+
+        //CAMBIO DE GRAVEDAD
+        var gravity = new GravitySwitch(this, 2500+levelDisplace, 1440, 1700+levelDisplace, 560, 'greenButton', 'redButton');
+        gravity.addTrigger(this, this.playerShape, this.playerShape2, this.playerPhysics, this.playerPhysics2);
+
+
+        //Meta
+        this.goal.setPosition(3750+levelDisplace, 1125);
+    }
+
     preload(){
     }
 
@@ -250,7 +406,7 @@ class infiniteScene extends Phaser.Scene {
 
 
         this.generateLevel1(0);
-        this.generateLevel1(3840)
+        this.generateLevel2(3840)
     }
 
     update(){
