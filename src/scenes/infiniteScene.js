@@ -1319,6 +1319,117 @@ class infiniteScene extends Phaser.Scene {
         this.goal.setPosition(3750+levelDisplace, 1125);
     }
 
+    generateLevel8(levelDisplace){
+        this.bg = this.add.sprite(960,540,'bg4');
+        this.bg.setDepth(-2);
+        this.bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 675;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2100;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+
+        var displaceY = 1440;
+
+        //ZONA FINAL
+        var nextLevel1 = this.add.zone(1900+levelDisplace,800,100,100);  //NEXT LEVEL
+        var nextLevel2 = this.add.zone(1900+levelDisplace,800+displaceY,100,100);  //NEXT LEVEL
+        this.physics.add.existing(nextLevel1, 1);
+        this.physics.add.existing(nextLevel2, 1);
+
+        this.physics.add.overlap(this.playerPhysics,nextLevel1);
+        this.physics.add.overlap(this.playerPhysics2,nextLevel2);
+
+        //TILEMAP
+        var map = this.add.tilemap('map8');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
+        map.createStaticLayer('Suelo',tileset,levelDisplace,0);
+        map.createStaticLayer('Suelo2',tileset,levelDisplace,0);
+
+        walls.setCollision([12,13,14,19,20,21]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace,0,4032,1440);
+        this.camera2.setBounds(levelDisplace,1440,4032, 1440);
+
+
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 935+displaceY, 'andamio', 350, 500, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3750+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3750+levelDisplace, 935+displaceY, 'andamio', 350, 500, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+
+        //SUELO
+        var floor1 = this.add.rectangle(2000+levelDisplace, 1265, 3800, 100, 0xff0000);
+        floor1.setAlpha(0);
+        this.physics.add.existing(floor1, 1);
+        this.physics.add.collider(this.playerShape, floor1);
+
+        var floor2 = this.add.rectangle(2000+levelDisplace, 1265+displaceY, 3800, 100, 0xff0000);
+        floor2.setAlpha(0);
+        this.physics.add.existing(floor2, 1);
+        this.physics.add.collider(this.playerShape2, floor2);
+
+        //PLATAFORMAS
+        var mp1 = new MovingPlatform(this, 1500+levelDisplace, 800, 'blueP');
+        mp1.addPlayerCollide(this, this.playerShape);
+        mp1.setMovement(this, 0, 200);
+
+        var mp2 = new MovingPlatform(this, 2300+levelDisplace, 800, 'blueP');
+        mp2.addPlayerCollide(this, this.playerShape);
+        mp2.setMovement(this, 0, 200);
+
+        var mp3 = new MovingPlatform(this, 1500+levelDisplace, 800+displaceY, 'blueP');
+        mp3.addPlayerCollide(this, this.playerShape2);
+        mp3.setMovement(this, 0, 200);
+
+        var mp4 = new MovingPlatform(this, 2300+levelDisplace, 800+displaceY, 'blueP');
+        mp4.addPlayerCollide(this, this.playerShape2);
+        mp4.setMovement(this, 0, 200);
+
+        var portal1 = this.add.sprite(1900+levelDisplace, 800, 'portalR').setDepth(15);
+        portal1.setScale(2,2);
+        this.physics.add.existing(portal1,1);
+
+        var playerShape = this.playerShape;
+        var playerPhysics = this.playerPhysics;
+        this.physics.add.collider(this.playerShape, portal1, function(){
+            playerShape.setPosition(portal1.x, portal1.y);
+            playerPhysics.body.setImmovable(true);
+            playerPhysics.body.moves =false;
+        });
+
+        var playerShape2 = this.playerShape2;
+        var playerPhysics2 = this.playerPhysics2;
+        var portal2 = this.add.sprite(1900+levelDisplace, 800+displaceY, 'portalR').setDepth(15);
+        portal2.setScale(2,2);
+        this.physics.add.existing(portal2,1);
+        this.physics.add.collider(this.playerShape2, portal2, function(){
+            playerShape2.setPosition(portal2.x, portal2.y);
+            playerPhysics2.body.setImmovable(true);
+            playerPhysics2.body.moves =false;
+        })
+
+        this.nextLevel1 = nextLevel1;
+        this.nextLevel2 = nextLevel2;
+    }
+
     preload(){
     }
 
@@ -1407,7 +1518,7 @@ class infiniteScene extends Phaser.Scene {
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
         this.physics.add.overlap(this.playerPhysics2,goalPhysics);
 
-        this.actualLevel = 0;
+        this.actualLevel = 8;
 
         this.generateLevel1(0);
         this.generateLevel2(5000);
@@ -1415,9 +1526,9 @@ class infiniteScene extends Phaser.Scene {
         this.generateLevel4(15000);
         this.generateLevel5(20000);
         this.generateLevel6(25000);
-
-        this.actualLevel = 7;
         this.generateLevel7(30000);
+        this.generateLevel8(35000);
+
     }
 
     update(){
@@ -1535,6 +1646,13 @@ class infiniteScene extends Phaser.Scene {
                 this.leverRight.anims.play('unpull', false);
                 this.overlapped1 = false;
                 this.overlapped2 = false;
+            }
+        }
+        else if(this.actualLevel == 8){
+            if (this.physics.world.overlap(this.playerPhysics2, this.nextLevel2) && this.physics.world.overlap(this.playerPhysics, this.nextLevel1)){
+                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+                console.log("completed");
+                this.levelGenerator();
             }
         }
     }
