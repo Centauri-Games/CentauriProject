@@ -271,7 +271,7 @@ class level10Scene extends Phaser.Scene{
         this.physics.add.overlap(playerPhysics,goalPhysics);
         this.goal = goal;
 
-        var goal2 = this.add.rectangle(3750, 1125 + displaceY, 300, 500, 0x000000);
+        var goal2 = this.add.rectangle(3800, 1125 + displaceY, 300, 500, 0x000000);
         goal2.setAlpha(0);
         var goalPhysics2 = this.physics.add.existing(goal2, 1);
         this.physics.add.overlap(playerPhysics2,goalPhysics2);
@@ -350,22 +350,24 @@ class level10Scene extends Phaser.Scene{
         //////////////////////////////////////////
         if (this.keyMovement.W.isDown) {
             if (this.playerProta) {
-                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
+                if(!this.physics.world.overlap(this.playerPhysics,this.goal)) {
+                    if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
                         this.playerPhysics.body.setVelocityY(-250);
-                    } else {
+                        this.playerShape.anims.play('jumpL', false);
+                    } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
                         this.playerPhysics.body.setVelocityY(250);
+                        this.playerShape.anims.play('jumpL', false);
                     }
-                    this.playerShape.anims.play('jumpL', false);
                 }
             } else {
-                if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
+                if(!this.physics.world.overlap(this.playerPhysics2,this.goal2)) {
+                    if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                         this.playerPhysics2.body.setVelocityY(-250);
-                    } else {
+                        this.playerShape.anims.play('jumpL', false);
+                    } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                         this.playerPhysics2.body.setVelocityY(250);
+                        this.playerShape.anims.play('jumpL', false);
                     }
-                    this.playerShape2.anims.play('jumpS', false);
                 }
             }
         }

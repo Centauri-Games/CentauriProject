@@ -258,6 +258,8 @@ class level6Scene extends Phaser.Scene{
         this.playerPhysics = playerPhysics;
         this.playerPhysics2 = playerPhysics2;
         this.goal = goal;
+
+        this.canJump = true;
     }
     update() {
         if (this.physics.world.overlap(this.playerPhysics, this.goal) && this.physics.world.overlap(this.playerPhysics2, this.goal)){
@@ -276,27 +278,15 @@ class level6Scene extends Phaser.Scene{
             if (this.playerProta){
                 this.playerPhysics.body.setVelocityX(-175);
                 this.playerShape.flipX = true;
-                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                    this.playerShape.anims.play('jumpL', false);
-                } else {
-                    this.playerShape.anims.play('runL', true);
-                }
             } else {
                 this.playerPhysics2.body.setVelocityX(-175);
                 this.playerShape2.flipX = true;
-                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                    this.playerShape2.anims.play('jumpS', false);
-                } else {
-                    this.playerShape2.anims.play('runS', true);
-                }
             }
         } else if (this.keyMovement.D.isUp){
             if (this.playerProta) {
                 this.playerPhysics.body.setVelocityX(0);
-                this.playerShape.anims.play('stopL', false);
             } else {
                 this.playerPhysics2.body.setVelocityX(0);
-                this.playerShape2.anims.play('stopS', false);
             }
         }
         /////////////////////////////////////////
@@ -305,47 +295,41 @@ class level6Scene extends Phaser.Scene{
             if (this.playerProta){
                 this.playerPhysics.body.setVelocityX(175);
                 this.playerShape.flipX = false;
-                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                    this.playerShape.anims.play('jumpL', false);
-                } else {
-                    this.playerShape.anims.play('runL', true);
-                }
             } else {
                 this.playerPhysics2.body.setVelocityX(175);
                 this.playerShape2.flipX = false;
-                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                    this.playerShape2.anims.play('jumpS', false);
-                } else {
-                    this.playerShape2.anims.play('runS', true);
-                }
             }
         } else if(this.keyMovement.A.isUp) {
             if (this.playerProta) {
                 this.playerPhysics.body.setVelocityX(0);
-                this.playerShape.anims.play('stopL', false);
             } else {
                 this.playerPhysics2.body.setVelocityX(0);
-                this.playerShape2.anims.play('stopS', false);
             }
         }
         ///////////////////////////////////////////
         //////////////////////////////////////////
+
         if (this.keyMovement.W.isDown) {
-            if (this.playerProta) {
-                if (this.physics.world.gravity.y > 0){
-                    this.playerPhysics.body.setVelocityY(-200);
+            if(this.canJump) {
+                if (this.playerProta) {
+                    if (this.physics.world.gravity.y > 0) {
+                        this.playerPhysics.body.setVelocityY(-200);
+                    } else {
+                        this.playerPhysics.body.setVelocityY(200);
+                    }
                 } else {
-                    this.playerPhysics.body.setVelocityY(200);
+                    if (this.physics.world.gravity.y > 0) {
+                        this.playerPhysics2.body.setVelocityY(-200);
+                    } else {
+                        this.playerPhysics2.body.setVelocityY(200);
+                    }
                 }
-                this.playerShape.anims.play('jumpL', false);
-            } else {
-                if (this.physics.world.gravity.y > 0){
-                    this.playerPhysics2.body.setVelocityY(-200);
-                } else {
-                    this.playerPhysics2.body.setVelocityY(200);
-                }
-                this.playerShape2.anims.play('jumpS', false);
             }
+            this.canJump = false;
+        }
+
+        if(this.keyMovement.W.isUp){
+            this.canJump = true;
         }
         if (this.keyMovement.ESC.isDown) {
             this.bgMusic.stop();

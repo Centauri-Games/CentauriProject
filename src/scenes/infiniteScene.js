@@ -16,58 +16,64 @@ class infiniteScene extends Phaser.Scene {
         do {
             level = Math.floor((Math.random() * 10) + 1);
         }while(level == this.actualLevel)
+        this.levelDisplace = this.levelCounter * 5000;
 
-        console.log(level);
+        if(this.actualLevel == 6){  //Si el ultimo nivel fue el 6, reset a sprites normales
+            this.playerShape.setTexture("light").setScale(1,1);
+            this.playerPhysics.body.setSize(65, 80);
+            this.playerShape2.setTexture("shadow").setScale(1,1);
+            this.playerPhysics2.body.setSize(65, 80);
+        }
 
         switch(level){
             case 1:
                 this.actualLevel = 1;
-                this.generateLevel1(this.levelCounter *5000);
+                this.generateLevel1(this.levelDisplace);
                 this.levelCounter ++;
                 break;
             case 2:
                 this.actualLevel = 2;
-                this.generateLevel2(this.levelCounter *5000);
+                this.generateLevel2(this.levelDisplace);
                 this.levelCounter ++;
                 break;
             case 3:
                 this.actualLevel = 3;
-                this.generateLevel3(this.levelCounter *5000);
+                this.generateLevel3(this.levelDisplace);
                 this.levelCounter ++;
                 break;
             case 4:
                 this.actualLevel = 4;
-                this.generateLevel4(this.levelCounter *5000);
+                this.generateLevel4(this.levelDisplace);
                 this.levelCounter ++;
                 break;
             case 5:
                 this.actualLevel = 5;
-                this.generateLevel5(this.levelCounter *5000);
+                this.generateLevel5(this.levelDisplace);
                 this.levelCounter ++;
                 break;
             case 6:
                 this.actualLevel = 6;
-                this.generateLevel6(this.levelCounter *5000);
+                this.generateLevel6(this.levelDisplace);
                 this.levelCounter ++;
                 break;
             case 7:
                 this.actualLevel = 7;
-                this.generateLevel7(this.levelCounter *5000);
+                this.generateLevel7(this.levelDisplace);
                 this.levelCounter ++;
                 break;
             case 8:
                 this.actualLevel = 8;
-                this.generateLevel8(this.levelCounter *5000);
+                this.generateLevel8(this.levelDisplace);
                 this.levelCounter ++;
                 break;
             case 9:
                 this.actualLevel = 9;
-                this.generateLevel9(this.levelCounter *5000);
+                this.generateLevel9(this.levelDisplace);
                 this.levelCounter ++;
                 break;
             case 10:
                 this.actualLevel = 10;
-                this.generateLevel10(this.levelCounter *5000);
+                this.generateLevel10(this.levelDisplace);
                 this.levelCounter ++;
                 break;
         }
@@ -215,7 +221,7 @@ class infiniteScene extends Phaser.Scene {
         spikesDownR.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //Meta
-        this.goal1 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal1 = this.add.rectangle(3800+levelDisplace, 1125, 300, 5000, 0x000000);
         this.goal1.setAlpha(0);
         var goalPhysics = this.physics.add.existing(this.goal1, 1);
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
@@ -374,7 +380,7 @@ class infiniteScene extends Phaser.Scene {
 
 
         //Meta
-        this.goal2 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal2 = this.add.rectangle(3800+levelDisplace, 1125, 300, 5000, 0x000000);
         this.goal2.setAlpha(0);
         var goalPhysics = this.physics.add.existing(this.goal2, 1);
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
@@ -582,7 +588,7 @@ class infiniteScene extends Phaser.Scene {
         portal2.addCollide(this, box4.getBox());
 
         //Meta
-        this.goal3 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal3 = this.add.rectangle(3800+levelDisplace, 1125, 300, 5000, 0x000000);
         this.goal3.setAlpha(0);
         var goalPhysics = this.physics.add.existing(this.goal3, 1);
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
@@ -836,7 +842,7 @@ class infiniteScene extends Phaser.Scene {
         mirror7.addDoors(doorUp, doorDown);
 
         //Meta
-        this.goal4 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal4 = this.add.rectangle(3800+levelDisplace, 1125, 300, 5000, 0x000000);
         this.goal4.setAlpha(0);
         var goalPhysics = this.physics.add.existing(this.goal4, 1);
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
@@ -958,7 +964,7 @@ class infiniteScene extends Phaser.Scene {
         dualPlat10.addWorldCollider(this, limitL);
 
         //Meta
-        this.goal5 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal5 = this.add.rectangle(3800+levelDisplace, 1125, 300, 5000, 0x000000);
         this.goal5.setAlpha(0);
         var goalPhysics = this.physics.add.existing(this.goal5, 1);
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
@@ -970,11 +976,16 @@ class infiniteScene extends Phaser.Scene {
         this.bg.setDepth(-2);
         this.bg.setScrollFactor(0);
 
-        var iniXL = 300+levelDisplace;
+        var iniXL = 3600+levelDisplace;
         var iniYL = 650;
 
-        var iniXS = 300+levelDisplace;
+        var iniXS = 3600+levelDisplace;
         var iniYS = 2090;
+
+        this.playerShape.setTexture("light6").setScale(0.8,0.8);
+        this.playerShape2.setTexture("shadow6").setScale(0.8,0.8);
+        this.playerPhysics.body.setSize(80, 120);
+        this.playerPhysics2.body.setSize(80, 120);
 
         this.playerShape.setPosition(iniXL, iniYL);
         this.playerShape2.setPosition(iniXS, iniYS);
@@ -1164,6 +1175,8 @@ class infiniteScene extends Phaser.Scene {
         var goalPhysics = this.physics.add.existing(this.goal6, 1);
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
         this.physics.add.overlap(this.playerPhysics2,goalPhysics);
+
+        this.canJump = true;
     }
 
     generateLevel7(levelDisplace){
@@ -1361,7 +1374,7 @@ class infiniteScene extends Phaser.Scene {
         this.overlapped2 = false;
 
         //Meta
-        this.goal7 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal7 = this.add.rectangle(3800+levelDisplace, 1125, 300, 5000, 0x000000);
         this.goal7.setAlpha(0);
         var goalPhysics = this.physics.add.existing(this.goal7, 1);
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
@@ -1943,7 +1956,7 @@ class infiniteScene extends Phaser.Scene {
         this.physics.add.collider(this.playerShape2, floor7D);
 
         //Meta
-        var goal = this.add.rectangle(3750+levelDisplace, 1125, 300, 500, 0x000000);
+        var goal = this.add.rectangle(3800+levelDisplace, 1125, 300, 500, 0x000000);
         goal.setAlpha(0);
         var goalPhysics = this.physics.add.existing(goal, 1);
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
@@ -2044,9 +2057,6 @@ class infiniteScene extends Phaser.Scene {
     }
 
     update(){
-        /* if (passedlevelcounter)
-         updatinglevels = 2;
-         */
         if (this.keyMovement.SPACE.isUp && this.lastDown){
             this.playerProta = !this.playerProta;
             this.lastDown = false;
@@ -2059,26 +2069,32 @@ class infiniteScene extends Phaser.Scene {
                 this.playerPhysics.body.setVelocityX(-175);
                 this.playerShape.flipX = true;
                 if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                    this.playerShape.anims.play('jumpL', false);
+                    if(this.actualLevel !=6)
+                        this.playerShape.anims.play('jumpL', false);
                 } else {
-                    this.playerShape.anims.play('runL', true);
+                    if(this.actualLevel !=6)
+                        this.playerShape.anims.play('runL', true);
                 }
             } else {
                 this.playerPhysics2.body.setVelocityX(-175);
                 this.playerShape2.flipX = true;
                 if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                    this.playerShape2.anims.play('jumpS', false);
+                    if(this.actualLevel !=6)
+                        this.playerShape2.anims.play('jumpS', false);
                 } else {
-                    this.playerShape2.anims.play('runS', true);
+                    if(this.actualLevel !=6)
+                        this.playerShape2.anims.play('runS', true);
                 }
             }
         } else if (this.keyMovement.D.isUp){
             if (this.playerProta) {
                 this.playerPhysics.body.setVelocityX(0);
-                this.playerShape.anims.play('stopL', false);
+                if(this.actualLevel !=6)
+                    this.playerShape.anims.play('stopL', false);
             } else {
                 this.playerPhysics2.body.setVelocityX(0);
-                this.playerShape2.anims.play('stopS', false);
+                if(this.actualLevel !=6)
+                    this.playerShape2.anims.play('stopS', false);
             }
         }
         /////////////////////////////////////////
@@ -2088,51 +2104,36 @@ class infiniteScene extends Phaser.Scene {
                 this.playerPhysics.body.setVelocityX(175);
                 this.playerShape.flipX = false;
                 if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                    this.playerShape.anims.play('jumpL', false);
+                    if(this.actualLevel !=6)
+                        this.playerShape.anims.play('jumpL', false);
                 } else {
-                    this.playerShape.anims.play('runL', true);
+                    if(this.actualLevel !=6)
+                        this.playerShape.anims.play('runL', true);
                 }
             } else {
                 this.playerPhysics2.body.setVelocityX(175);
                 this.playerShape2.flipX = false;
                 if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                    this.playerShape2.anims.play('jumpS', false);
+                    if(this.actualLevel !=6)
+                        this.playerShape2.anims.play('jumpS', false);
                 } else {
-                    this.playerShape2.anims.play('runS', true);
+                    if(this.actualLevel !=6)
+                        this.playerShape2.anims.play('runS', true);
                 }
             }
         } else if(this.keyMovement.A.isUp) {
             if (this.playerProta) {
                 this.playerPhysics.body.setVelocityX(0);
-                this.playerShape.anims.play('stopL', false);
+                if(this.actualLevel !=6)
+                    this.playerShape.anims.play('stopL', false);
             } else {
                 this.playerPhysics2.body.setVelocityX(0);
-                this.playerShape2.anims.play('stopS', false);
+                if(this.actualLevel !=6)
+                    this.playerShape2.anims.play('stopS', false);
             }
         }
         ///////////////////////////////////////////
         //////////////////////////////////////////
-        if (this.keyMovement.W.isDown) {
-            if (this.playerProta) {
-                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
-                        this.playerPhysics.body.setVelocityY(-250);
-                    } else {
-                        this.playerPhysics.body.setVelocityY(250);
-                    }
-                    this.playerShape.anims.play('jumpL', false);
-                }
-            } else {
-                if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
-                        this.playerPhysics2.body.setVelocityY(-250);
-                    } else {
-                        this.playerPhysics2.body.setVelocityY(250);
-                    }
-                    this.playerShape2.anims.play('jumpS', false);
-                }
-            }
-        }
         if (this.keyMovement.ESC.isDown) {
             this.bgMusic.stop();
             this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
@@ -2145,12 +2146,60 @@ class infiniteScene extends Phaser.Scene {
                 console.log("completed");
                 this.levelGenerator();
             }
+
+            if (this.keyMovement.W.isDown) {
+                if (this.playerProta) {
+                    if(!this.physics.world.overlap(this.playerPhysics,this.goal1)) {
+                        if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                } else {
+                    if(!this.physics.world.overlap(this.playerPhysics2,this.goal1)) {
+                        if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics2.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics2.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                }
+            }
         }
         else if(this.actualLevel == 2){
             if (this.physics.world.overlap(this.playerPhysics,this.goal2) && this.physics.world.overlap(this.playerPhysics2,this.goal2)){
                 this.sound.add("diamondFX", { volume: 1, loop: false }).play();
                 console.log("completed");
                 this.levelGenerator();
+            }
+
+            if (this.keyMovement.W.isDown) {
+                if (this.playerProta) {
+                    if(!this.physics.world.overlap(this.playerPhysics,this.goal2)) {
+                        if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                } else {
+                    if(!this.physics.world.overlap(this.playerPhysics2,this.goal2)) {
+                        if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics2.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics2.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                }
             }
         }
         else if(this.actualLevel == 3){
@@ -2159,12 +2208,60 @@ class infiniteScene extends Phaser.Scene {
                 console.log("completed");
                 this.levelGenerator();
             }
+
+            if (this.keyMovement.W.isDown) {
+                if (this.playerProta) {
+                    if(!this.physics.world.overlap(this.playerPhysics,this.goal3)) {
+                        if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                } else {
+                    if(!this.physics.world.overlap(this.playerPhysics2,this.goal3)) {
+                        if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics2.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics2.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                }
+            }
         }
         else if(this.actualLevel == 4){
             if (this.physics.world.overlap(this.playerPhysics,this.goal4) && this.physics.world.overlap(this.playerPhysics2,this.goal4)){
                 this.sound.add("diamondFX", { volume: 1, loop: false }).play();
                 console.log("completed");
                 this.levelGenerator();
+            }
+
+            if (this.keyMovement.W.isDown) {
+                if (this.playerProta) {
+                    if(!this.physics.world.overlap(this.playerPhysics,this.goal4)) {
+                        if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                } else {
+                    if(!this.physics.world.overlap(this.playerPhysics2,this.goal4)) {
+                        if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics2.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics2.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                }
             }
         }
         else if(this.actualLevel == 5){
@@ -2173,12 +2270,59 @@ class infiniteScene extends Phaser.Scene {
                 console.log("completed");
                 this.levelGenerator();
             }
+
+            if (this.keyMovement.W.isDown) {
+                if (this.playerProta) {
+                    if(!this.physics.world.overlap(this.playerPhysics,this.goal5)) {
+                        if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                } else {
+                    if(!this.physics.world.overlap(this.playerPhysics2,this.goal5)) {
+                        if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics2.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics2.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                }
+            }
         }
         else if(this.actualLevel == 6){
             if (this.physics.world.overlap(this.playerPhysics,this.goal6) && this.physics.world.overlap(this.playerPhysics2,this.goal6)){
                 this.sound.add("diamondFX", { volume: 1, loop: false }).play();
                 console.log("completed");
                 this.levelGenerator();
+            }
+
+            if (this.keyMovement.W.isDown) {
+                if(this.canJump) {
+                    if (this.playerProta) {
+                        if (this.physics.world.gravity.y > 0) {
+                            this.playerPhysics.body.setVelocityY(-200);
+                        } else {
+                            this.playerPhysics.body.setVelocityY(200);
+                        }
+                    } else {
+                        if (this.physics.world.gravity.y > 0) {
+                            this.playerPhysics2.body.setVelocityY(-200);
+                        } else {
+                            this.playerPhysics2.body.setVelocityY(200);
+                        }
+                    }
+                }
+                this.canJump = false;
+            }
+
+            if(this.keyMovement.W.isUp){
+                this.canJump = true;
             }
         }
         else if(this.actualLevel == 7){
@@ -2201,6 +2345,30 @@ class infiniteScene extends Phaser.Scene {
                 this.leverRight.anims.play('unpull', false);
                 this.overlapped1 = false;
                 this.overlapped2 = false;
+            }
+
+            if (this.keyMovement.W.isDown) {
+                if (this.playerProta) {
+                    if(!this.physics.world.overlap(this.playerPhysics,this.goal7)) {
+                        if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                } else {
+                    if(!this.physics.world.overlap(this.playerPhysics2,this.goal7)) {
+                        if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics2.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics2.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                }
             }
         }
         else if(this.actualLevel == 8){
@@ -2304,6 +2472,30 @@ class infiniteScene extends Phaser.Scene {
                 this.sound.add("diamondFX", { volume: 1, loop: false }).play();
                 console.log("completed");
                 this.levelGenerator();
+            }
+
+            if (this.keyMovement.W.isDown) {
+                if (this.playerProta) {
+                    if(!this.physics.world.overlap(this.playerPhysics,this.goal10)) {
+                        if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                } else {
+                    if(!this.physics.world.overlap(this.playerPhysics2,this.goal102)) {
+                        if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics2.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics2.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                }
             }
         }
     }
