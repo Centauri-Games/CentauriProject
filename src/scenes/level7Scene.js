@@ -31,7 +31,7 @@ class level7Scene extends Phaser.Scene{
         bg.setScrollFactor(0);
 
         //JUGADORES
-        var iniXL = 3300;
+        var iniXL = 300;
         var iniYL = 685;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         this.anims.create({
@@ -53,7 +53,7 @@ class level7Scene extends Phaser.Scene{
         });
         var playerPhysics = this.physics.add.existing(playerShape, 0);
 
-        var iniXS = 3300;
+        var iniXS = 300;
         var iniYS = 2110;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
         this.anims.create({
