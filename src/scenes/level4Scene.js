@@ -434,6 +434,7 @@ class level4Scene extends Phaser.Scene{
             }
         }
         if (this.keyMovement.ESC.isDown) {
+            this.bgMusic.stop();
             this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
         }
     }
