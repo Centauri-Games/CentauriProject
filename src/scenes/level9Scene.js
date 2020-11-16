@@ -148,7 +148,7 @@ class level9Scene extends Phaser.Scene{
         camera2.startFollow(playerShape2);
 
         //VIDA
-        var hp = new Life(this, this.English, playerShape, playerShape2);
+        var hp = new Life(this, iniXL, iniYL, this.English);
 
         //SUELO
         var floor1 = this.add.rectangle(1700, 2700, 3800, 100, 0xff0000);

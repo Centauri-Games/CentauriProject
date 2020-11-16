@@ -88,7 +88,7 @@ class level6Scene extends Phaser.Scene{
         andd2.addCollide(this, playerShape2);
 
         //VIDA + PINCHOS
-        var hp = new Life(this, this.English, playerShape, playerShape2);
+        var hp = new Life(this, iniXL, iniYL, this.English);
 
         //Superior
         var spikesUp1 = new Spike(this, 2000, 1210, 3800, 100, 0xff0000, hp);

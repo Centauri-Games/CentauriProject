@@ -114,7 +114,7 @@ class level10Scene extends Phaser.Scene{
 
 
         //VIDA + PINCHOS
-        var hp = new Life(this, this.English, playerShape, playerShape2);
+        var hp = new Life(this, iniXL, iniYL, this.English);
         var displaceY = 1440;
 
         var spikesD = new Spike(this, 1295, 1200 + displaceY, 480, 100, 0xff0000, hp);

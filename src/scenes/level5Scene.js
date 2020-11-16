@@ -116,7 +116,7 @@ class level5Scene extends Phaser.Scene{
         andd2.addCollide(this, playerShape2);
 
         //VIDA + PINCHOS
-        var hp = new Life(this, this.English, playerShape, playerShape2);
+        var hp = new Life(this, iniXL, iniYL, this.English);
         var displaceY = 1445;
 
         //PINCHOS
