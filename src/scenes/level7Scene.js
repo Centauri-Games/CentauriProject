@@ -31,8 +31,8 @@ class level7Scene extends Phaser.Scene{
         bg.setScrollFactor(0);
 
         //JUGADORES
-        var iniXL = 300;
-        var iniYL = 875;
+        var iniXL = 3300;
+        var iniYL = 685;
         var playerShape = this.add.sprite(iniXL, iniYL, 'light');
         this.anims.create({
             key: 'stopL',
@@ -53,8 +53,8 @@ class level7Scene extends Phaser.Scene{
         });
         var playerPhysics = this.physics.add.existing(playerShape, 0);
 
-        var iniXS = 300;
-        var iniYS = 2300;
+        var iniXS = 3300;
+        var iniYS = 2110;
         var playerShape2 = this.add.sprite(iniXS, iniYS, 'shadow');
         this.anims.create({
             key: 'stopS',
@@ -104,16 +104,16 @@ class level7Scene extends Phaser.Scene{
         camera2.setBounds(0, 1440, 4032, 1440);
 
         //ANDAMIOS
-        var andl = new Scaffold(this, 300, 1125, 'andamio', 350, 500, 20, 80);
+        var andl = new Scaffold(this, 300, 935, 'andamio', 350, 500, 20, 80);
         andl.addCollide(this, playerShape); //Inicio superior
 
-        var andd = new Scaffold(this, 300, 2570, 'andamio', 350, 500, 20, 80);
+        var andd = new Scaffold(this, 300, 2375, 'andamio', 350, 500, 20, 80);
         andd.addCollide(this, playerShape2);    //Inicio inferior
 
-        var andl2 = new Scaffold(this, 3350, 1125, 'andamio', 350, 500, 20, 80);
+        var andl2 = new Scaffold(this, 3750, 935, 'andamio', 350, 500, 20, 80);
         andl2.addCollide(this, playerShape);
 
-        var andd2 = new Scaffold(this, 3350, 2570, 'andamio', 350, 500, 20, 80);
+        var andd2 = new Scaffold(this, 3750, 2375, 'andamio', 350, 500, 20, 80);
         andd2.addCollide(this, playerShape2);
 
         //VIDA + PINCHOS
@@ -133,13 +133,18 @@ class level7Scene extends Phaser.Scene{
         //Móviles
         var mpl = new MovingPlatform(this, 650, 1200, 'woodP');
         mpl.addPlayerCollide(this, playerShape);
-        mpl.setMovement(this, 0, -250);
+        mpl.setMovement(this, 0, -325);
         var mpl2 = new MovingPlatform(this, 2258, 1000, 'woodP');
         mpl2.addPlayerCollide(this, playerShape);
         this.mpl2 = mpl2;
-        var mpl3 = new MovingPlatform(this, 3026, 1200 + displaceY, 'woodP');
+
+        var mpl3 = new MovingPlatform(this, 3400, 1175 + displaceY, 'woodP');
         mpl3.addPlayerCollide(this, playerShape2);
-        mpl3.setMovement(this, 0, -150);
+        mpl3.setMovement(this, 0, -175);
+
+        var mpl4 = new MovingPlatform(this, 3400, 1100, 'woodP');
+        mpl4.addPlayerCollide(this, playerShape);
+        mpl4.setMovement(this, 0, -175);
 
         //SUELO
         //J Superior
@@ -157,11 +162,6 @@ class level7Scene extends Phaser.Scene{
         floor3L.setAlpha(0);
         this.physics.add.existing(floor3L, 1);
         this.physics.add.collider(playerShape, floor3L);
-
-        var floor4L = this.add.rectangle(3750, 975, 500, 100, 0xff0000);
-        floor4L.setAlpha(0);
-        this.physics.add.existing(floor4L, 1);
-        this.physics.add.collider(playerShape, floor4L);
 
         //J Inferior
         var floor1S = this.add.rectangle(2000, 1295 + displaceY, 3800, 100, 0xff0000);
@@ -203,23 +203,18 @@ class level7Scene extends Phaser.Scene{
         floor8S.setAlpha(0);
         this.physics.add.existing(floor8S, 1);
         this.physics.add.collider(playerShape2, floor8S);
-
-        var floor9S = this.add.rectangle(3750, 975 + displaceY, 500, 100, 0xff0000);
-        floor9S.setAlpha(0);
-        this.physics.add.existing(floor9S, 1);
-        this.physics.add.collider(playerShape2, floor9S);
         this.sc = this;
 
         //PUERTA
         var doorStart = this.add.sprite(1500, 360, 'doorStart');
         doorStart.setScale(0.5, 0.5);
         doorStart.setDepth(100);
-        var doorButton = new Button(this, 650, 1150 + displaceY, 1550, 350, 'greenButton', 'door');
+        var doorButton = new Button(this, 500, 1150 + displaceY, 1550, 350, 'greenButton', 'door');
         doorButton.addCollideDoor(this, playerShape);
         doorButton.addCollideButton(this, playerShape2);
 
         //BOTÓN QUE ACTIVA EL PUENTE
-        var bridgeButton = this.add.sprite(2000, 600, 'redButton');
+        var bridgeButton = this.add.sprite(2300, 490, 'redButton');
         this.physics.add.existing(bridgeButton, 1);
         this.anims.create({
             key: 'pressedR',
@@ -402,6 +397,8 @@ class level7Scene extends Phaser.Scene{
             }
         } else {
             this.mpl2.movingPlatformPhysics.body.setVelocityX(0);
+            this.leverLeft.anims.play('unpull', false);
+            this.leverRight.anims.play('unpull', false);
             this.overlapped1 = false;
             this.overlapped2 = false;
         }
