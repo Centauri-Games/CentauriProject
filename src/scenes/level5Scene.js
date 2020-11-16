@@ -86,7 +86,7 @@ class level5Scene extends Phaser.Scene{
         this.map.createStaticLayer('Suelo',tileset,0,0);
         this.map.createStaticLayer('Suelo2',tileset,0,0);
 
-        walls.setCollision([10,15,16,17]);
+        walls.setCollision([8,10,15,16,17]);
 
         this.physics.add.collider(walls, playerShape);
         this.physics.add.collider(walls, playerShape2);
