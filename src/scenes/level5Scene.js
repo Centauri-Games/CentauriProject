@@ -8,6 +8,7 @@ class level5Scene extends Phaser.Scene{
         this.English = data.english;
         this.lastDown = false;
         this.am = data.am;
+        this.device = data.device;
     }
 
     preload(){
@@ -297,6 +298,7 @@ class level5Scene extends Phaser.Scene{
             }
         }
         if (this.keyMovement.ESC.isDown) {
+            this.bgMusic.stop();
             this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
         }
     }

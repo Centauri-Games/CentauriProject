@@ -6,7 +6,12 @@ class menuScene extends Phaser.Scene{
     init(data){
         this.English = data.english;
         this.am = data.am;
+        if (this.sys.game.device.os.desktop){
+            this.device = "desktop";
+        }else{
+            this.device = "mobile";       
     }
+}
 
     preload(){
         this.load.image('menu', 'assets/screens/Menú.png');
@@ -34,9 +39,13 @@ class menuScene extends Phaser.Scene{
         });
         bSingle.setAlpha(0.25);
 
+
         var bMulti = this.add.rectangle(292.5,340,450,100,0x550055).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
             this.scene.start("selectMode", {english: this.English, online : true, am: this.am});
+
+            this.scene.start("selectMode", {english: this.English, online : true, am: this.am, device: this.device});
+            console.log("Click");
         });
         bMulti.setAlpha(0.25);
 
@@ -55,6 +64,8 @@ class menuScene extends Phaser.Scene{
         var bRanking = this.add.rectangle(292.5,955,450,100,0xffff00).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
             this.scene.start("controls", {english: this.English, online : true, am: this.am});
+            console.log("Click");
+            this.scene.start("selectMode", {english: this.English, online : false, am: this.am, device : this.device})
         });
         bRanking.setAlpha(0.25);
 
@@ -64,8 +75,12 @@ class menuScene extends Phaser.Scene{
         }
 
         //Audio Manager
+        if(this.am==null){
+            this.am = new AudioManager();
+        }
         if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
             this.bgMusic = this.sound.add("menuMS", { volume: 0.5, loop: true });
+            console.log(this.bgMusic);
             this.bgMusic.play();
             this.am.bgMusicPlaying = true;
             this.am.bgMusic = this.bgMusic; //Guarda la referencia a la musica sonando para después poder pararla
