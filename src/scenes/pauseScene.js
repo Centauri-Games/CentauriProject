@@ -33,5 +33,6 @@ class pauseScene extends Phaser.Scene{
     }
 
     update(){
+      
     }
 }
