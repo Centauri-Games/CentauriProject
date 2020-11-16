@@ -50,7 +50,7 @@ class infiniteScene extends Phaser.Scene {
                 break;
             case 10:
                 this.actualLevel = 10;
-                //this.generateLevel10();
+                this.generateLevel10();
                 break;
         }
     }
@@ -1708,6 +1708,205 @@ class infiniteScene extends Phaser.Scene {
         this.mp3 = mp3;
     }
 
+    generateLevel10(levelDisplace){
+        this.bg = this.add.sprite(960,540,'bg4');
+        this.bg.setDepth(-2);
+        this.bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 875;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2300;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+
+        //TILEMAP
+        var map = this.add.tilemap('map10');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
+        map.createStaticLayer('Suelo',tileset,levelDisplace,0);
+        map.createStaticLayer('Suelo2',tileset,levelDisplace,0);
+        map.createStaticLayer('Pinchos',tileset,levelDisplace,0);
+
+        walls.setCollision([12,13]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace,0,4032, 1440);
+        this.camera2.setBounds(levelDisplace,0,4032, 2880);
+
+
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 1125, 'andamio', 350, 500, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 2570, 'andamio', 350, 500, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3750+levelDisplace, 1125, 'andamio', 350, 500, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3750+levelDisplace, 2570, 'andamio', 350, 500, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+        var displaceY = 1440;
+
+        var spikesD = new Spike(this, 1295+levelDisplace, 1200 + displaceY, 480, 100, 0xff0000, this.hp);
+        spikesD.setAlpha(0);
+        spikesD.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS);
+
+        var spikes2D = new Spike(this, 3023+levelDisplace, 1488 + displaceY, 864, 100, 0xff0000, this.hp);
+        spikes2D.setAlpha(0);
+        spikes2D.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS);
+
+        var spikes3D = new Spike(this, 1500+levelDisplace, 850 + displaceY, 480, 100, 0xff0000, hp);
+        spikes3D.setAlpha(0);
+        spikes3D.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS);
+
+        //PLATAFORMAS
+        //Móviles
+        var mpd = new MovingPlatform(this, 2000+levelDisplace, 2800, 'woodP');
+        mpd.addPlayerCollide(this, this.playerShape2);
+        mpd.setMovement(this, 0, -400);
+
+        var mpd2 = new MovingPlatform(this, 3550+levelDisplace, 500 + displaceY, 'woodP');
+        mpd2.addPlayerCollide(this, this.playerShape2);
+        mpd2.setMovement(this, 0, -100);
+
+        var mpd3 = new MovingPlatform(this, 675+levelDisplace, 800 + displaceY, 'woodP');
+        mpd3.addPlayerCollide(this, this.playerShape2);
+        mpd3.setMovement(this, 0, -200);
+
+        //Estáticas
+        var spl = new StaticPlatform(this, 600+levelDisplace, 1350, 'woodP');
+        spl.addPlayerCollide(this, this.playerShape);
+
+        var spl2 = new StaticPlatform(this, 850+levelDisplace, 1250, 'woodP');
+        spl2.addPlayerCollide(this, this.playerShape);
+
+        var spl3 = new StaticPlatform(this, 3455+levelDisplace, 1000, 'woodP');
+        spl3.addPlayerCollide(this, this.playerShape);
+
+        var spl4 = new StaticPlatform(this, 3050+levelDisplace, 500, 'woodP');
+        spl4.addPlayerCollide(this, this.playerShape);
+
+
+        //SUELO
+        //J Superior
+        var floor1L = this.add.rectangle(2000+levelDisplace, 1488, 3800, 100, 0xff0000);
+        floor1L.setAlpha(0);
+        this.physics.add.existing(floor1L, 1);
+        this.physics.add.collider(this.playerShape, floor1L);
+
+        var floor2L = this.add.rectangle(1295+levelDisplace, 1200, 672, 100, 0xff0000);
+        floor2L.setAlpha(0);
+        this.physics.add.existing(floor2L, 1);
+        this.physics.add.collider(this.playerShape, floor2L);
+
+        var floor3L = this.add.rectangle(1727+levelDisplace, 1104, 192, 100, 0xff0000);
+        floor3L.setAlpha(0);
+        this.physics.add.existing(floor3L, 1);
+        this.physics.add.collider(this.playerShape, floor3L);
+
+        var floor4L = this.add.rectangle(2015+levelDisplace, 1008, 384, 100, 0xff0000);
+        floor4L.setAlpha(0);
+        this.physics.add.existing(floor4L, 1);
+        this.physics.add.collider(this.playerShape, floor4L);
+
+        var floor5L = this.add.rectangle(2687+levelDisplace, 1200, 960, 100, 0xff0000);
+        floor5L.setAlpha(0);
+        this.physics.add.existing(floor5L, 1);
+        this.physics.add.collider(this.playerShape, floor5L);
+
+        var floor6L = this.add.rectangle(3359+levelDisplace, 1104, 384, 100, 0xff0000);
+        floor6L.setAlpha(0);
+        this.physics.add.existing(floor6L, 1);
+        this.physics.add.collider(this.playerShape, floor6L);
+
+        var floor7L = this.add.rectangle(719+levelDisplace, 912, 96, 100, 0xff0000);
+        floor7L.setAlpha(0);
+        this.physics.add.existing(floor7L, 1);
+        this.physics.add.collider(this.playerShape, floor7L);
+
+        var floor8L = this.add.rectangle(815+levelDisplace, 816, 96, 100, 0xff0000);
+        floor8L.setAlpha(0);
+        this.physics.add.existing(floor8L, 1);
+        this.physics.add.collider(this.playerShape, floor8L);
+
+        var floor9L = this.add.rectangle(911+levelDisplace, 720, 96, 100, 0xff0000);
+        floor9L.setAlpha(0);
+        this.physics.add.existing(floor9L, 1);
+        this.physics.add.collider(this.playerShape, floor9L);
+
+        var floor10L = this.add.rectangle(1103+levelDisplace, 624, 288, 100, 0xff0000);
+        floor10L.setAlpha(0);
+        this.physics.add.existing(floor10L, 1);
+        this.physics.add.collider(this.playerShape, floor10L);
+
+        var floor11L = this.add.rectangle(1439+levelDisplace, 528, 384, 100, 0xff0000);
+        floor11L.setAlpha(0);
+        this.physics.add.existing(floor11L, 1);
+        this.physics.add.collider(this.playerShape, floor11L);
+
+        var floor12L = this.add.rectangle(2303+levelDisplace, 432, 1344, 100, 0xff0000);
+        floor12L.setAlpha(0);
+        this.physics.add.existing(floor12L, 1);
+        this.physics.add.collider(this.playerShape, floor12L);
+
+        var floor13L = this.add.rectangle(3455+levelDisplace, 624, 960, 100, 0xff0000);
+        floor13L.setAlpha(0);
+        this.physics.add.existing(floor13L, 1);
+        this.physics.add.collider(this.playerShape, floor13L);
+
+        //J Inferior
+        var floor1D = this.add.rectangle(2000+levelDisplace, 1488 + displaceY, 3800, 100, 0xff0000);
+        floor1D.setAlpha(0);
+        this.physics.add.existing(floor1D, 1);
+        this.physics.add.collider(this.playerShape2, floor1D);
+
+        var floor3D = this.add.rectangle(2303+levelDisplace, 1104 + displaceY, 384, 100, 0xff0000);
+        floor3D.setAlpha(0);
+        this.physics.add.existing(floor3D, 1);
+        this.physics.add.collider(this.playerShape2, floor3D);
+
+        var floor4D = this.add.rectangle(2447+levelDisplace, 672 + displaceY, 672, 196, 0xff0000);
+        floor4D.setAlpha(0);
+        this.physics.add.existing(floor4D, 1);
+        this.physics.add.collider(this.playerShape2, floor4D);
+
+        var floor5D = this.add.rectangle(3263+levelDisplace, 672 + displaceY, 576, 196, 0xff0000);  //Central derechoa
+        floor5D.setAlpha(0);
+        this.physics.add.existing(floor5D, 1);
+        this.physics.add.collider(this.playerShape2, floor5D);
+
+        var floor6D = this.add.rectangle(863+levelDisplace, 912 + displaceY, 384, 100, 0xff0000);
+        floor6D.setAlpha(0);
+        this.physics.add.existing(floor6D, 1);
+        this.physics.add.collider(this.playerShape2, floor6D);
+
+        var floor7D = this.add.rectangle(3090+levelDisplace, 1000 + displaceY, 800, 100, 0xff0000);
+        floor7D.setAlpha(0);
+        this.physics.add.existing(floor7D, 1);
+        this.physics.add.collider(this.playerShape2, floor7D);
+
+        //Meta
+        var goal = this.add.rectangle(3750+levelDisplace, 1125, 300, 500, 0x000000);
+        goal.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(goal, 1);
+        this.physics.add.overlap(this.playerPhysics,goalPhysics);
+        this.goal10 = goal;
+
+        var goal2 = this.add.rectangle(3750+levelDisplace, 1125 + displaceY, 300, 500, 0x000000);
+        goal2.setAlpha(0);
+        var goalPhysics2 = this.physics.add.existing(goal2, 1);
+        this.physics.add.overlap(this.playerPhysics2,goalPhysics2);
+        this.goal102 = goal2;
+    }
+
     preload(){
     }
 
@@ -1796,7 +1995,7 @@ class infiniteScene extends Phaser.Scene {
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
         this.physics.add.overlap(this.playerPhysics2,goalPhysics);
 
-        this.actualLevel = 9;
+        this.actualLevel = 10;
 
         this.generateLevel1(0);
         this.generateLevel2(5000);
@@ -1807,8 +2006,9 @@ class infiniteScene extends Phaser.Scene {
         this.generateLevel7(30000);
         this.generateLevel8(35000);
         this.generateLevel9(40000);
+        this.generateLevel10(45000);
 
-        this.levelDisplace = 40000;
+        this.levelDisplace = 45000;
 
     }
 
@@ -2019,6 +2219,14 @@ class infiniteScene extends Phaser.Scene {
 
             //Final nivel
             if (this.physics.world.overlap(this.playerPhysics, this.nextLevel) && this.physics.world.overlap(this.playerPhysics2, this.nextLevel)){
+                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+                console.log("completed");
+                this.levelGenerator();
+            }
+        }
+
+        if(this.actualLevel == 10){
+            if (this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal2)){
                 this.sound.add("diamondFX", { volume: 1, loop: false }).play();
                 console.log("completed");
                 this.levelGenerator();

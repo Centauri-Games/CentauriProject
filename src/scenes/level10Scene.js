@@ -83,6 +83,7 @@ class level10Scene extends Phaser.Scene{
         var walls = this.map.createStaticLayer('Pared', tileset, 0,0);
         this.map.createStaticLayer('Suelo',tileset,0,0);
         this.map.createStaticLayer('Suelo2',tileset,0,0);
+        this.map.createStaticLayer('Pinchos',tileset,0,0);
 
         walls.setCollision([12,13]);
 
@@ -118,13 +119,17 @@ class level10Scene extends Phaser.Scene{
         var hp = new Life(this, iniXL, iniYL, this.English);
         var displaceY = 1440;
 
-        var spikesD = new Spike(this, 1295, 1200 + displaceY, 480, 100, 0xff0000, hp);
+        var spikesD = new Spike(this, 1295, 1190 + displaceY, 480, 100, 0xff0000, hp);
         spikesD.setAlpha(0);
         spikesD.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS);
 
-        var spikes2D = new Spike(this, 3023, 1488 + displaceY, 864, 100, 0xff0000, hp);
+        var spikes2D = new Spike(this, 3023, 1465 + displaceY, 864, 100, 0xff0000, hp);
         spikes2D.setAlpha(0);
         spikes2D.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS);
+
+        var spikes3D = new Spike(this, 1500, 850 + displaceY, 480, 100, 0xff0000, hp);
+        spikes3D.setAlpha(0);
+        spikes3D.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS);
 
         //PLATAFORMAS
         //Móviles
@@ -136,19 +141,22 @@ class level10Scene extends Phaser.Scene{
         mpd2.addPlayerCollide(this, playerShape2);
         mpd2.setMovement(this, 0, -100);
 
-        var mpd3 = new MovingPlatform(this, 700, 775 + displaceY, 'woodP');
+        var mpd3 = new MovingPlatform(this, 675, 800 + displaceY, 'woodP');
         mpd3.addPlayerCollide(this, playerShape2);
         mpd3.setMovement(this, 0, -200);
 
         //Estáticas
-        var spl = new StaticPlatform(this, 500, 1350, 'woodP');
+        var spl = new StaticPlatform(this, 600, 1350, 'woodP');
         spl.addPlayerCollide(this, playerShape);
 
-        var spl2 = new StaticPlatform(this, 800, 1250, 'woodP');
+        var spl2 = new StaticPlatform(this, 850, 1250, 'woodP');
         spl2.addPlayerCollide(this, playerShape);
 
         var spl3 = new StaticPlatform(this, 3455, 1000, 'woodP');
         spl3.addPlayerCollide(this, playerShape);
+
+        var spl4 = new StaticPlatform(this, 3050, 500, 'woodP');
+        spl4.addPlayerCollide(this, playerShape);
 
         //SUELO
         //J Superior
@@ -202,12 +210,12 @@ class level10Scene extends Phaser.Scene{
         this.physics.add.existing(floor10L, 1);
         this.physics.add.collider(playerShape, floor10L);
 
-        var floor11L = this.add.rectangle(1439, 528, 384, 100, 0xff0000);
+        var floor11L = this.add.rectangle(1439, 528, 384, 100, 0xff0000);   //Suelo derecha arriba
         floor11L.setAlpha(0);
         this.physics.add.existing(floor11L, 1);
         this.physics.add.collider(playerShape, floor11L);
 
-        var floor12L = this.add.rectangle(2303, 432, 1344, 100, 0xff0000);
+        var floor12L = this.add.rectangle(2303, 432, 1344, 100, 0xff0000);  //Suelo más alto
         floor12L.setAlpha(0);
         this.physics.add.existing(floor12L, 1);
         this.physics.add.collider(playerShape, floor12L);
@@ -242,6 +250,11 @@ class level10Scene extends Phaser.Scene{
         floor6D.setAlpha(0);
         this.physics.add.existing(floor6D, 1);
         this.physics.add.collider(playerShape2, floor6D);
+
+        var floor7D = this.add.rectangle(3090, 1000 + displaceY, 800, 100, 0xff0000);
+        floor7D.setAlpha(0);
+        this.physics.add.existing(floor7D, 1);
+        this.physics.add.collider(playerShape2, floor7D);
 
         //CONTROL Y MOVIMIENTO
         this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
