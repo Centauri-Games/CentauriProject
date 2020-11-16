@@ -2225,7 +2225,7 @@ class infiniteScene extends Phaser.Scene {
             }
         }
 
-        if(this.actualLevel == 10){
+        else if(this.actualLevel == 10){
             if (this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal2)){
                 this.sound.add("diamondFX", { volume: 1, loop: false }).play();
                 console.log("completed");
@@ -2235,7 +2235,6 @@ class infiniteScene extends Phaser.Scene {
     }
 
     /*async syncLoadPhysics(playerShape,mode){
-        
         return await this.physics.add.existing(playerShape, mode);
     }*/
 
