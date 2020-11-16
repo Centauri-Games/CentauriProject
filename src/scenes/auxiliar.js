@@ -523,6 +523,7 @@ class Spike{
     constructor(scene, posX, posY, sizeX, sizeY, color, hp){
         this.spikes = scene.add.rectangle(posX, posY, sizeX, sizeY, color);
         scene.physics.add.existing(this.spikes, 1);
+        this.am = scene.am;
 
         this.hp = hp;
     }

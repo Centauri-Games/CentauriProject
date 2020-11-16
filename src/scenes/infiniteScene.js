@@ -316,6 +316,209 @@ class infiniteScene extends Phaser.Scene {
         this.goal.setPosition(3750+levelDisplace, 1125);
     }
 
+    generateLevel3(levelDisplace){
+        var bg = this.add.sprite(960,540,'bg1');
+        bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 875;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2300;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+
+        //TILEMAP
+        var map = this.add.tilemap('map3');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var ground = map.createStaticLayer('Suelo',tileset,levelDisplace,0);
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
+        map.createStaticLayer('Pinchos',tileset,levelDisplace,0);
+        map.createStaticLayer('Plataformas',tileset,levelDisplace,0);
+
+        ground.setCollision([58]);
+        walls.setCollision([30,36,37,38,43,44,45]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace,0,4032,1440);
+        this.camera2.setBounds(levelDisplace,1440,4032, 1440);
+
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 1125, 'andamio', 350, 80, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 2570, 'andamio', 350, 80, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3750+levelDisplace, 1125, 'andamio', 350, 80, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3750+levelDisplace, 2570, 'andamio', 350, 80, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+        //VIDA + PINCHOS
+        var displaceY = 1440;
+
+        var spikesUp = new Spike(this, 2000+levelDisplace, 1380, 3800, 100, 0xff0000, this.hp);
+        spikesUp.setAlpha(0);
+        spikesUp.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikesDown = new Spike(this, 2000+levelDisplace, 1380+displaceY, 3800, 100, 0xff0000, this.hp);
+        spikesDown.setAlpha(0);
+        spikesDown.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        //SUELO y PLATAFORMAS
+        //J Superior
+        var floor1 = this.add.rectangle(725+levelDisplace, 950, 200, 80, 0x000000);
+        floor1.setAlpha(0);
+        this.physics.add.existing(floor1, 1);
+        this.physics.add.collider(this.playerShape, floor1);
+
+        var floor2 = this.add.rectangle(1050+levelDisplace, 950, 80, 80, 0x000000);
+        floor2.setAlpha(0);
+        this.physics.add.existing(floor2, 1);
+        this.physics.add.collider(this.playerShape, floor2);
+
+        var floor3 = this.add.rectangle(1400+levelDisplace, 950, 200, 80, 0x000000);
+        floor3.setAlpha(0);
+        this.physics.add.existing(floor3, 1);
+        this.physics.add.collider(this.playerShape, floor3);
+
+        var floor4 = this.add.rectangle(725+levelDisplace, 1235, 400, 80, 0x000000);
+        floor4.setAlpha(0);
+        this.physics.add.existing(floor4, 1);
+        this.physics.add.collider(this.playerShape, floor4);
+
+        var floor5 = this.add.rectangle(1400+levelDisplace, 1235, 400, 80, 0x000000);
+        floor5.setAlpha(0);
+        this.physics.add.existing(floor5, 1);
+        this.physics.add.collider(this.playerShape, floor5);
+
+        var floor6 = this.add.rectangle(2100+levelDisplace, 1235, 700, 80, 0x000000);
+        floor6.setAlpha(0);
+        this.physics.add.existing(floor6, 1);
+        this.physics.add.collider(this.playerShape, floor6);
+
+        var floor7 = this.add.rectangle(2450+levelDisplace, 1165, 100, 80, 0x000000);
+        floor7.setAlpha(0);
+        this.physics.add.existing(floor7, 1);
+        this.physics.add.collider(this.playerShape, floor7);
+
+        var floor8 = this.add.rectangle(2600+levelDisplace, 1075, 200, 80, 0x000000);
+        floor8.setAlpha(0);
+        this.physics.add.existing(floor8, 1);
+        this.physics.add.collider(this.playerShape, floor8);
+
+        var floor9 = this.add.rectangle(2790+levelDisplace, 980, 200, 80, 0x000000);
+        floor9.setAlpha(0);
+        this.physics.add.existing(floor9, 1);
+        this.physics.add.collider(this.playerShape, floor9);
+
+        var floor10 = this.add.rectangle(2945+levelDisplace, 790, 120, 80, 0x000000);
+        floor10.setAlpha(0);
+        this.physics.add.existing(floor10, 1);
+        this.physics.add.collider(this.playerShape, floor10);
+
+        var sp = new StaticPlatform(this, 1050+levelDisplace, 1125, 'woodP');
+        sp.addPlayerCollide(this, this.playerShape);
+
+        var mp1 = new MovingPlatform(this, 3100+levelDisplace, 790, 'woodP'); //Plataforma final
+        mp1.addPlayerCollide(this, this.playerShape);
+        mp1.setMovement(this, 200, 0);
+
+        //J Inferior
+
+        var mp2 = new MovingPlatform(this, 700+levelDisplace, 2400, 'woodP'); //Plataforma 1
+        mp2.addPlayerCollide(this, this.playerShape2);
+        mp2.setMovement(this, 0, 150, this.playerPhysics2);
+
+        var sp2 = new StaticPlatform(this, 1200+levelDisplace, 2700, 'woodP');
+        sp2.addPlayerCollide(this, this.playerShape2);
+
+        var mp3 = new MovingPlatform(this, 1500+levelDisplace, 2700, 'woodP'); //Plataforma 2
+        mp3.addPlayerCollide(this, this.playerShape2);
+        mp3.setMovement(this, 0, -300, this.playerPhysics2);
+
+        var floor11 = this.add.rectangle(1920+levelDisplace, 2015, 500, 80, 0x000000);
+        floor11.setAlpha(0);
+        this.physics.add.existing(floor11, 1);
+        this.physics.add.collider(this.playerShape2, floor11);
+
+        var floor12 = this.add.rectangle(2400+levelDisplace, 2200, 300, 80, 0x000000);
+        floor12.setAlpha(0);
+        this.physics.add.existing(floor12, 1);
+        this.physics.add.collider(this.playerShape2, floor12);
+
+        var floor13 = this.add.rectangle(2820+levelDisplace, 2110, 200, 80, 0x000000);
+        floor13.setAlpha(0);
+        this.physics.add.existing(floor13, 1);
+        this.physics.add.collider(this.playerShape2, floor13);
+
+        this.physics.add.collider(this.playerShape, floor13);
+        this.physics.add.collider(this.playerShape, floor12);
+
+        var floor14 = this.add.rectangle(3070+levelDisplace, 2675, 300, 80, 0x000000);
+        floor14.setAlpha(0);
+        this.physics.add.existing(floor14, 1);
+        this.physics.add.collider(this.playerShape2, floor14);
+
+        var mp4 = new MovingPlatform(this, 3400+levelDisplace, 2200, 'woodP'); //Plataforma 2
+        mp4.addPlayerCollide(this, this.playerShape2);
+        mp4.setMovement(this, 0, 200);
+
+        var mp5 = new MovingPlatform(this, 3100+levelDisplace, 2400, 'woodP'); //Plataforma 2
+        mp5.addPlayerCollide(this, this.playerShape2);
+        mp5.setMovement(this, 0, -200);
+
+        //PORTALES
+
+        var portal1 = new Teleport(this, 1050+levelDisplace, 1300, 1000, 2300, 'portalA', 'portalR');
+        portal1.setScale(1.5,1.5);
+        portal1.rotateExit(Math.PI);
+
+        var portal2 = new Teleport(this, 2600+levelDisplace, 2750, 2855, 550, 'portalA', 'portalR');
+        portal2.setScale(1.5,1.5);
+        portal2.rotateExit(Math.PI);
+
+
+        //CAJAS
+
+        var box1 = new Box(this, 1000+levelDisplace, 2775, 850, 1100, 50, 50, 'caja');
+        box1.addPlayerCollide(this, this.playerShape);
+        box1.addPlayerCollide(this, this.playerShape2);
+        box1.addWorldCollide(this, floor4);
+
+        portal1.addCollide(this, box1.getBox());
+
+        var box2 = new Box(this,2855+levelDisplace,915,2520, 1600, 50, 50, 'caja');
+        box2.addPlayerCollide(this, this.playerShape);
+        box2.addPlayerCollide(this, this.playerShape2);
+        box2.addWorldCollide(this, floor12);
+
+        portal2.addCollide(this, box2.getBox());
+
+        var box3 = new Box(this,2855+levelDisplace,865,2400, 1600, 50, 50, 'caja');
+        box3.addPlayerCollide(this, this.playerShape);
+        box3.addPlayerCollide(this, this.playerShape2);
+        box3.addWorldCollide(this, floor12);
+
+        portal2.addCollide(this, box3.getBox());
+
+        var box4 = new Box(this,2805+levelDisplace,915,2805,915, 50, 50, 'caja');
+        box4.addPlayerCollide(this, this.playerShape);
+        box4.addResetCollide(this, spikesUp);
+        box4.addResetCollide(this, spikesDown);
+
+        portal2.addCollide(this, box4.getBox());
+
+        //Meta
+        this.goal.setPosition(3750+levelDisplace, 1125);
+    }
+
     preload(){
     }
 
@@ -406,7 +609,8 @@ class infiniteScene extends Phaser.Scene {
 
 
         this.generateLevel1(0);
-        this.generateLevel2(3840)
+        this.generateLevel2(3840);
+        this.generateLevel3(7680);
     }
 
     update(){
