@@ -547,9 +547,9 @@ class Spike{
 
 class Life{
 
-    constructor(scene, english){
+    constructor(scene, posX, posY, english){
         this.lifes = 3;
-        this.lifesText = scene.add.text(0, 300, 'Vidas: ' + this.lifes, {font: '32px'});
+        this.lifesText = scene.add.text(posX, posY, 'Vidas: ' + this.lifes, {font: '32px'});
         this.english = english;
         if (this.english){
             this.lifesText.setText('Lives: ' + this.lifes);

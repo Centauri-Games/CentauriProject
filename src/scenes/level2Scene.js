@@ -8,6 +8,8 @@ class level2Scene extends Phaser.Scene{
         this.English = data.english;
         this.lastDown = false;
         this.am = data.am;
+        this.device = data.device;
+
     }
 
     preload(){
@@ -205,7 +207,7 @@ class level2Scene extends Phaser.Scene{
         sp12.addPlayerCollide(this, playerShape2);
 
         //VIDA
-        var hp = new Life(this, this.English, playerShape, playerShape2);
+        var hp = new Life(this, iniXL, iniYL, this.English);
 
         //PINCHOS
         var spikesupd = new Spike(this, 2000, 1560, 4000, 100, 0xff0000, hp);

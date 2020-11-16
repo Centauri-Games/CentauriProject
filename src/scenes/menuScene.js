@@ -6,14 +6,21 @@ class menuScene extends Phaser.Scene{
     init(data){
         this.English = data.english;
         this.am = data.am;
+        if (this.sys.game.device.os.desktop){
+            this.device = "desktop";
+        }else{
+            this.device = "mobile";       
     }
+}
 
     preload(){
+        this.load.image('menu', 'assets/screens/Menú.png');
         this.load.image('screen', 'assets/UI/FullScreen.png');
         this.load.image('settings', 'assets/UI/Settings.png');
     }
 
     create(){
+        this.add.sprite(960, 540, 'menu');
         this.add.image(1750, 125, 'screen').setScale(0.35).setInteractive().on('pointerup',()=>{
             if (this.scale.isFullscreen){
                 this.scale.stopFullscreen();
@@ -21,41 +28,59 @@ class menuScene extends Phaser.Scene{
                 this.scale.startFullscreen();
             }
         });
-        var fsText = this.add.text(1625,250,"Pantalla completa",{font : "24px"});
 
-        this.add.image(200, 125, 'settings').setScale(0.08).setInteractive().on('pointerup',()=>{
+        this.add.image(1750, 925, 'settings').setScale(0.08).setInteractive().on('pointerup',()=>{
             this.scene.start("settings", {am: this.am});
         });
-        var sText = this.add.text(150,250,"Ajustes",{font : "24px"});
 
-        this.add.rectangle(960,360,800,200,0xffff00).setInteractive().on('pointerup',()=>{
+        var bSingle = this.add.rectangle(292.5,125,450,100,0x550055).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
-
-            this.scene.start("selectMode", {english: this.English, online : true, am: this.am});
-            console.log("Click");
-        });
-        var mpText = this.add.text(960,360,"Cooperativo en linea",{font : "24px", color : "black"});
-
-        this.add.rectangle(960,720,800,200,0xffff00).setInteractive().on('pointerup',()=>{
-            //this.setFillStyle(0xffffff);
-            console.log("Click");
             this.scene.start("selectMode", {english: this.English, online : false, am: this.am});
         });
-        var spText = this.add.text(960,720,"Un jugador",{font : "24px",color : "black"});
+        bSingle.setAlpha(0.25);
+
+
+        var bMulti = this.add.rectangle(292.5,340,450,100,0x550055).setInteractive().on('pointerup',()=>{
+            //this.setFillStyle(0xffffff);
+            this.scene.start("selectMode", {english: this.English, online : true, am: this.am});
+
+            this.scene.start("selectMode", {english: this.English, online : true, am: this.am, device: this.device});
+            console.log("Click");
+        });
+        bMulti.setAlpha(0.25);
+
+        var bControls = this.add.rectangle(292.5,540,450,100,0xaa7f2a).setInteractive().on('pointerup',()=>{
+            //this.setFillStyle(0xffffff);
+            this.scene.start("controls", {english: this.English, online : true, am: this.am});
+        });
+        bControls.setAlpha(0.1);
+
+        var bCredits = this.add.rectangle(292.5,740,450,100,0xffff00).setInteractive().on('pointerup',()=>{
+            //this.setFillStyle(0xffffff);
+            this.scene.start("credits", {english: this.English, online : true, am: this.am});
+        });
+        bCredits.setAlpha(0.25);
+
+        var bRanking = this.add.rectangle(292.5,955,450,100,0xffff00).setInteractive().on('pointerup',()=>{
+            //this.setFillStyle(0xffffff);
+            this.scene.start("controls", {english: this.English, online : true, am: this.am});
+            console.log("Click");
+            this.scene.start("selectMode", {english: this.English, online : false, am: this.am, device : this.device})
+        });
+        bRanking.setAlpha(0.25);
 
         if (this.English){
-            fsText.setText("Full screen");
-            sText.setText("Settings");
             mpText.setText("Cooperative online");
             spText.setText("Single player");
         }
 
         //Audio Manager
-        if(this.am == null){
+        if(this.am==null){
             this.am = new AudioManager();
         }
         if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
             this.bgMusic = this.sound.add("menuMS", { volume: 0.5, loop: true });
+            console.log(this.bgMusic);
             this.bgMusic.play();
             this.am.bgMusicPlaying = true;
             this.am.bgMusic = this.bgMusic; //Guarda la referencia a la musica sonando para después poder pararla
