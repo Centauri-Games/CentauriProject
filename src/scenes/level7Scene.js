@@ -8,6 +8,7 @@ class level7Scene extends Phaser.Scene{
         this.English = data.english;
         this.lastDown = false;
         this.am = data.am;
+        this.device = data.device;
     }
 
     preload(){
@@ -117,7 +118,7 @@ class level7Scene extends Phaser.Scene{
         andd2.addCollide(this, playerShape2);
 
         //VIDA + PINCHOS
-        var hp = new Life(this, this.English, playerShape, playerShape2);
+        var hp = new Life(this, iniXL, iniYL, this.English);
         var displaceY = 1440;
 
         var spikesl = new Spike(this, 2900, 1195, 3800, 100, 0xff0000, hp);

@@ -6,7 +6,8 @@ class pauseScene extends Phaser.Scene{
     init(data){
         this.Level = data.level;
         this.English = data.english;
-        this.am = data.am;
+        
+        this.device = data.device;
     }
 
     preload(){
@@ -27,11 +28,11 @@ class pauseScene extends Phaser.Scene{
             this.scene.resume(this.Level);
         });
         this.bText.setInteractive().on("pointerup",()=>{
-            this.scene.start("menuScene", {english: this.English, am: this.am});
+            this.scene.start("menuScene", {english: this.English, device : this.device});
         });
     }
 
     update(){
-
+      
     }
 }
