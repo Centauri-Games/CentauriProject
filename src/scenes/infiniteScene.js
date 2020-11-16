@@ -9,48 +9,66 @@ class infiniteScene extends Phaser.Scene {
         this.device = data.device;
     }
 
-    levelGenerator(level){
-        switch(level){
+    levelGenerator(){
 
+        //Generar numero aleatorio diferente al anterior nivel
+        var level;
+        do {
+            level = Math.floor((Math.random() * 10) + 1);
+        }while(level == this.actualLevel)
+
+        console.log(level);
+
+        switch(level){
             case 1:
                 this.actualLevel = 1;
-                this.generateLevel1();
+                this.generateLevel1(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
             case 2:
                 this.actualLevel = 2;
-                this.generateLevel2();
+                this.generateLevel2(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
             case 3:
                 this.actualLevel = 3;
-                this.generateLevel3();
+                this.generateLevel3(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
             case 4:
                 this.actualLevel = 4;
-                this.generateLevel4();
+                this.generateLevel4(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
             case 5:
                 this.actualLevel = 5;
-                this.generateLevel5();
+                this.generateLevel5(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
             case 6:
                 this.actualLevel = 6;
-                this.generateLevel6();
+                this.generateLevel6(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
             case 7:
                 this.actualLevel = 7;
-                this.generateLevel7();
+                this.generateLevel7(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
             case 8:
                 this.actualLevel = 8;
-                this.generateLevel8();
+                this.generateLevel8(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
             case 9:
                 this.actualLevel = 9;
-                this.generateLevel9();
+                this.generateLevel9(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
             case 10:
                 this.actualLevel = 10;
-                this.generateLevel10();
+                this.generateLevel10(this.levelCounter *5000);
+                this.levelCounter ++;
                 break;
         }
     }
@@ -195,6 +213,13 @@ class infiniteScene extends Phaser.Scene {
         var spikesDownR = new Spike(this, 3160+levelDisplace, 92+displaceY, 800, 100, 0xff0000, this.hp);
         spikesDownR.setAlpha(0);
         spikesDownR.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        //Meta
+        this.goal1 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal1.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(this.goal1, 1);
+        this.physics.add.overlap(this.playerPhysics,goalPhysics);
+        this.physics.add.overlap(this.playerPhysics2,goalPhysics);
     }
 
     generateLevel2(levelDisplace){
@@ -349,7 +374,11 @@ class infiniteScene extends Phaser.Scene {
 
 
         //Meta
-        this.goal.setPosition(3750+levelDisplace, 1125);
+        this.goal2 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal2.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(this.goal2, 1);
+        this.physics.add.overlap(this.playerPhysics,goalPhysics);
+        this.physics.add.overlap(this.playerPhysics2,goalPhysics);
     }
 
     generateLevel3(levelDisplace){
@@ -553,7 +582,11 @@ class infiniteScene extends Phaser.Scene {
         portal2.addCollide(this, box4.getBox());
 
         //Meta
-        this.goal.setPosition(3750+levelDisplace, 1125);
+        this.goal3 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal3.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(this.goal3, 1);
+        this.physics.add.overlap(this.playerPhysics,goalPhysics);
+        this.physics.add.overlap(this.playerPhysics2,goalPhysics);
     }
 
     generateLevel4(levelDisplace){
@@ -803,7 +836,11 @@ class infiniteScene extends Phaser.Scene {
         mirror7.addDoors(doorUp, doorDown);
 
         //Meta
-        this.goal.setPosition(3750+levelDisplace, 1125);
+        this.goal4 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal4.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(this.goal4, 1);
+        this.physics.add.overlap(this.playerPhysics,goalPhysics);
+        this.physics.add.overlap(this.playerPhysics2,goalPhysics);
     }
 
     generateLevel5(levelDisplace){
@@ -921,7 +958,11 @@ class infiniteScene extends Phaser.Scene {
         dualPlat10.addWorldCollider(this, limitL);
 
         //Meta
-        this.goal.setPosition(3750+levelDisplace, 1125);
+        this.goal5 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal5.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(this.goal5, 1);
+        this.physics.add.overlap(this.playerPhysics,goalPhysics);
+        this.physics.add.overlap(this.playerPhysics2,goalPhysics);
     }
 
     generateLevel6(levelDisplace){
@@ -1118,7 +1159,11 @@ class infiniteScene extends Phaser.Scene {
         this.physics.add.collider(this.playerShape2, floor2);
 
         //Meta
-        this.goal.setPosition(3750+levelDisplace, 1125);
+        this.goal6 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal6.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(this.goal6, 1);
+        this.physics.add.overlap(this.playerPhysics,goalPhysics);
+        this.physics.add.overlap(this.playerPhysics2,goalPhysics);
     }
 
     generateLevel7(levelDisplace){
@@ -1316,7 +1361,11 @@ class infiniteScene extends Phaser.Scene {
         this.overlapped2 = false;
 
         //Meta
-        this.goal.setPosition(3750+levelDisplace, 1125);
+        this.goal7 = this.add.rectangle(3750+levelDisplace, 1125, 300, 5000, 0x000000);
+        this.goal7.setAlpha(0);
+        var goalPhysics = this.physics.add.existing(this.goal7, 1);
+        this.physics.add.overlap(this.playerPhysics,goalPhysics);
+        this.physics.add.overlap(this.playerPhysics2,goalPhysics);
     }
 
     generateLevel8(levelDisplace){
@@ -1988,27 +2037,9 @@ class infiniteScene extends Phaser.Scene {
         this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
         this.playerProta = true;
 
-        //Meta
-        this.goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
-        this.goal.setAlpha(0);
-        var goalPhysics = this.physics.add.existing(this.goal, 1);
-        this.physics.add.overlap(this.playerPhysics,goalPhysics);
-        this.physics.add.overlap(this.playerPhysics2,goalPhysics);
-
-        this.actualLevel = 10;
-
-        this.generateLevel1(0);
-        this.generateLevel2(5000);
-        this.generateLevel3(10000);
-        this.generateLevel4(15000);
-        this.generateLevel5(20000);
-        this.generateLevel6(25000);
-        this.generateLevel7(30000);
-        this.generateLevel8(35000);
-        this.generateLevel9(40000);
-        this.generateLevel10(45000);
-
-        this.levelDisplace = 45000;
+        this.actualLevel = 0;
+        this.levelCounter = 0;
+        this.levelGenerator();
 
     }
 
@@ -2107,7 +2138,50 @@ class infiniteScene extends Phaser.Scene {
             this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
         }
 
-        if(this.actualLevel == 7){
+        //Meta
+        if(this.actualLevel == 1){
+            if (this.physics.world.overlap(this.playerPhysics,this.goal1) && this.physics.world.overlap(this.playerPhysics2,this.goal1)){
+                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+                console.log("completed");
+                this.levelGenerator();
+            }
+        }
+        else if(this.actualLevel == 2){
+            if (this.physics.world.overlap(this.playerPhysics,this.goal2) && this.physics.world.overlap(this.playerPhysics2,this.goal2)){
+                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+                console.log("completed");
+                this.levelGenerator();
+            }
+        }
+        else if(this.actualLevel == 3){
+            if (this.physics.world.overlap(this.playerPhysics,this.goal3) && this.physics.world.overlap(this.playerPhysics2,this.goal3)){
+                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+                console.log("completed");
+                this.levelGenerator();
+            }
+        }
+        else if(this.actualLevel == 4){
+            if (this.physics.world.overlap(this.playerPhysics,this.goal4) && this.physics.world.overlap(this.playerPhysics2,this.goal4)){
+                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+                console.log("completed");
+                this.levelGenerator();
+            }
+        }
+        else if(this.actualLevel == 5){
+            if (this.physics.world.overlap(this.playerPhysics,this.goal5) && this.physics.world.overlap(this.playerPhysics2,this.goal5)){
+                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+                console.log("completed");
+                this.levelGenerator();
+            }
+        }
+        else if(this.actualLevel == 6){
+            if (this.physics.world.overlap(this.playerPhysics,this.goal6) && this.physics.world.overlap(this.playerPhysics2,this.goal6)){
+                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+                console.log("completed");
+                this.levelGenerator();
+            }
+        }
+        else if(this.actualLevel == 7){
             if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
                 this.mpl2.movingPlatformPhysics.body.setVelocityX(-100);
                 if(!this.overlapped1){
@@ -2226,7 +2300,7 @@ class infiniteScene extends Phaser.Scene {
         }
 
         else if(this.actualLevel == 10){
-            if (this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal2)){
+            if (this.physics.world.overlap(this.playerPhysics,this.goal10) && this.physics.world.overlap(this.playerPhysics2,this.goal102)){
                 this.sound.add("diamondFX", { volume: 1, loop: false }).play();
                 console.log("completed");
                 this.levelGenerator();
