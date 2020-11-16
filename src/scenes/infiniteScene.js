@@ -13,10 +13,44 @@ class infiniteScene extends Phaser.Scene {
         switch(level){
 
             case 1:
+                this.actualLevel = 1;
                 this.generateLevel1();
                 break;
             case 2:
+                this.actualLevel = 2;
                 this.generateLevel2();
+                break;
+            case 3:
+                this.actualLevel = 3;
+                this.generateLevel3();
+                break;
+            case 4:
+                this.actualLevel = 4;
+                this.generateLevel4();
+                break;
+            case 5:
+                this.actualLevel = 5;
+                this.generateLevel5();
+                break;
+            case 6:
+                this.actualLevel = 6;
+                this.generateLevel6();
+                break;
+            case 7:
+                this.actualLevel = 7;
+                this.generateLevel7();
+                break;
+            case 8:
+                this.actualLevel = 8;
+                //this.generateLevel8();
+                break;
+            case 9:
+                this.actualLevel = 9;
+                //this.generateLevel9();
+                break;
+            case 10:
+                this.actualLevel = 10;
+                //this.generateLevel10();
                 break;
         }
     }
@@ -1087,6 +1121,204 @@ class infiniteScene extends Phaser.Scene {
         this.goal.setPosition(3750+levelDisplace, 1125);
     }
 
+    generateLevel7(levelDisplace){
+
+        this.bg = this.add.sprite(960,540,'bg4');
+        this.bg.setDepth(-2);
+        this.bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 685;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2110;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+
+        //TILEMAP
+        var map = this.add.tilemap('map7');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace, 0);
+        map.createStaticLayer('Suelo', tileset, levelDisplace, 0);
+        map.createStaticLayer('Suelo2', tileset, levelDisplace, 0);
+        map.createStaticLayer('Pinchos', tileset, levelDisplace, 0);
+
+        walls.setCollision([12, 13, 19, 20]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace, 0, 4032, 1440);
+        this.camera2.setBounds(levelDisplace, 1440, 4032, 1440);
+
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 2375, 'andamio', 350, 500, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3750+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3750+levelDisplace, 2375, 'andamio', 350, 500, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+        var displaceY = 1440;
+
+        var spikesl = new Spike(this, 2900+levelDisplace, 1195, 3800, 100, 0xff0000, this.hp);
+        spikesl.setAlpha(0);
+        spikesl.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+        var spikesd = new Spike(this, 2258+levelDisplace, 1199 + displaceY, 384, 96, 0xff0000, this.hp);
+        spikesd.setAlpha(0);
+        spikesd.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        //PLATAFORMAS
+        //Móviles
+        var mpl = new MovingPlatform(this, 650+levelDisplace, 1200, 'woodP');
+        mpl.addPlayerCollide(this, this.playerShape);
+        mpl.setMovement(this, 0, -325);
+        var mpl2 = new MovingPlatform(this, 2258+levelDisplace, 1000, 'woodP');
+        mpl2.addPlayerCollide(this, this.playerShape);
+        this.mpl2 = mpl2;
+
+        var mpl3 = new MovingPlatform(this, 3400+levelDisplace, 1175 + displaceY, 'woodP');
+        mpl3.addPlayerCollide(this, this.playerShape2);
+        mpl3.setMovement(this, 0, -175);
+
+        var mpl4 = new MovingPlatform(this, 3400+levelDisplace, 1100, 'woodP');
+        mpl4.addPlayerCollide(this, this.playerShape);
+        mpl4.setMovement(this, 0, -175);
+
+        //SUELO
+        //J Superior
+        var floor1L = this.add.rectangle(2000+levelDisplace, 1295, 3800, 100, 0xff0000);
+        floor1L.setAlpha(0);
+        this.physics.add.existing(floor1L, 1);
+        this.physics.add.collider(this.playerShape, floor1L);
+
+        var floor2L = this.add.rectangle(2000+levelDisplace, 1295, 3800, 100, 0xff0000);
+        floor2L.setAlpha(0);
+        this.physics.add.existing(floor2L, 1);
+        this.physics.add.collider(this.playerShape, floor2L);
+
+        var floor3L = this.add.rectangle(1778+levelDisplace, 670, 2016, 192, 0xff0000);
+        floor3L.setAlpha(0);
+        this.physics.add.existing(floor3L, 1);
+        this.physics.add.collider(this.playerShape, floor3L);
+
+        //J Inferior
+        var floor1S = this.add.rectangle(2000+levelDisplace, 1295 + displaceY, 3800, 100, 0xff0000);
+        floor1S.setAlpha(0);
+        this.physics.add.existing(floor1S, 1);
+        this.physics.add.collider(this.playerShape2, floor1S);
+
+        var floor2S = this.add.rectangle(1010+levelDisplace, 1199 + displaceY, 96, 96, 0xff0000);
+        floor2S.setAlpha(0);
+        this.physics.add.existing(floor2S, 1);
+        this.physics.add.collider(this.playerShape2, floor2S);
+
+        var floor3S = this.add.rectangle(1202+levelDisplace, 1103 + displaceY, 288, 96, 0xff0000);
+        floor3S.setAlpha(0);
+        this.physics.add.existing(floor3S, 1);
+        this.physics.add.collider(this.playerShape2, floor3S);
+
+        var floor4S = this.add.rectangle(1442+levelDisplace, 1007 + displaceY, 192, 96, 0xff0000);
+        floor4S.setAlpha(0);
+        this.physics.add.existing(floor4S, 1);
+        this.physics.add.collider(this.playerShape2, floor4S);
+
+        var floor5S = this.add.rectangle(1682+levelDisplace, 911 + displaceY, 288, 96, 0xff0000);
+        floor5S.setAlpha(0);
+        this.physics.add.existing(floor5S, 1);
+        this.physics.add.collider(this.playerShape2, floor5S);
+
+        var floor6S = this.add.rectangle(1874+levelDisplace, 815 + displaceY, 96, 96, 0xff0000);
+        floor6S.setAlpha(0);
+        this.physics.add.existing(floor6S, 1);
+        this.physics.add.collider(this.playerShape2, floor6S);
+
+        var floor7S = this.add.rectangle(1970+levelDisplace, 719 + displaceY, 96, 96, 0xff0000);
+        floor7S.setAlpha(0);
+        this.physics.add.existing(floor7S, 1);
+        this.physics.add.collider(this.playerShape2, floor7S);
+
+        var floor8S = this.add.rectangle(2546+levelDisplace, 719 + displaceY, 96, 96, 0xff0000);
+        floor8S.setAlpha(0);
+        this.physics.add.existing(floor8S, 1);
+        this.physics.add.collider(this.playerShape2, floor8S);
+        this.sc = this;
+
+        //PUERTA
+        var doorStart = this.add.sprite(1500+levelDisplace, 360, 'doorStart');
+        doorStart.setScale(0.5, 0.5);
+        doorStart.setDepth(100);
+        var doorButton = new Button(this, 500+levelDisplace, 1150 + displaceY, 1550+levelDisplace, 350, 'greenButton', 'door');
+        doorButton.addCollideDoor(this, this.playerShape);
+        doorButton.addCollideButton(this, this.playerShape2);
+
+        //BOTÓN QUE ACTIVA EL PUENTE
+        var bridgeButton = this.add.sprite(2300+levelDisplace, 490, 'redButton');
+
+        this.physics.add.existing(bridgeButton, 1);
+        this.anims.create({
+            key: 'pressedR',
+            frames: this.anims.generateFrameNumbers('redButton', {start: 0, end: 2}),
+            frameRate: 10
+        });
+        var bridge = this.add.sprite(2258+levelDisplace, 719 + displaceY, 'bridge');
+        var bridgePhysics = this.physics.add.existing(bridge, 1);
+        bridgePhysics.body.setSize(480, 66);
+        this.anims.create({
+            key: 'activated',
+            frames: this.anims.generateFrameNumbers('bridge', {start: 0, end: 4}),
+            frameRate: 10
+        });
+        this.physics.add.collider(this.playerShape, bridgeButton, function(){
+            bridge.anims.play('activated', false);
+            bridgeButton.anims.play('pressedR', false);
+            this.sc.sound.add("door1FX", { volume: 1, loop: false }).play();
+            this.physics.add.collider(this.playerShape2, bridge);
+        }, null, this);
+
+        //PALANCAS QUE MUEVEN LA PLATAFORMA
+        var leverLeft = this.add.sprite(2690+levelDisplace, 1179 + displaceY, 'lever');
+        this.physics.add.existing(leverLeft, 1);
+        var leverRight = this.add.sprite(2930+levelDisplace, 1179 + displaceY, 'lever');
+        this.physics.add.existing(leverRight, 1);
+        leverRight.flipX = true;
+
+        this.anims.create({
+            key: 'unpull',
+            frames: this.anims.generateFrameNumbers('lever', {start: 0, end: 0}),
+            frameRate: 10
+        });
+        this.anims.create({
+            key: 'pull',
+            frames: this.anims.generateFrameNumbers('lever', {start: 3, end: 3}),
+            frameRate: 10
+        });
+
+        this.physics.add.overlap(this.playerShape2, leverLeft, function(){
+            leverLeft.anims.play('pull', false);
+            leverRight.anims.play('unpull', false);
+        }, null, this);
+        this.physics.add.overlap(this.playerShape2, leverRight, function(){
+            leverRight.anims.play('pull', false);
+            leverLeft.anims.play('unpull', false);
+        }, null, this);
+
+        this.leverLeft = leverLeft;
+        this.leverRight = leverRight;
+        this.overlapped1 = false;
+        this.overlapped2 = false;
+
+        //Meta
+        this.goal.setPosition(3750+levelDisplace, 1125);
+    }
+
     preload(){
     }
 
@@ -1175,6 +1407,7 @@ class infiniteScene extends Phaser.Scene {
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
         this.physics.add.overlap(this.playerPhysics2,goalPhysics);
 
+        this.actualLevel = 0;
 
         this.generateLevel1(0);
         this.generateLevel2(5000);
@@ -1182,6 +1415,9 @@ class infiniteScene extends Phaser.Scene {
         this.generateLevel4(15000);
         this.generateLevel5(20000);
         this.generateLevel6(25000);
+
+        this.actualLevel = 7;
+        this.generateLevel7(30000);
     }
 
     update(){
@@ -1277,6 +1513,29 @@ class infiniteScene extends Phaser.Scene {
         if (this.keyMovement.ESC.isDown) {
             this.bgMusic.stop();
             this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
+        }
+
+        if(this.actualLevel == 7){
+            if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
+                this.mpl2.movingPlatformPhysics.body.setVelocityX(-100);
+                if(!this.overlapped1){
+                    this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
+                    this.overlapped1=true;
+                }
+
+            } else if (this.physics.world.overlap(this.playerShape2, this.leverRight)){
+                this.mpl2.movingPlatformPhysics.body.setVelocityX(100);
+                if(!this.overlapped2){
+                    this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
+                    this.overlapped2=true;
+                }
+            } else {
+                this.mpl2.movingPlatformPhysics.body.setVelocityX(0);
+                this.leverLeft.anims.play('unpull', false);
+                this.leverRight.anims.play('unpull', false);
+                this.overlapped1 = false;
+                this.overlapped2 = false;
+            }
         }
     }
 
