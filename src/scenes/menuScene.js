@@ -8,30 +8,37 @@ class menuScene extends Phaser.Scene{
         this.am = data.am;
         if (this.sys.game.device.os.desktop){
             this.device = "desktop";
-        }else{
+        } else {
             this.device = "mobile";       
+        }
     }
-}
 
     preload(){
         this.load.image('menu', 'assets/screens/Menú.png');
+        this.load.image('menuEnglish', 'assets/screens/MenúIngles.png');
         this.load.image('screen', 'assets/UI/FullScreen.png');
         this.load.image('settings', 'assets/UI/Settings.png');
     }
 
     create(){
-        this.add.sprite(960, 540, 'menu');
-        this.add.image(1750, 125, 'screen').setScale(0.35).setInteractive().on('pointerup',()=>{
+        if (this.English){
+            this.add.sprite(960, 540, 'menuEnglish');
+        } else {
+            this.add.sprite(960, 540, 'menu');
+        }
+        var fullScreen = this.add.image(1875, 50, 'screen').setScale(0.2).setInteractive().on('pointerup',()=>{
             if (this.scale.isFullscreen){
                 this.scale.stopFullscreen();
             } else {
                 this.scale.startFullscreen();
             }
         });
+        fullScreen.setAlpha(0.01);
 
-        this.add.image(1750, 925, 'settings').setScale(0.08).setInteractive().on('pointerup',()=>{
-            this.scene.start("settings", {am: this.am});
+        var bSet = this.add.image(1875, 150, 'settings').setScale(0.04).setInteractive().on('pointerup',()=>{
+            this.scene.start("settings", {english: this.English, am: this.am});
         });
+        bSet.setAlpha(0.01);
 
         var bSingle = this.add.rectangle(292.5,125,450,100,0x550055).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
@@ -39,13 +46,8 @@ class menuScene extends Phaser.Scene{
         });
         bSingle.setAlpha(0.25);
 
-
         var bMulti = this.add.rectangle(292.5,340,450,100,0x550055).setInteractive().on('pointerup',()=>{
-            //this.setFillStyle(0xffffff);
-            this.scene.start("selectMode", {english: this.English, online : true, am: this.am});
-
             this.scene.start("selectMode", {english: this.English, online : true, am: this.am, device: this.device});
-            console.log("Click");
         });
         bMulti.setAlpha(0.25);
 
@@ -66,11 +68,6 @@ class menuScene extends Phaser.Scene{
             this.scene.start("controls", {english: this.English, online : true, am: this.am});
         });
         bRanking.setAlpha(0.25);
-
-        if (this.English){
-            mpText.setText("Cooperative online");
-            spText.setText("Single player");
-        }
 
         //Audio Manager
         if(this.am==null){

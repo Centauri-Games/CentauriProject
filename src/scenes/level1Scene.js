@@ -196,6 +196,14 @@ class level1Scene extends Phaser.Scene{
         spd6.setAlpha(0);
         spd6.addPlayerCollide(this, playerShape2);
 
+        var spl7 = new StaticPlatform(this, 3200, 200, 'woodP');
+        spl7.rotate(Math.PI);
+        spl7.addPlayerCollide(this, playerShape);
+
+        var spd7 = new StaticPlatform(this, 3200, 200+displaceY, 'woodP');
+        spd7.rotate(Math.PI);
+        spd7.addPlayerCollide(this, playerShape2);
+
         //VIDA + PINCHOS
         var hp = new Life(this, iniXL, iniYL, this.English);
 
@@ -220,7 +228,7 @@ class level1Scene extends Phaser.Scene{
         this.playerProta = true;
 
         //Meta
-        var goal = this.add.rectangle(3750, 1125, 300, 5000, 0x000000);
+        var goal = this.add.rectangle(3800, 1125, 300, 5000, 0x000000);
         goal.setAlpha(0);
         var goalPhysics = this.physics.add.existing(goal, 1);
         this.physics.add.overlap(playerPhysics,goalPhysics);
@@ -305,22 +313,24 @@ class level1Scene extends Phaser.Scene{
         //////////////////////////////////////////
         if (this.keyMovement.W.isDown) {
             if (this.playerProta) {
-                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
+                if(!this.physics.world.overlap(this.playerPhysics,this.goal)) {
+                    if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
                         this.playerPhysics.body.setVelocityY(-250);
-                    } else {
+                        this.playerShape.anims.play('jumpL', false);
+                    } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
                         this.playerPhysics.body.setVelocityY(250);
+                        this.playerShape.anims.play('jumpL', false);
                     }
-                    this.playerShape.anims.play('jumpL', false);
                 }
             } else {
-                if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
+                if(!this.physics.world.overlap(this.playerPhysics2,this.goal)) {
+                    if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                         this.playerPhysics2.body.setVelocityY(-250);
-                    } else {
+                        this.playerShape.anims.play('jumpL', false);
+                    } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                         this.playerPhysics2.body.setVelocityY(250);
+                        this.playerShape.anims.play('jumpL', false);
                     }
-                    this.playerShape2.anims.play('jumpS', false);
                 }
             }
         }

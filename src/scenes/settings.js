@@ -4,27 +4,38 @@ class settings extends Phaser.Scene{
     }
 
     init(data){
+        this.English = data.english;
         this.am = data.am;
     }
 
     preload(){
+        this.load.image('language', 'assets/screens/SeleccionIdioma.png');
+        this.load.image('languageEnglish', 'assets/screens/SeleccionIdiomaIngles.png');
         this.load.image('español', 'assets/UI/España.png');
         this.load.image('english', 'assets/UI/UK.png');
     }
 
     create(){
-        this.add.text(375, 200, 'Español', {font : "48px"});
-        this.add.image(500, 500, 'español').setInteractive().on('pointerup',()=>{
+        if (this.English){
+            this.add.sprite(960, 540, 'languageEnglish');
+        } else {
+            this.add.sprite(960, 540, 'language');
+        }
+
+        var spanish = this.add.image(600, 540, 'español').setInteractive().on('pointerup',()=>{
             this.scene.start("menuScene", {english: false, am: this.am});
         });
+        spanish.setAlpha(0.01);
 
-        this.add.text(1300, 200, 'English', {font : "48px"});
-        this.add.image(1420, 500, 'english').setInteractive().on('pointerup',()=>{
+        var english = this.add.image(1375, 540, 'english').setInteractive().on('pointerup',()=>{
             this.scene.start("menuScene", {english: true, am: this.am});
         });
+        english.setAlpha(0.01);
 
-        this.add.text(960, 900, 'Elige un idioma', {font : "48px"});
-        this.add.text(960, 950, 'Choose a language', {font : "48px"});
+        var bText = this.add.text(125,125,"Atrás",{font : "48px"}).setInteractive().on("pointerup",()=>{
+            this.scene.start("menuScene", {english: this.English, am: this.am});
+        });
+        bText.setAlpha(0.01);
     }
 
     update(){

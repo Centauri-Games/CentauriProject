@@ -12,48 +12,44 @@ class selectMode extends Phaser.Scene{
     }
 
     preload(){
+        this.load.image('mode', 'assets/screens/SeleccionModo.png');
+        this.load.image('modeEnglish', 'assets/screens/SeleccionModoIngles.png');
         this.load.image('screen', 'assets/UI/FullScreen.png');
     }
 
     create(){
-        var bText = this.add.text(100,1000,"Atrás",{font : "24px"}).setInteractive().on("pointerup",()=>{
-            this.scene.start("menuScene", {am: this.am});
+        if (this.English){
+            this.add.sprite(960, 540, 'modeEnglish');
+        } else {
+            this.add.sprite(960, 540, 'mode');
+        }
+        var bText = this.add.text(125,125,"Atrás",{font : "48px"}).setInteractive().on("pointerup",()=>{
+            this.scene.start("menuScene", {english: this.English, am: this.am});
         });
+        bText.setAlpha(0.01);
 
-        this.add.image(1750, 125, 'screen').setScale(0.35).setInteractive().on('pointerup',()=>{
+        var fullScreen = this.add.image(1875, 50, 'screen').setScale(0.2).setInteractive().on('pointerup',()=>{
             if (this.scale.isFullscreen){
                 this.scale.stopFullscreen();
             } else {
                 this.scale.startFullscreen();
             }
         });
-        var fsText = this.add.text(1625,250,"Pantalla completa",{font : "24px"});
+        fullScreen.setAlpha(0.01);
 
-        this.add.rectangle(960,360,800,200,0xffff00).setInteractive().on('pointerup',()=>{
-            //this.setFillStyle(0xffffff);
-            console.log("Click");
-            this.scene.start("selectLevel", {english: this.English,online : this.online, am: this.am, device : this.device});
+        var bStory = this.add.rectangle(985,380,700,150,0x550055).setInteractive().on('pointerup',()=>{
+            this.scene.start("selectLevel", {english: this.English, online : this.online, am: this.am, device : this.device});
         });
-        var sText = this.add.text(960,360,"Modo historia",{font : "24px",color : "black"});
+        bStory.setAlpha(0.25);
 
-        this.add.rectangle(960,720,800,200,0xffff00).setInteractive().on('pointerup',()=>{
-            //this.setFillStyle(0xffffff);
-            console.log("Click");
-            if(this.online){
+        var bInfinite = this.add.rectangle(985,700,700,150,0xffff00).setInteractive().on('pointerup',()=>{
+            if (this.online){
                 this.scene.start("matchmakingScene", {level : 0, am: this.am, device : this.device} )
-            }else{
+            } else {
                 this.scene.start("infiniteScene", {english: this.English, am: this.am, device : this.device});
             }
-            
         });
-        var iText = this.add.text(960,720,"Modo infinito",{font : "24px",color : "black"});
-
-        if (this.English){
-            bText.setText("Back");
-            fsText.setText("Full screen");
-            sText.setText("Story mode");
-            iText.setText("Endless mode");
-        }
+        bInfinite.setAlpha(0.25);
 
         //Audio Manager
         if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
