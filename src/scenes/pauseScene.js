@@ -24,12 +24,11 @@ class pauseScene extends Phaser.Scene{
 
         var bResume = this.add.rectangle(960,535,600,100,0x550055).setInteractive().on('pointerup',()=>{
             this.scene.switch(this.level);
-            this.level.keyMovement.ESC.isDown = false;
         });
         bResume.setAlpha(0.25);
 
         var bBack = this.add.rectangle(960,770,600,100,0xffff00).setInteractive().on('pointerup',()=>{
-            this.level.scene.restart();
+            this.scene.restart(this.level);
             this.scene.start("menuScene", {english: this.English, online : true, am: this.am});
         });
         bBack.setAlpha(0.25);

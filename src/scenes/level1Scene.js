@@ -113,9 +113,11 @@ class level1Scene extends Phaser.Scene{
         var cameraMain = this.cameras.main;
         cameraMain.setSize(1920,540);
         cameraMain.setBounds(0,0,4032,1440);
+        this.cameraMain = cameraMain;
 
         var camera2 = this.cameras.add(0,540, 1920, 540);
         camera2.setBounds(0,1440,4032, 1440);
+        this.camera2 = camera2;
 
         cameraMain.startFollow(playerShape);
         camera2.startFollow(playerShape2);
