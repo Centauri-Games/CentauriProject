@@ -2983,95 +2983,99 @@ class infiniteScene extends Phaser.Scene {
 
         //CONTROL Y MOVIMIENTO
         if(this.device == "mobile"){
-           
 
-            var keyMovement = {"A": {"isUp": true, "isDown" : false}, 
-                            "D" :{"isUp": true, "isDown" : false}, 
-                            "W" : {"isUp": true, "isDown" : false}, 
-                            "ESC" : {"isUp": true, "isDown" : false}, 
-                            "SPACE" : {"isUp": true, "isDown" : false}};
 
-           
+            var keyMovement = {
+                "A": { "isUp": true, "isDown": false },
+                "D": { "isUp": true, "isDown": false },
+                "W": { "isUp": true, "isDown": false },
+                "ESC": { "isUp": true, "isDown": false },
+                "SPACE": { "isUp": true, "isDown": false }
+            };
 
-            var right = this.add.sprite(1770,400,'rightIcon').setInteractive();
-            right.setScrollFactor(0,0);
-            right.setScale(1.6);
-            right.on('pointerout',function(){
-                
+
+
+            var right = this.add.sprite(1800, 430, 'rightIcon').setInteractive();
+            right.setScrollFactor(0, 0);
+            right.setScale(0.4);
+            right.on('pointerout', function () {
+
                 keyMovement.D.isUp = true;
                 keyMovement.D.isDown = false;
             });
-            right.on('pointerdown',function(){
+            right.on('pointerdown', function () {
                 keyMovement.D.isDown = true;
                 keyMovement.D.isUp = false;
             });
             cameraMain.ignore(right);
             ///////////////////////////////////
-            let left = this.add.sprite(150,400,'leftIcon').setInteractive();
-            left.setScale(1.6);
-            left.setScrollFactor(0,0);
-            left.on('pointerout',function(){
+            let left = this.add.sprite(120, 430, 'leftIcon').setInteractive();
+            left.setScale(0.4);
+            left.setScrollFactor(0, 0);
+            left.on('pointerout', function () {
                 keyMovement.A.isUp = true;
                 keyMovement.A.isDown = false;
             });
-            left.on('pointerover',function(){
+            left.on('pointerover', function () {
                 keyMovement.A.isDown = true;
                 keyMovement.A.isUp = false;
             });
             cameraMain.ignore(left);
             ////////////////////////////////////
-            let jump  = this.add.sprite(1820,250,'jumpIcon').setInteractive();
-            jump.setScrollFactor(0,0);
-            jump.on('pointerout',function(){
+            let jump = this.add.sprite(1820, 250, 'jumpIcon').setInteractive();
+            jump.setScale(0.3);
+            jump.setScrollFactor(0, 0);
+            jump.on('pointerout', function () {
                 keyMovement.W.isUp = true;
                 keyMovement.W.isDown = false;
             });
-            jump.on('pointerover',function(){
+            jump.on('pointerover', function () {
                 keyMovement.W.isDown = true;
                 keyMovement.W.isUp = false;
             });
             cameraMain.ignore(jump);
             ///////////////////////////////////////
-            let jump2  = this.add.sprite(100,250,'jumpIcon').setInteractive();
-            jump2.setScrollFactor(0,0);
-            jump2.on('pointerout',function(){
+            let jump2 = this.add.sprite(100, 250, 'jumpIcon').setInteractive();
+            jump2.setScale(0.3);
+            jump2.setScrollFactor(0, 0);
+            jump2.on('pointerout', function () {
                 keyMovement.W.isUp = true;
                 keyMovement.W.isDown = false;
             });
-            jump2.on('pointerover',function(){
+            jump2.on('pointerover', function () {
                 keyMovement.W.isDown = true;
                 keyMovement.W.isUp = false;
             });
             cameraMain.ignore(jump2);
             //////////////////////////////
-            let swap = this.add.sprite(120,120,'swapIcon').setInteractive();
-            swap.setScale(1.35);
-            swap.setScrollFactor(0,0);
-            swap.on('pointerout',function(){
+            let swap = this.add.sprite(120, 120, 'swapIcon').setInteractive();
+            swap.setScale(0.35);
+            swap.setScrollFactor(0, 0);
+            swap.on('pointerout', function () {
                 keyMovement.SPACE.isUp = true;
                 keyMovement.SPACE.isDown = false;
             });
-            swap.on('pointerover',function(){
+            swap.on('pointerover', function () {
                 keyMovement.SPACE.isDown = true;
                 keyMovement.SPACE.isUp = false;
             });
             camera2.ignore(swap);
             /////////////////////////////////////
-            let pause = this.add.sprite(1800,120,'pauseIcon').setInteractive();
-            pause.setScale(1.5);
-            pause.setScrollFactor(0,0);
-            pause.on('pointerout',function(){
+            let pause = this.add.sprite(1800, 120, 'pauseIcon').setInteractive();
+            pause.setScale(0.45);
+            pause.setScrollFactor(0, 0);
+            pause.on('pointerout', function () {
                 keyMovement.ESC.isUp = true;
                 keyMovement.ESC.isDown = false;
             });
-            pause.on('pointerover',function(){
+            pause.on('pointerover', function () {
                 keyMovement.ESC.isDown = true;
                 keyMovement.ESC.isUp = false;
             });
             camera2.ignore(pause);
 
             this.keyMovement = keyMovement;
-            
+
         }else{
             this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
         }
