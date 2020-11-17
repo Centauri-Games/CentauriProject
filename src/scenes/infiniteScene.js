@@ -18,6 +18,10 @@ class infiniteScene extends Phaser.Scene {
         }while(level == this.actualLevel)
         this.levelDisplace = this.levelCounter * 5000;
 
+        this.initialTime = this.totalTime - Math.floor(this.levelCounter/3) *30;    //Cada 3 niveles, el tiempo disminuye
+        if(this.initialTime < 60)   //El tiempo minimo es 1 min
+            this.initialTime = 60;
+
         if(this.actualLevel == 6){  //Si el ultimo nivel fue el 6, reset a sprites normales
             this.playerShape.setTexture("light").setScale(1,1);
             this.playerPhysics.body.setSize(65, 80);
@@ -25,95 +29,59 @@ class infiniteScene extends Phaser.Scene {
             this.playerPhysics2.body.setSize(65, 80);
         }
 
+        level = 10;
         this.hp.resetDamage();  //Resetea las vidas para el siguiente nivel
 
-        switch(level){
+        switch(level) {
             case 1:
                 this.actualLevel = 1;
                 this.generateLevel1(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 2:
                 this.actualLevel = 2;
                 this.generateLevel2(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 3:
                 this.actualLevel = 3;
                 this.generateLevel3(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 4:
                 this.actualLevel = 4;
                 this.generateLevel4(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 5:
                 this.actualLevel = 5;
                 this.generateLevel5(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 6:
                 this.actualLevel = 6;
                 this.generateLevel6(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 7:
                 this.actualLevel = 7;
                 this.generateLevel7(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 8:
                 this.actualLevel = 8;
                 this.generateLevel8(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 9:
                 this.actualLevel = 9;
                 this.generateLevel9(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 10:
                 this.actualLevel = 10;
                 this.generateLevel10(this.levelDisplace);
-                this.levelCounter ++;
-                this.generateLevel1();
-                break;
-            case 2:
-                this.actualLevel = 2;
-                this.generateLevel2();
-                break;
-            case 3:
-                this.actualLevel = 3;
-                this.generateLevel3();
-                break;
-            case 4:
-                this.actualLevel = 4;
-                this.generateLevel4();
-                break;
-            case 5:
-                this.actualLevel = 5;
-                this.generateLevel5();
-                break;
-            case 6:
-                this.actualLevel = 6;
-                this.generateLevel6();
-                break;
-            case 7:
-                this.actualLevel = 7;
-                this.generateLevel7();
-                break;
-            case 8:
-                this.actualLevel = 8;
-                //this.generateLevel8();
-                break;
-            case 9:
-                this.actualLevel = 9;
-                //this.generateLevel9();
-                break;
-            case 10:
-                this.actualLevel = 10;
-                //this.generateLevel10();
+                this.levelCounter++;
                 break;
         }
     }
@@ -2751,7 +2719,7 @@ class infiniteScene extends Phaser.Scene {
         spikes2D.setAlpha(0);
         spikes2D.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS);
 
-        var spikes3D = new Spike(this, 1500+levelDisplace, 850 + displaceY, 480, 100, 0xff0000, hp);
+        var spikes3D = new Spike(this, 1500+levelDisplace, 850 + displaceY, 480, 100, 0xff0000, this.hp);
         spikes3D.setAlpha(0);
         spikes3D.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS);
 
@@ -2974,95 +2942,99 @@ class infiniteScene extends Phaser.Scene {
 
         //CONTROL Y MOVIMIENTO
         if(this.device == "mobile"){
-           
 
-            var keyMovement = {"A": {"isUp": true, "isDown" : false}, 
-                            "D" :{"isUp": true, "isDown" : false}, 
-                            "W" : {"isUp": true, "isDown" : false}, 
-                            "ESC" : {"isUp": true, "isDown" : false}, 
-                            "SPACE" : {"isUp": true, "isDown" : false}};
 
-           
+            var keyMovement = {
+                "A": { "isUp": true, "isDown": false },
+                "D": { "isUp": true, "isDown": false },
+                "W": { "isUp": true, "isDown": false },
+                "ESC": { "isUp": true, "isDown": false },
+                "SPACE": { "isUp": true, "isDown": false }
+            };
 
-            var right = this.add.sprite(1770,400,'rightIcon').setInteractive();
-            right.setScrollFactor(0,0);
-            right.setScale(1.6);
-            right.on('pointerout',function(){
-                
+
+
+            var right = this.add.sprite(1800, 430, 'rightIcon').setInteractive();
+            right.setScrollFactor(0, 0);
+            right.setScale(0.4);
+            right.on('pointerout', function () {
+
                 keyMovement.D.isUp = true;
                 keyMovement.D.isDown = false;
             });
-            right.on('pointerdown',function(){
+            right.on('pointerdown', function () {
                 keyMovement.D.isDown = true;
                 keyMovement.D.isUp = false;
             });
             cameraMain.ignore(right);
             ///////////////////////////////////
-            let left = this.add.sprite(150,400,'leftIcon').setInteractive();
-            left.setScale(1.6);
-            left.setScrollFactor(0,0);
-            left.on('pointerout',function(){
+            let left = this.add.sprite(120, 430, 'leftIcon').setInteractive();
+            left.setScale(0.4);
+            left.setScrollFactor(0, 0);
+            left.on('pointerout', function () {
                 keyMovement.A.isUp = true;
                 keyMovement.A.isDown = false;
             });
-            left.on('pointerover',function(){
+            left.on('pointerover', function () {
                 keyMovement.A.isDown = true;
                 keyMovement.A.isUp = false;
             });
             cameraMain.ignore(left);
             ////////////////////////////////////
-            let jump  = this.add.sprite(1820,250,'jumpIcon').setInteractive();
-            jump.setScrollFactor(0,0);
-            jump.on('pointerout',function(){
+            let jump = this.add.sprite(1820, 250, 'jumpIcon').setInteractive();
+            jump.setScale(0.3);
+            jump.setScrollFactor(0, 0);
+            jump.on('pointerout', function () {
                 keyMovement.W.isUp = true;
                 keyMovement.W.isDown = false;
             });
-            jump.on('pointerover',function(){
+            jump.on('pointerover', function () {
                 keyMovement.W.isDown = true;
                 keyMovement.W.isUp = false;
             });
             cameraMain.ignore(jump);
             ///////////////////////////////////////
-            let jump2  = this.add.sprite(100,250,'jumpIcon').setInteractive();
-            jump2.setScrollFactor(0,0);
-            jump2.on('pointerout',function(){
+            let jump2 = this.add.sprite(100, 250, 'jumpIcon').setInteractive();
+            jump2.setScale(0.3);
+            jump2.setScrollFactor(0, 0);
+            jump2.on('pointerout', function () {
                 keyMovement.W.isUp = true;
                 keyMovement.W.isDown = false;
             });
-            jump2.on('pointerover',function(){
+            jump2.on('pointerover', function () {
                 keyMovement.W.isDown = true;
                 keyMovement.W.isUp = false;
             });
             cameraMain.ignore(jump2);
             //////////////////////////////
-            let swap = this.add.sprite(120,120,'swapIcon').setInteractive();
-            swap.setScale(1.35);
-            swap.setScrollFactor(0,0);
-            swap.on('pointerout',function(){
+            let swap = this.add.sprite(120, 120, 'swapIcon').setInteractive();
+            swap.setScale(0.35);
+            swap.setScrollFactor(0, 0);
+            swap.on('pointerout', function () {
                 keyMovement.SPACE.isUp = true;
                 keyMovement.SPACE.isDown = false;
             });
-            swap.on('pointerover',function(){
+            swap.on('pointerover', function () {
                 keyMovement.SPACE.isDown = true;
                 keyMovement.SPACE.isUp = false;
             });
             camera2.ignore(swap);
             /////////////////////////////////////
-            let pause = this.add.sprite(1800,120,'pauseIcon').setInteractive();
-            pause.setScale(1.5);
-            pause.setScrollFactor(0,0);
-            pause.on('pointerout',function(){
+            let pause = this.add.sprite(1800, 120, 'pauseIcon').setInteractive();
+            pause.setScale(0.45);
+            pause.setScrollFactor(0, 0);
+            pause.on('pointerout', function () {
                 keyMovement.ESC.isUp = true;
                 keyMovement.ESC.isDown = false;
             });
-            pause.on('pointerover',function(){
+            pause.on('pointerover', function () {
                 keyMovement.ESC.isDown = true;
                 keyMovement.ESC.isUp = false;
             });
             camera2.ignore(pause);
 
             this.keyMovement = keyMovement;
-            
+
         }else{
             this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE');
         }
@@ -3073,7 +3045,8 @@ class infiniteScene extends Phaser.Scene {
         this.levelGenerator();
 
         //Timer
-        this.initialTime = 5*60;    //5 minutos de cuenta atrás
+        this.totalTime = 3*60;
+        this.initialTime = 3*60;    //3 minutos de cuenta atrás
         this.timerText = this.add.text(iniXL, iniYL, this.formatTime(this.initialTime),{fill: '#ffffff' });
         this.timerText2 = this.add.text(iniXL, iniYL, this.formatTime(this.initialTime),{fill: '#ffffff' });
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
@@ -3589,151 +3562,6 @@ class infiniteScene extends Phaser.Scene {
             }
         }
     }
-
-    /*async syncLoadPhysics(playerShape,mode){
-        this.actualLevel = 8;
-
-        this.generateLevel1(0);
-        this.generateLevel2(5000);
-        this.generateLevel3(10000);
-        this.generateLevel4(15000);
-        this.generateLevel5(20000);
-        this.generateLevel6(25000);
-        this.generateLevel7(30000);
-        this.generateLevel8(35000);
-
-    }
-*/
-    update(){
-        /* if (passedlevelcounter)
-         updatinglevels = 2;
-         */
-        if (this.keyMovement.SPACE.isUp && this.lastDown){
-            this.playerProta = !this.playerProta;
-            this.lastDown = false;
-        } else if (this.keyMovement.SPACE.isDown){
-            this.lastDown = true;
-        }
-
-        if (this.keyMovement.A.isDown) {
-            if (this.playerProta){
-                this.playerPhysics.body.setVelocityX(-175);
-                this.playerShape.flipX = true;
-                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                    this.playerShape.anims.play('jumpL', false);
-                } else {
-                    this.playerShape.anims.play('runL', true);
-                }
-            } else {
-                this.playerPhysics2.body.setVelocityX(-175);
-                this.playerShape2.flipX = true;
-                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                    this.playerShape2.anims.play('jumpS', false);
-                } else {
-                    this.playerShape2.anims.play('runS', true);
-                }
-            }
-        } else if (this.keyMovement.D.isUp){
-            if (this.playerProta) {
-                this.playerPhysics.body.setVelocityX(0);
-                this.playerShape.anims.play('stopL', false);
-            } else {
-                this.playerPhysics2.body.setVelocityX(0);
-                this.playerShape2.anims.play('stopS', false);
-            }
-        }
-        /////////////////////////////////////////
-        /////////////////////////////////////////
-        if (this.keyMovement.D.isDown) {
-            if (this.playerProta){
-                this.playerPhysics.body.setVelocityX(175);
-                this.playerShape.flipX = false;
-                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                    this.playerShape.anims.play('jumpL', false);
-                } else {
-                    this.playerShape.anims.play('runL', true);
-                }
-            } else {
-                this.playerPhysics2.body.setVelocityX(175);
-                this.playerShape2.flipX = false;
-                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                    this.playerShape2.anims.play('jumpS', false);
-                } else {
-                    this.playerShape2.anims.play('runS', true);
-                }
-            }
-        } else if(this.keyMovement.A.isUp) {
-            if (this.playerProta) {
-                this.playerPhysics.body.setVelocityX(0);
-                this.playerShape.anims.play('stopL', false);
-            } else {
-                this.playerPhysics2.body.setVelocityX(0);
-                this.playerShape2.anims.play('stopS', false);
-            }
-        }
-        ///////////////////////////////////////////
-        //////////////////////////////////////////
-        if (this.keyMovement.W.isDown) {
-            if (this.playerProta) {
-                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
-                        this.playerPhysics.body.setVelocityY(-250);
-                    } else {
-                        this.playerPhysics.body.setVelocityY(250);
-                    }
-                    this.playerShape.anims.play('jumpL', false);
-                }
-            } else {
-                if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
-                        this.playerPhysics2.body.setVelocityY(-250);
-                    } else {
-                        this.playerPhysics2.body.setVelocityY(250);
-                    }
-                    this.playerShape2.anims.play('jumpS', false);
-                }
-            }
-        }
-        if (this.keyMovement.ESC.isDown) {
-            this.bgMusic.stop();
-            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
-        }
-
-        if(this.actualLevel == 7){
-            if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
-                this.mpl2.movingPlatformPhysics.body.setVelocityX(-100);
-                if(!this.overlapped1){
-                    this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
-                    this.overlapped1=true;
-                }
-
-            } else if (this.physics.world.overlap(this.playerShape2, this.leverRight)){
-                this.mpl2.movingPlatformPhysics.body.setVelocityX(100);
-                if(!this.overlapped2){
-                    this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
-                    this.overlapped2=true;
-                }
-            } else {
-                this.mpl2.movingPlatformPhysics.body.setVelocityX(0);
-                this.leverLeft.anims.play('unpull', false);
-                this.leverRight.anims.play('unpull', false);
-                this.overlapped1 = false;
-                this.overlapped2 = false;
-            }
-        }
-        else if(this.actualLevel == 8){
-            if (this.physics.world.overlap(this.playerPhysics2, this.nextLevel2) && this.physics.world.overlap(this.playerPhysics, this.nextLevel1)){
-                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
-                console.log("completed");
-                this.levelGenerator();
-            }
-        }
-    }
-
-    /*async syncLoadPhysics(playerShape,mode){
-        
-        return await this.physics.add.existing(playerShape, mode);
-    }*/
 
     //Función para configurar espejo
     setInteractiveMirror(mirror, correctPosition){
