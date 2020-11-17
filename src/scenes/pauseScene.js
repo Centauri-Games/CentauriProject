@@ -4,7 +4,7 @@ class pauseScene extends Phaser.Scene{
     }
 
     init(data){
-        this.Level = data.level;
+        this.level = data.level;
         this.English = data.english;
         
         this.device = data.device;
@@ -22,13 +22,15 @@ class pauseScene extends Phaser.Scene{
             this.add.sprite(885, 665, 'pause').setScale(2);
         }
 
-        var bResume = this.add.rectangle(960,535,600,100,0x550055).setInteractive().on('pointerup',()=>{
-            this.scene.switch(this.level);
+        var bResume = this.add.rectangle(960,535,600,100,0x550055).setInteractive().on('pointerup',function(){
+            this.scene.stop();
+            this.scene.resume(this.level);
         });
         bResume.setAlpha(0.25);
 
-        var bBack = this.add.rectangle(960,770,600,100,0xffff00).setInteractive().on('pointerup',()=>{
-            this.scene.restart(this.level);
+        var bBack = this.add.rectangle(960,770,600,100,0xffff00).setInteractive().on('pointerup',function(){
+            this.scene.stop();
+            this.scene.stop(this.level);
             this.scene.start("menuScene", {english: this.English, online : true, am: this.am});
         });
         bBack.setAlpha(0.25);
