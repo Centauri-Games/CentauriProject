@@ -77,6 +77,43 @@ class infiniteScene extends Phaser.Scene {
                 this.actualLevel = 10;
                 this.generateLevel10(this.levelDisplace);
                 this.levelCounter ++;
+                this.generateLevel1();
+                break;
+            case 2:
+                this.actualLevel = 2;
+                this.generateLevel2();
+                break;
+            case 3:
+                this.actualLevel = 3;
+                this.generateLevel3();
+                break;
+            case 4:
+                this.actualLevel = 4;
+                this.generateLevel4();
+                break;
+            case 5:
+                this.actualLevel = 5;
+                this.generateLevel5();
+                break;
+            case 6:
+                this.actualLevel = 6;
+                this.generateLevel6();
+                break;
+            case 7:
+                this.actualLevel = 7;
+                this.generateLevel7();
+                break;
+            case 8:
+                this.actualLevel = 8;
+                //this.generateLevel8();
+                break;
+            case 9:
+                this.actualLevel = 9;
+                //this.generateLevel9();
+                break;
+            case 10:
+                this.actualLevel = 10;
+                //this.generateLevel10();
                 break;
         }
     }
@@ -603,6 +640,885 @@ class infiniteScene extends Phaser.Scene {
         var goalPhysics = this.physics.add.existing(this.goal3, 1);
         this.physics.add.overlap(this.playerPhysics,goalPhysics);
         this.physics.add.overlap(this.playerPhysics2,goalPhysics);
+        this.goal.setPosition(3750+levelDisplace, 1125);
+    }
+
+    generateLevel4(levelDisplace){
+        this.bg = this.add.sprite(960,540,'bg3');
+        this.bg.setDepth(-2);
+        this.bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 875;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2300;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+        this.anims.create({
+            key: 'openl',
+            frames: this.anims.generateFrameNumbers('pinkDoor', { start: 0, end: 5 }),
+            frameRate: 10,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'closel',
+            frames: this.anims.generateFrameNumbers('pinkDoor', { start: 5, end: 0 }),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        //TILEMAP
+        var map = this.add.tilemap('map4');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
+        map.createStaticLayer('Suelo',tileset,levelDisplace,0);
+        map.createStaticLayer('Suelo2',tileset,levelDisplace,0);
+
+        walls.setCollision([10,15,16,17]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace,0,4032,1440);
+        this.camera2.setBounds(levelDisplace,1440,4032, 1440);
+
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 1125, 'andamio', 350, 500, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 2570, 'andamio', 350, 500, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3350+levelDisplace, 1125, 'andamio', 350, 500, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3350+levelDisplace, 2570, 'andamio', 350, 500, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+        var displaceY = 1440;
+
+        //SUELO
+        //J Superior
+        var floor1 = this.add.rectangle(2000+levelDisplace, 1450, 3800, 100, 0xff0000);
+        floor1.setAlpha(0);
+        this.physics.add.existing(floor1, 1);
+        this.physics.add.collider(this.playerShape, floor1);
+
+        var floor2 = this.add.rectangle(2000+levelDisplace, 1450+displaceY, 3800, 100, 0xff0000);
+        floor2.setAlpha(0);
+        this.physics.add.existing(floor2, 1);
+        this.physics.add.collider(this.playerShape2, floor2);
+
+        var floor3 = this.add.rectangle(3750+levelDisplace, 975, 500, 100, 0xff0000);
+        floor3.setAlpha(0);
+        this.physics.add.existing(floor3, 1);
+        this.physics.add.collider(this.playerShape, floor3);
+
+        var floor4 = this.add.rectangle(3750+levelDisplace, 975+displaceY, 500, 100, 0xff0000);
+        floor4.setAlpha(0);
+        this.physics.add.existing(floor4, 1);
+        this.physics.add.collider(this.playerShape2, floor4);
+
+        //PLATAFORMAS
+        var mp1 = new MovingPlatform(this, 800+levelDisplace, 950, 'blueP'); //Plataforma recorrido medio
+        mp1.addPlayerCollide(this, this.playerShape);
+        mp1.setMovementTime(this, 330, 0, 6000);
+
+        var mp2 = new MovingPlatform(this, 600+levelDisplace, 950, 'blueP');
+        mp2.addPlayerCollide(this, this.playerShape);
+        mp2.setMovement(this, 0, 200);
+
+        var mp3 = new MovingPlatform(this, 3000+levelDisplace, 950, 'blueP');
+        mp3.addPlayerCollide(this, this.playerShape);
+        mp3.setMovement(this, 0, 200);
+
+        var mp4 = new MovingPlatform(this, 800+levelDisplace, 950+displaceY, 'blueP'); //Plataforma recorrido medio
+        mp4.addPlayerCollide(this, this.playerShape2);
+        mp4.setMovementTime(this, 330, 0, 6000);
+
+        var mp5 = new MovingPlatform(this, 600+levelDisplace, 950+displaceY, 'blueP');
+        mp5.addPlayerCollide(this, this.playerShape2);
+        mp5.setMovement(this, 0, 200);
+
+        var mp6 = new MovingPlatform(this, 3000+levelDisplace, 950+displaceY, 'blueP');
+        mp6.addPlayerCollide(this, this.playerShape2);
+        mp6.setMovement(this, 0, 200);
+
+        //ESPEJOS
+
+
+        var mirror1 = new Mirror(this, 1000+levelDisplace, 1370, 'mirror');
+        mirror1.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror1, 7);
+
+        var mirror2 = new Mirror(this, 1500+levelDisplace, 1370, 'mirror');
+        mirror2.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror2, 5);
+
+        var mirror3 = new Mirror(this, 2000+levelDisplace, 1370, 'mirror');
+        mirror3.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror3, 7);
+
+        var mirror4 = new Mirror(this, 2500+levelDisplace, 1370, 'mirror');
+        mirror4.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror4, 5);
+
+        var mirror5 = new Mirror(this, 1500+levelDisplace, 700, 'mirror');    //Techo
+        mirror5.rotate(Math.PI);
+        mirror5.mirror.setDepth(-1);
+        this.setInteractiveMirror(mirror5, 6);
+
+        //Inferiores
+        var mirror6 = new Mirror(this, 1400+levelDisplace, 1370+displaceY, 'mirror');
+        mirror6.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror6, 7);
+
+        var mirror7 = new Mirror(this, 1900+levelDisplace, 1050+displaceY, 'mirror');
+        mirror7.rotate(Math.PI/2);
+        mirror7.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror7, 7);
+
+        var mirror8 = new Mirror(this, 2200+levelDisplace, 700+displaceY, 'mirror');   //Techo
+        mirror8.mirror.setDepth(-1);
+        mirror8.rotate(Math.PI);
+        this.setInteractiveMirror(mirror8, 6);
+
+        var mirror9 = new Mirror(this, 2500+levelDisplace, 1370+displaceY, 'mirror');
+        mirror9.mirror.setDepth(11);
+        this.setInteractiveMirror(mirror9, 5);
+
+        var diam = this.add.sprite(1900+levelDisplace, 1370+displaceY, 'diamond').setDepth(13);
+        this.add.sprite(1370+levelDisplace, 750+displaceY, 'blueP').setRotation(Math.PI/2);
+        this.add.sprite(1840+levelDisplace, 1050+displaceY, 'blueP').setScale(1.2,1.2).setRotation(Math.PI/2);
+        var laser = this.add.sprite(1400+levelDisplace, 760+displaceY, 'laser');
+        laser.setRotation(Math.PI/2);
+        laser.setDepth(13);
+        laser.setScale(1.3,1.3);
+
+        var portal1D = this.add.sprite(1700+levelDisplace, 760+displaceY, 'portalA').setDepth(13);
+        var portal2D = this.add.sprite(2700+levelDisplace, 760+displaceY, 'portalR').setDepth(13);
+        var portal1U = this.add.sprite(1000+levelDisplace, 800, 'portalR').setDepth(13);
+        var portal2U = this.add.sprite(2000+levelDisplace, 800, 'portalA').setDepth(13);
+
+
+        var laser1 = this.add.line(0,0, laser.x+10, laser.y, mirror6.mirror.x, mirror6.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser1.setDepth(12);
+
+        var laser2 = this.add.line(0,0, mirror6.mirror.x, mirror6.mirror.y-10, portal1D.x, portal1D.y, 0xff0000).setOrigin(0,0);
+        laser2.setDepth(12);
+        mirror6.addObject(laser2);
+
+        var laser3 = this.add.line(0,0, portal1U.x, portal1U.y, mirror2.mirror.x, mirror2.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser3.setDepth(12);
+        mirror6.addObject(laser3);
+        mirror6.addNext(mirror2);
+        mirror2.addPrevious(mirror6);
+
+        var laser4 = this.add.line(0,0, mirror2.mirror.x, mirror2.mirror.y-10, mirror1.mirror.x, mirror1.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser4.setDepth(12);
+        mirror2.addObject(laser4);
+        mirror2.addNext(mirror1);
+        mirror1.addPrevious(mirror2);
+
+        var laser5 = this.add.line(0,0, mirror1.mirror.x, mirror1.mirror.y-10, mirror5.mirror.x, mirror5.mirror.y+12, 0xff0000).setOrigin(0,0);
+        laser5.setDepth(12);
+        mirror1.addObject(laser5);
+        mirror1.addNext(mirror5);
+        mirror5.addPrevious(mirror1);
+
+        var laser6 = this.add.line(0,0, mirror5.mirror.x, mirror5.mirror.y+12, mirror3.mirror.x, mirror3.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser6.setDepth(12);
+        mirror5.addObject(laser6);
+        mirror5.addNext(mirror3);
+        mirror3.addPrevious(mirror5);
+
+        var laser7 = this.add.line(0,0, mirror3.mirror.x, mirror3.mirror.y-10, mirror4.mirror.x, mirror4.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser7.setDepth(12);
+        mirror3.addObject(laser7);
+        mirror3.addNext(mirror4);
+        mirror4.addPrevious(mirror3);
+
+        var laser8 = this.add.line(0,0, mirror4.mirror.x, mirror4.mirror.y-10, portal2U.x, portal2U.y, 0xff0000).setOrigin(0,0);
+        laser8.setDepth(12);
+        mirror4.addObject(laser8);
+
+        var laser9 = this.add.line(0,0, portal2D.x, portal2D.y, mirror9.mirror.x, mirror9.mirror.y-10, 0xff0000).setOrigin(0,0);
+        laser9.setDepth(12);
+        mirror4.addObject(laser9);
+        mirror4.addNext(mirror9);
+        mirror9.addPrevious(mirror4);
+
+        var laser10 = this.add.line(0,0, mirror9.mirror.x, mirror9.mirror.y-10, mirror8.mirror.x, mirror8.mirror.y+12, 0xff0000).setOrigin(0,0);
+        laser10.setDepth(12);
+        mirror9.addObject(laser10);
+        mirror9.addNext(mirror8);
+        mirror8.addPrevious(mirror9);
+
+        var laser11 = this.add.line(0,0, mirror8.mirror.x, mirror8.mirror.y+12, mirror7.mirror.x+12, mirror7.mirror.y, 0xff0000).setOrigin(0,0);
+        laser11.setDepth(12);
+        mirror8.addObject(laser11);
+        mirror8.addNext(mirror7);
+        mirror7.addPrevious(mirror8);
+
+        var laser12 = this.add.line(0,0, mirror7.mirror.x+12, mirror7.mirror.y, diam.x, diam.y, 0xff0000).setOrigin(0,0);
+        laser12.setDepth(12);
+        mirror7.addObject(laser12);
+
+
+        laser2.setAlpha(0);
+        laser3.setAlpha(0);
+        laser4.setAlpha(0);
+        laser5.setAlpha(0);
+        laser6.setAlpha(0);
+        laser7.setAlpha(0);
+        laser8.setAlpha(0);
+        laser9.setAlpha(0);
+        laser10.setAlpha(0);
+        laser11.setAlpha(0);
+        laser12.setAlpha(0);
+
+        //PUERTAS
+        var doorUp = new Door(this, 3625+levelDisplace, 850, 'laserDoor');
+        doorUp.scale(1.25,1.25);
+        doorUp.addPlayerCollide(this.playerShape);
+        var doorDown = new Door(this, 3625+levelDisplace, 850+displaceY, 'laserDoor');
+        doorDown.scale(1.25,1.25);
+        doorDown.addPlayerCollide(this.playerShape2);
+        mirror7.addDoors(doorUp, doorDown);
+
+        //Meta
+        this.goal.setPosition(3750+levelDisplace, 1125);
+    }
+
+    generateLevel5(levelDisplace){
+        this.bg = this.add.sprite(960,540,'bg3');
+        this.bg.setDepth(-2);
+        this.bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 875;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2300;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+
+        //TILEMAP
+        var map = this.add.tilemap('map5');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
+        map.createStaticLayer('Pinchos',tileset,levelDisplace,0);
+        map.createStaticLayer('Suelo',tileset,levelDisplace,0);
+        map.createStaticLayer('Suelo2',tileset,levelDisplace,0);
+
+        walls.setCollision([8,10,15,16,17]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace,0,4032,1440);
+        this.camera2.setBounds(levelDisplace,1440,4032, 1440);
+
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 1125, 'andamio', 350, 500, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 2570, 'andamio', 350, 500, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3750+levelDisplace, 1125, 'andamio', 350, 80, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3750+levelDisplace, 2570, 'andamio', 350, 80, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+        var displaceY = 1440;
+
+        //PINCHOS
+        var spikesUp = new Spike(this, 2000+levelDisplace, 1400, 3800, 100, 0xff0000, this.hp);
+        spikesUp.setAlpha(0);
+        spikesUp.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikesDown = new Spike(this, 2000+levelDisplace, 1400+displaceY, 3800, 100, 0xff0000, this.hp);
+        spikesDown.setAlpha(0);
+        spikesDown.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+
+        //DROP PLATFORMS
+        var dualPlat1 = new DualDropPlatform(this, 600+levelDisplace, 1100, 600+levelDisplace, 2540, 'blueP');
+        dualPlat1.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat1.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat2 = new DualDropPlatform(this, 900+levelDisplace, 1100, 900+levelDisplace, 2540, 'blueP');
+        dualPlat2.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat2.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat3 = new DualDropPlatform(this, 1200+levelDisplace, 1300, 1200+levelDisplace, 2740, 'blueP');
+        dualPlat3.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat3.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat4 = new DualDropPlatform(this, 1500+levelDisplace, 1250, 1500+levelDisplace, 2690, 'blueP');
+        dualPlat4.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat4.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat5 = new DualDropPlatform(this, 1800+levelDisplace, 1200, 1800+levelDisplace, 2640, 'blueP');
+        dualPlat5.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat5.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat6 = new DualDropPlatform(this, 2100+levelDisplace, 1150, 2100+levelDisplace, 2590, 'blueP');
+        dualPlat6.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat6.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat7 = new DualDropPlatform(this, 2400+levelDisplace, 1225, 2400+levelDisplace, 2665, 'blueP');
+        dualPlat7.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat7.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat8 = new DualDropPlatform(this, 2700+levelDisplace, 1200, 2700+levelDisplace, 2640, 'blueP');
+        dualPlat8.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat8.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat9 = new DualDropPlatform(this, 3000+levelDisplace, 1150, 3000+levelDisplace, 2590, 'blueP');
+        dualPlat9.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat9.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat10 = new DualDropPlatform(this, 3300+levelDisplace, 1100, 3300+levelDisplace, 2540, 'blueP');
+        dualPlat10.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat10.addPlayerCollide(this, this.playerShape2, 5);
+
+        var dualPlat10 = new DualDropPlatform(this, 3450+levelDisplace, 1025, 3450+levelDisplace, 2465, 'blueP');
+        dualPlat10.addPlayerCollide(this, this.playerShape, 5);
+        dualPlat10.addPlayerCollide(this, this.playerShape2, 5);
+
+        var limitL = this.add.rectangle(2000+levelDisplace, 1500, 4000, 100, 0x000000);
+        this.physics.add.existing(limitL, 1);
+        dualPlat1.addWorldCollider(this, limitL);
+        dualPlat2.addWorldCollider(this, limitL);
+        dualPlat3.addWorldCollider(this, limitL);
+        dualPlat4.addWorldCollider(this, limitL);
+        dualPlat5.addWorldCollider(this, limitL);
+        dualPlat6.addWorldCollider(this, limitL);
+        dualPlat7.addWorldCollider(this, limitL);
+        dualPlat8.addWorldCollider(this, limitL);
+        dualPlat9.addWorldCollider(this, limitL);
+        dualPlat10.addWorldCollider(this, limitL);
+
+        //Meta
+        this.goal.setPosition(3750+levelDisplace, 1125);
+    }
+
+    generateLevel6(levelDisplace){
+        this.bg = this.add.sprite(960,540,'bg4');
+        this.bg.setDepth(-2);
+        this.bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 650;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2090;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+
+        //TILEMAP
+        var map = this.add.tilemap('map6');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
+        map.createStaticLayer('Suelo',tileset,levelDisplace,0);
+        map.createStaticLayer('Suelo2',tileset,levelDisplace,0);
+        var walls2 = map.createStaticLayer('Obstaculos', tileset, levelDisplace,0);
+        map.createStaticLayer('Pinchos', tileset, levelDisplace,0);
+
+        walls.setCollision([12,14,20]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+        this.physics.add.collider(walls2, this.playerShape);
+        this.physics.add.collider(walls2, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace,0,4032,1440);
+        this.camera2.setBounds(levelDisplace,1440,4032, 1440);
+
+        var displaceY = 1440;
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 935+displaceY, 'andamio', 350, 500, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3750+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3750+levelDisplace, 935+displaceY, 'andamio', 350, 500, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+        //Superior
+        var spikesUp1 = new Spike(this, 2000+levelDisplace, 1210, 3800, 100, 0xff0000, this.hp);
+        spikesUp1.setAlpha(0);
+        spikesUp1.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikesUp2 = new Spike(this, 2000+levelDisplace, 90, 3800, 100, 0xff0000, this.hp);
+        spikesUp2.setAlpha(0);
+        spikesUp2.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes1 = new Spike(this, 740+levelDisplace, 370, 150, 600, 0xff0000, this.hp);
+        spikes1.setAlpha(0);
+        spikes1.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes2 = new Spike(this, 1125+levelDisplace, 230, 150, 300, 0xff0000, this.hp);
+        spikes2.setAlpha(0);
+        spikes2.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes3 = new Spike(this, 1510+levelDisplace, 325, 150, 500, 0xff0000, this.hp);
+        spikes3.setAlpha(0);
+        spikes3.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes4 = new Spike(this, 1895+levelDisplace, 375, 150, 600, 0xff0000, this.hp);
+        spikes4.setAlpha(0);
+        spikes4.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        //Symmetry
+        var spikes5 = new Spike(this, 2185+levelDisplace, 375, 150, 600, 0xff0000, this.hp);
+        spikes5.setAlpha(0);
+        spikes5.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes6 = new Spike(this, 2570+levelDisplace, 325, 150, 500, 0xff0000, this.hp);
+        spikes6.setAlpha(0);
+        spikes6.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes7 = new Spike(this, 2955+levelDisplace, 275, 150, 400, 0xff0000, this.hp);
+        spikes7.setAlpha(0);
+        spikes7.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes8 = new Spike(this, 3340+levelDisplace, 370, 150, 600, 0xff0000, this.hp);
+        spikes8.setAlpha(0);
+        spikes8.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        //
+        var spikes9 = new Spike(this, 1125+levelDisplace, 1000, 150, 500, 0xff0000, this.hp);
+        spikes9.setAlpha(0);
+        spikes9.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes10 = new Spike(this, 1510+levelDisplace, 1040, 150, 400, 0xff0000, this.hp);
+        spikes10.setAlpha(0);
+        spikes10.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes11 = new Spike(this, 1895+levelDisplace, 1090, 150, 300, 0xff0000, this.hp);
+        spikes11.setAlpha(0);
+        spikes11.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes12 = new Spike(this, 2185+levelDisplace, 1090, 150, 300, 0xff0000, this.hp);
+        spikes12.setAlpha(0);
+        spikes12.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes13 = new Spike(this, 2570+levelDisplace, 1040, 150, 400, 0xff0000, this.hp);
+        spikes13.setAlpha(0);
+        spikes13.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes14 = new Spike(this, 2955+levelDisplace, 1000, 150, 500, 0xff0000, this.hp);
+        spikes14.setAlpha(0);
+        spikes14.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        //Inferior
+
+        var spikesDown1 = new Spike(this, 2000+levelDisplace, 1210+displaceY, 3800, 100, 0xff0000, this.hp);
+        spikesDown1.setAlpha(0);
+        spikesDown1.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        var spikesDown2 = new Spike(this, 2000+levelDisplace, 90+displaceY, 3800, 100, 0xff0000, this.hp);
+        spikesDown2.setAlpha(0);
+        spikesDown2.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes1d = new Spike(this, 740+levelDisplace, 370+displaceY, 150, 600, 0xff0000, this.hp);
+        spikes1d.setAlpha(0);
+        spikes1d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes2d = new Spike(this, 1125+levelDisplace, 230+displaceY, 150, 300, 0xff0000, this.hp);
+        spikes2d.setAlpha(0);
+        spikes2d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes3d = new Spike(this, 1510+levelDisplace, 325+displaceY, 150, 500, 0xff0000, this.hp);
+        spikes3d.setAlpha(0);
+        spikes3d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes4d = new Spike(this, 1895+levelDisplace, 375+displaceY, 150, 600, 0xff0000, this.hp);
+        spikes4d.setAlpha(0);
+        spikes4d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        //Symmetry
+        var spikes5d = new Spike(this, 2185+levelDisplace, 375+displaceY, 150, 600, 0xff0000, this.hp);
+        spikes5d.setAlpha(0);
+        spikes5d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes6d = new Spike(this, 2570+levelDisplace, 325+displaceY, 150, 500, 0xff0000, this.hp);
+        spikes6d.setAlpha(0);
+        spikes6d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes7d = new Spike(this, 2955+levelDisplace, 275+displaceY, 150, 400, 0xff0000, this.hp);
+        spikes7d.setAlpha(0);
+        spikes7d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes8d = new Spike(this, 3340+levelDisplace, 370+displaceY, 150, 600, 0xff0000, this.hp);
+        spikes8d.setAlpha(0);
+        spikes8d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        //
+        var spikes9d = new Spike(this, 1125+levelDisplace, 1000+displaceY, 150, 500, 0xff0000, this.hp);
+        spikes9d.setAlpha(0);
+        spikes9d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes10d = new Spike(this, 1510+levelDisplace, 1040+displaceY, 150, 400, 0xff0000, this.hp);
+        spikes10d.setAlpha(0);
+        spikes10d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes11d = new Spike(this, 1895+levelDisplace, 1090+displaceY, 150, 300, 0xff0000, this.hp);
+        spikes11d.setAlpha(0);
+        spikes11d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes12d = new Spike(this, 2185+levelDisplace, 1090+displaceY, 150, 300, 0xff0000, this.hp);
+        spikes12d.setAlpha(0);
+        spikes12d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes13d = new Spike(this, 2570+levelDisplace, 1040+displaceY, 150, 400, 0xff0000, this.hp);
+        spikes13d.setAlpha(0);
+        spikes13d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        var spikes14d = new Spike(this, 2955+levelDisplace, 1000+displaceY, 150, 500, 0xff0000, this.hp);
+        spikes14d.setAlpha(0);
+        spikes14d.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+
+        //SUELO
+        //J Superior
+        var floor1 = this.add.rectangle(2000+levelDisplace, 1258, 3800, 100, 0xff0000);
+        floor1.setAlpha(0);
+        this.physics.add.existing(floor1, 1);
+        this.physics.add.collider(this.playerShape, floor1);
+
+        var floor2 = this.add.rectangle(2000+levelDisplace, 1258+displaceY, 3800, 100, 0xff0000);
+        floor2.setAlpha(0);
+        this.physics.add.existing(floor2, 1);
+        this.physics.add.collider(this.playerShape2, floor2);
+
+        //Meta
+        this.goal.setPosition(3750+levelDisplace, 1125);
+    }
+
+    generateLevel7(levelDisplace){
+
+        this.bg = this.add.sprite(960,540,'bg4');
+        this.bg.setDepth(-2);
+        this.bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 685;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2110;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+
+        //TILEMAP
+        var map = this.add.tilemap('map7');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace, 0);
+        map.createStaticLayer('Suelo', tileset, levelDisplace, 0);
+        map.createStaticLayer('Suelo2', tileset, levelDisplace, 0);
+        map.createStaticLayer('Pinchos', tileset, levelDisplace, 0);
+
+        walls.setCollision([12, 13, 19, 20]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace, 0, 4032, 1440);
+        this.camera2.setBounds(levelDisplace, 1440, 4032, 1440);
+
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 2375, 'andamio', 350, 500, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3750+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3750+levelDisplace, 2375, 'andamio', 350, 500, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+        var displaceY = 1440;
+
+        var spikesl = new Spike(this, 2900+levelDisplace, 1195, 3800, 100, 0xff0000, this.hp);
+        spikesl.setAlpha(0);
+        spikesl.addPlayerCollide(this, this.playerShape, this.playerShape2, this.English, iniXL, iniYL, iniXS, iniYS);
+        var spikesd = new Spike(this, 2258+levelDisplace, 1199 + displaceY, 384, 96, 0xff0000, this.hp);
+        spikesd.setAlpha(0);
+        spikesd.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
+
+        //PLATAFORMAS
+        //Móviles
+        var mpl = new MovingPlatform(this, 650+levelDisplace, 1200, 'woodP');
+        mpl.addPlayerCollide(this, this.playerShape);
+        mpl.setMovement(this, 0, -325);
+        var mpl2 = new MovingPlatform(this, 2258+levelDisplace, 1000, 'woodP');
+        mpl2.addPlayerCollide(this, this.playerShape);
+        this.mpl2 = mpl2;
+
+        var mpl3 = new MovingPlatform(this, 3400+levelDisplace, 1175 + displaceY, 'woodP');
+        mpl3.addPlayerCollide(this, this.playerShape2);
+        mpl3.setMovement(this, 0, -175);
+
+        var mpl4 = new MovingPlatform(this, 3400+levelDisplace, 1100, 'woodP');
+        mpl4.addPlayerCollide(this, this.playerShape);
+        mpl4.setMovement(this, 0, -175);
+
+        //SUELO
+        //J Superior
+        var floor1L = this.add.rectangle(2000+levelDisplace, 1295, 3800, 100, 0xff0000);
+        floor1L.setAlpha(0);
+        this.physics.add.existing(floor1L, 1);
+        this.physics.add.collider(this.playerShape, floor1L);
+
+        var floor2L = this.add.rectangle(2000+levelDisplace, 1295, 3800, 100, 0xff0000);
+        floor2L.setAlpha(0);
+        this.physics.add.existing(floor2L, 1);
+        this.physics.add.collider(this.playerShape, floor2L);
+
+        var floor3L = this.add.rectangle(1778+levelDisplace, 670, 2016, 192, 0xff0000);
+        floor3L.setAlpha(0);
+        this.physics.add.existing(floor3L, 1);
+        this.physics.add.collider(this.playerShape, floor3L);
+
+        //J Inferior
+        var floor1S = this.add.rectangle(2000+levelDisplace, 1295 + displaceY, 3800, 100, 0xff0000);
+        floor1S.setAlpha(0);
+        this.physics.add.existing(floor1S, 1);
+        this.physics.add.collider(this.playerShape2, floor1S);
+
+        var floor2S = this.add.rectangle(1010+levelDisplace, 1199 + displaceY, 96, 96, 0xff0000);
+        floor2S.setAlpha(0);
+        this.physics.add.existing(floor2S, 1);
+        this.physics.add.collider(this.playerShape2, floor2S);
+
+        var floor3S = this.add.rectangle(1202+levelDisplace, 1103 + displaceY, 288, 96, 0xff0000);
+        floor3S.setAlpha(0);
+        this.physics.add.existing(floor3S, 1);
+        this.physics.add.collider(this.playerShape2, floor3S);
+
+        var floor4S = this.add.rectangle(1442+levelDisplace, 1007 + displaceY, 192, 96, 0xff0000);
+        floor4S.setAlpha(0);
+        this.physics.add.existing(floor4S, 1);
+        this.physics.add.collider(this.playerShape2, floor4S);
+
+        var floor5S = this.add.rectangle(1682+levelDisplace, 911 + displaceY, 288, 96, 0xff0000);
+        floor5S.setAlpha(0);
+        this.physics.add.existing(floor5S, 1);
+        this.physics.add.collider(this.playerShape2, floor5S);
+
+        var floor6S = this.add.rectangle(1874+levelDisplace, 815 + displaceY, 96, 96, 0xff0000);
+        floor6S.setAlpha(0);
+        this.physics.add.existing(floor6S, 1);
+        this.physics.add.collider(this.playerShape2, floor6S);
+
+        var floor7S = this.add.rectangle(1970+levelDisplace, 719 + displaceY, 96, 96, 0xff0000);
+        floor7S.setAlpha(0);
+        this.physics.add.existing(floor7S, 1);
+        this.physics.add.collider(this.playerShape2, floor7S);
+
+        var floor8S = this.add.rectangle(2546+levelDisplace, 719 + displaceY, 96, 96, 0xff0000);
+        floor8S.setAlpha(0);
+        this.physics.add.existing(floor8S, 1);
+        this.physics.add.collider(this.playerShape2, floor8S);
+        this.sc = this;
+
+        //PUERTA
+        var doorStart = this.add.sprite(1500+levelDisplace, 360, 'doorStart');
+        doorStart.setScale(0.5, 0.5);
+        doorStart.setDepth(100);
+        var doorButton = new Button(this, 500+levelDisplace, 1150 + displaceY, 1550+levelDisplace, 350, 'greenButton', 'door');
+        doorButton.addCollideDoor(this, this.playerShape);
+        doorButton.addCollideButton(this, this.playerShape2);
+
+        //BOTÓN QUE ACTIVA EL PUENTE
+        var bridgeButton = this.add.sprite(2300+levelDisplace, 490, 'redButton');
+
+        this.physics.add.existing(bridgeButton, 1);
+        this.anims.create({
+            key: 'pressedR',
+            frames: this.anims.generateFrameNumbers('redButton', {start: 0, end: 2}),
+            frameRate: 10
+        });
+        var bridge = this.add.sprite(2258+levelDisplace, 719 + displaceY, 'bridge');
+        var bridgePhysics = this.physics.add.existing(bridge, 1);
+        bridgePhysics.body.setSize(480, 66);
+        this.anims.create({
+            key: 'activated',
+            frames: this.anims.generateFrameNumbers('bridge', {start: 0, end: 4}),
+            frameRate: 10
+        });
+        this.physics.add.collider(this.playerShape, bridgeButton, function(){
+            bridge.anims.play('activated', false);
+            bridgeButton.anims.play('pressedR', false);
+            this.sc.sound.add("door1FX", { volume: 1, loop: false }).play();
+            this.physics.add.collider(this.playerShape2, bridge);
+        }, null, this);
+
+        //PALANCAS QUE MUEVEN LA PLATAFORMA
+        var leverLeft = this.add.sprite(2690+levelDisplace, 1179 + displaceY, 'lever');
+        this.physics.add.existing(leverLeft, 1);
+        var leverRight = this.add.sprite(2930+levelDisplace, 1179 + displaceY, 'lever');
+        this.physics.add.existing(leverRight, 1);
+        leverRight.flipX = true;
+
+        this.anims.create({
+            key: 'unpull',
+            frames: this.anims.generateFrameNumbers('lever', {start: 0, end: 0}),
+            frameRate: 10
+        });
+        this.anims.create({
+            key: 'pull',
+            frames: this.anims.generateFrameNumbers('lever', {start: 3, end: 3}),
+            frameRate: 10
+        });
+
+        this.physics.add.overlap(this.playerShape2, leverLeft, function(){
+            leverLeft.anims.play('pull', false);
+            leverRight.anims.play('unpull', false);
+        }, null, this);
+        this.physics.add.overlap(this.playerShape2, leverRight, function(){
+            leverRight.anims.play('pull', false);
+            leverLeft.anims.play('unpull', false);
+        }, null, this);
+
+        this.leverLeft = leverLeft;
+        this.leverRight = leverRight;
+        this.overlapped1 = false;
+        this.overlapped2 = false;
+
+        //Meta
+        this.goal.setPosition(3750+levelDisplace, 1125);
+    }
+
+    generateLevel8(levelDisplace){
+        this.bg = this.add.sprite(960,540,'bg4');
+        this.bg.setDepth(-2);
+        this.bg.setScrollFactor(0);
+
+        var iniXL = 300+levelDisplace;
+        var iniYL = 675;
+
+        var iniXS = 300+levelDisplace;
+        var iniYS = 2100;
+
+        this.playerShape.setPosition(iniXL, iniYL);
+        this.playerShape2.setPosition(iniXS, iniYS);
+
+        var displaceY = 1440;
+
+        //ZONA FINAL
+        var nextLevel1 = this.add.zone(1900+levelDisplace,800,100,100);  //NEXT LEVEL
+        var nextLevel2 = this.add.zone(1900+levelDisplace,800+displaceY,100,100);  //NEXT LEVEL
+        this.physics.add.existing(nextLevel1, 1);
+        this.physics.add.existing(nextLevel2, 1);
+
+        this.physics.add.overlap(this.playerPhysics,nextLevel1);
+        this.physics.add.overlap(this.playerPhysics2,nextLevel2);
+
+        //TILEMAP
+        var map = this.add.tilemap('map8');
+        var tileset = map.addTilesetImage('tileset', 'tiles');
+        var walls = map.createStaticLayer('Pared', tileset, levelDisplace,0);
+        map.createStaticLayer('Suelo',tileset,levelDisplace,0);
+        map.createStaticLayer('Suelo2',tileset,levelDisplace,0);
+
+        walls.setCollision([12,13,14,19,20,21]);
+
+        this.physics.add.collider(walls, this.playerShape);
+        this.physics.add.collider(walls, this.playerShape2);
+
+        //CÁMARAS
+        this.cameraMain.setBounds(levelDisplace,0,4032,1440);
+        this.camera2.setBounds(levelDisplace,1440,4032, 1440);
+
+
+        //ANDAMIOS
+        var andl = new Scaffold(this, 300+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl.addCollide(this, this.playerShape); //Inicio superior
+
+        var andd = new Scaffold(this, 300+levelDisplace, 935+displaceY, 'andamio', 350, 500, 20, 80);
+        andd.addCollide(this, this.playerShape2);    //Inicio inferior
+
+        var andl2 = new Scaffold(this, 3750+levelDisplace, 935, 'andamio', 350, 500, 20, 80);
+        andl2.addCollide(this, this.playerShape);
+
+        var andd2 = new Scaffold(this, 3750+levelDisplace, 935+displaceY, 'andamio', 350, 500, 20, 80);
+        andd2.addCollide(this, this.playerShape2);
+
+
+        //SUELO
+        var floor1 = this.add.rectangle(2000+levelDisplace, 1265, 3800, 100, 0xff0000);
+        floor1.setAlpha(0);
+        this.physics.add.existing(floor1, 1);
+        this.physics.add.collider(this.playerShape, floor1);
+
+        var floor2 = this.add.rectangle(2000+levelDisplace, 1265+displaceY, 3800, 100, 0xff0000);
+        floor2.setAlpha(0);
+        this.physics.add.existing(floor2, 1);
+        this.physics.add.collider(this.playerShape2, floor2);
+
+        //PLATAFORMAS
+        var mp1 = new MovingPlatform(this, 1500+levelDisplace, 800, 'blueP');
+        mp1.addPlayerCollide(this, this.playerShape);
+        mp1.setMovement(this, 0, 200);
+
+        var mp2 = new MovingPlatform(this, 2300+levelDisplace, 800, 'blueP');
+        mp2.addPlayerCollide(this, this.playerShape);
+        mp2.setMovement(this, 0, 200);
+
+        var mp3 = new MovingPlatform(this, 1500+levelDisplace, 800+displaceY, 'blueP');
+        mp3.addPlayerCollide(this, this.playerShape2);
+        mp3.setMovement(this, 0, 200);
+
+        var mp4 = new MovingPlatform(this, 2300+levelDisplace, 800+displaceY, 'blueP');
+        mp4.addPlayerCollide(this, this.playerShape2);
+        mp4.setMovement(this, 0, 200);
+
+        var portal1 = this.add.sprite(1900+levelDisplace, 800, 'portalR').setDepth(15);
+        portal1.setScale(2,2);
+        this.physics.add.existing(portal1,1);
+
+        var playerShape = this.playerShape;
+        var playerPhysics = this.playerPhysics;
+        this.physics.add.collider(this.playerShape, portal1, function(){
+            playerShape.setPosition(portal1.x, portal1.y);
+            playerPhysics.body.setImmovable(true);
+            playerPhysics.body.moves =false;
+        });
+
+        var playerShape2 = this.playerShape2;
+        var playerPhysics2 = this.playerPhysics2;
+        var portal2 = this.add.sprite(1900+levelDisplace, 800+displaceY, 'portalR').setDepth(15);
+        portal2.setScale(2,2);
+        this.physics.add.existing(portal2,1);
+        this.physics.add.collider(this.playerShape2, portal2, function(){
+            playerShape2.setPosition(portal2.x, portal2.y);
+            playerPhysics2.body.setImmovable(true);
+            playerPhysics2.body.moves =false;
+        })
+
+        this.nextLevel1 = nextLevel1;
+        this.nextLevel2 = nextLevel2;
+    }
+
+    preload(){
+      
     }
 
     generateLevel4(levelDisplace){
@@ -2583,6 +3499,147 @@ class infiniteScene extends Phaser.Scene {
     }
 
     /*async syncLoadPhysics(playerShape,mode){
+        this.actualLevel = 8;
+
+        this.generateLevel1(0);
+        this.generateLevel2(5000);
+        this.generateLevel3(10000);
+        this.generateLevel4(15000);
+        this.generateLevel5(20000);
+        this.generateLevel6(25000);
+        this.generateLevel7(30000);
+        this.generateLevel8(35000);
+
+    }
+
+    update(){
+        /* if (passedlevelcounter)
+         updatinglevels = 2;
+         */
+        if (this.keyMovement.SPACE.isUp && this.lastDown){
+            this.playerProta = !this.playerProta;
+            this.lastDown = false;
+        } else if (this.keyMovement.SPACE.isDown){
+            this.lastDown = true;
+        }
+
+        if (this.keyMovement.A.isDown) {
+            if (this.playerProta){
+                this.playerPhysics.body.setVelocityX(-175);
+                this.playerShape.flipX = true;
+                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
+                    this.playerShape.anims.play('jumpL', false);
+                } else {
+                    this.playerShape.anims.play('runL', true);
+                }
+            } else {
+                this.playerPhysics2.body.setVelocityX(-175);
+                this.playerShape2.flipX = true;
+                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
+                    this.playerShape2.anims.play('jumpS', false);
+                } else {
+                    this.playerShape2.anims.play('runS', true);
+                }
+            }
+        } else if (this.keyMovement.D.isUp){
+            if (this.playerProta) {
+                this.playerPhysics.body.setVelocityX(0);
+                this.playerShape.anims.play('stopL', false);
+            } else {
+                this.playerPhysics2.body.setVelocityX(0);
+                this.playerShape2.anims.play('stopS', false);
+            }
+        }
+        /////////////////////////////////////////
+        /////////////////////////////////////////
+        if (this.keyMovement.D.isDown) {
+            if (this.playerProta){
+                this.playerPhysics.body.setVelocityX(175);
+                this.playerShape.flipX = false;
+                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
+                    this.playerShape.anims.play('jumpL', false);
+                } else {
+                    this.playerShape.anims.play('runL', true);
+                }
+            } else {
+                this.playerPhysics2.body.setVelocityX(175);
+                this.playerShape2.flipX = false;
+                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
+                    this.playerShape2.anims.play('jumpS', false);
+                } else {
+                    this.playerShape2.anims.play('runS', true);
+                }
+            }
+        } else if(this.keyMovement.A.isUp) {
+            if (this.playerProta) {
+                this.playerPhysics.body.setVelocityX(0);
+                this.playerShape.anims.play('stopL', false);
+            } else {
+                this.playerPhysics2.body.setVelocityX(0);
+                this.playerShape2.anims.play('stopS', false);
+            }
+        }
+        ///////////////////////////////////////////
+        //////////////////////////////////////////
+        if (this.keyMovement.W.isDown) {
+            if (this.playerProta) {
+                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics.body.setVelocityY(250);
+                    }
+                    this.playerShape.anims.play('jumpL', false);
+                }
+            } else {
+                if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
+                    if (this.physics.world.gravity.y > 0){
+                        this.playerPhysics2.body.setVelocityY(-250);
+                    } else {
+                        this.playerPhysics2.body.setVelocityY(250);
+                    }
+                    this.playerShape2.anims.play('jumpS', false);
+                }
+            }
+        }
+        if (this.keyMovement.ESC.isDown) {
+            this.bgMusic.stop();
+            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
+        }
+
+        if(this.actualLevel == 7){
+            if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
+                this.mpl2.movingPlatformPhysics.body.setVelocityX(-100);
+                if(!this.overlapped1){
+                    this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
+                    this.overlapped1=true;
+                }
+
+            } else if (this.physics.world.overlap(this.playerShape2, this.leverRight)){
+                this.mpl2.movingPlatformPhysics.body.setVelocityX(100);
+                if(!this.overlapped2){
+                    this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
+                    this.overlapped2=true;
+                }
+            } else {
+                this.mpl2.movingPlatformPhysics.body.setVelocityX(0);
+                this.leverLeft.anims.play('unpull', false);
+                this.leverRight.anims.play('unpull', false);
+                this.overlapped1 = false;
+                this.overlapped2 = false;
+            }
+        }
+        else if(this.actualLevel == 8){
+            if (this.physics.world.overlap(this.playerPhysics2, this.nextLevel2) && this.physics.world.overlap(this.playerPhysics, this.nextLevel1)){
+                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
+                console.log("completed");
+                this.levelGenerator();
+            }
+        }
+    }
+
+    /*async syncLoadPhysics(playerShape,mode){
+        
         return await this.physics.add.existing(playerShape, mode);
     }*/
 
