@@ -2244,6 +2244,10 @@ class infiniteScene extends Phaser.Scene {
 
         if (this.keyMovement.SPACE.isUp && this.lastDown){
             this.playerProta = !this.playerProta;
+            this.playerShape.anims.play('stopL', false);
+            this.playerPhysics.body.setVelocityX(0);
+            this.playerShape2.anims.play('stopS', false);
+            this.playerPhysics2.body.setVelocityX(0);
             this.lastDown = false;
         } else if (this.keyMovement.SPACE.isDown){
             this.lastDown = true;
@@ -2321,6 +2325,7 @@ class infiniteScene extends Phaser.Scene {
         //////////////////////////////////////////
         if (this.keyMovement.ESC.isDown) {
             this.bgMusic.stop();
+            this.bgMusic.stop();
             this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
         }
 
@@ -2347,10 +2352,10 @@ class infiniteScene extends Phaser.Scene {
                     if(!this.physics.world.overlap(this.playerPhysics2,this.goal1)) {
                         if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                             this.playerPhysics2.body.setVelocityY(-250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                             this.playerPhysics2.body.setVelocityY(250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         }
                     }
                 }
@@ -2378,10 +2383,10 @@ class infiniteScene extends Phaser.Scene {
                     if(!this.physics.world.overlap(this.playerPhysics2,this.goal2)) {
                         if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                             this.playerPhysics2.body.setVelocityY(-250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                             this.playerPhysics2.body.setVelocityY(250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         }
                     }
                 }
@@ -2409,10 +2414,10 @@ class infiniteScene extends Phaser.Scene {
                     if(!this.physics.world.overlap(this.playerPhysics2,this.goal3)) {
                         if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                             this.playerPhysics2.body.setVelocityY(-250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                             this.playerPhysics2.body.setVelocityY(250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         }
                     }
                 }
@@ -2440,10 +2445,10 @@ class infiniteScene extends Phaser.Scene {
                     if(!this.physics.world.overlap(this.playerPhysics2,this.goal4)) {
                         if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                             this.playerPhysics2.body.setVelocityY(-250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                             this.playerPhysics2.body.setVelocityY(250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         }
                     }
                 }
@@ -2464,17 +2469,17 @@ class infiniteScene extends Phaser.Scene {
                             this.playerShape.anims.play('jumpL', false);
                         } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
                             this.playerPhysics.body.setVelocityY(250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape.anims.play('jumpL', false);
                         }
                     }
                 } else {
                     if(!this.physics.world.overlap(this.playerPhysics2,this.goal5)) {
                         if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                             this.playerPhysics2.body.setVelocityY(-250);
-                            this.playerShape.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                             this.playerPhysics2.body.setVelocityY(250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         }
                     }
                 }
@@ -2553,10 +2558,10 @@ class infiniteScene extends Phaser.Scene {
                     if(!this.physics.world.overlap(this.playerPhysics2,this.goal7)) {
                         if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                             this.playerPhysics2.body.setVelocityY(-250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                             this.playerPhysics2.body.setVelocityY(250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         }
                     }
                 }
@@ -2724,10 +2729,10 @@ class infiniteScene extends Phaser.Scene {
                     if(!this.physics.world.overlap(this.playerPhysics2,this.goal102)) {
                         if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                             this.playerPhysics2.body.setVelocityY(-250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                             this.playerPhysics2.body.setVelocityY(250);
-                            this.playerShape2.anims.play('jumpL', false);
+                            this.playerShape2.anims.play('jumpS', false);
                         }
                     }
                 }

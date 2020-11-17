@@ -393,6 +393,10 @@ class level6Scene extends Phaser.Scene{
 
         if (this.keyMovement.SPACE.isUp && this.lastDown){
             this.playerProta = !this.playerProta;
+            this.playerShape.anims.play('stopL', false);
+            this.playerPhysics.body.setVelocityX(0);
+            this.playerShape2.anims.play('stopS', false);
+            this.playerPhysics2.body.setVelocityX(0);
             this.lastDown = false;
         } else if (this.keyMovement.SPACE.isDown){
             this.lastDown = true;
