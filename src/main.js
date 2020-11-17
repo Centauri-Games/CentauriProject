@@ -11,7 +11,7 @@ var gameConfig = {
         default: 'arcade',
         arcade: {
             gravity: { y: 265 },
-            debug: true
+            debug: false
         }
     },  
     scene: [bootScene, menuScene, settings, selectLevel, controls, credits, selectMode,

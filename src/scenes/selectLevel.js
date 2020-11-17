@@ -11,141 +11,115 @@ class selectLevel extends Phaser.Scene{
     }
 
     preload(){
-
+        this.load.image('levelSelect', 'assets/screens/SeleccionNivel.png');
+        this.load.image('screen', 'assets/UI/FullScreen.png');
     }
 
     create(){
+        this.add.sprite(960, 540, 'levelSelect');
 
-        
-        var bText = this.add.text(100,1000,"Atrás",{font : "24px"}).setInteractive().on("pointerup",()=>{
-           
-            this.scene.start("selectMode", {english: this.English, am: this.am, device : this.device});
+        var bText = this.add.text(125,125,"Atrás",{font : "48px"}).setInteractive().on("pointerup",()=>{
+            this.scene.start("selectMode", {english: this.English, am: this.am});
         });
+        bText.setAlpha(0.01);
 
-        this.add.rectangle(320,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var fullScreen = this.add.image(1875, 50, 'screen').setScale(0.2).setInteractive().on('pointerup',()=>{
+            if (this.scale.isFullscreen){
+                this.scale.stopFullscreen();
+            } else {
+                this.scale.startFullscreen();
+            }
+        });
+        fullScreen.setAlpha(0.01);
+
+        var lvl1 = this.add.rectangle(250,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 1, am: this.am,device : this.device});
-            }else{
-                this.scene.start("level1Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level1Scene", {english: this.English, am: this.am, device: this.device});
             }
-            
         });
+        lvl1.setAlpha(0.25);
 
-        this.add.text(320,360,"1",{font : "24px", color : "black"});
-
-
-        
-        this.add.rectangle(640,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl2 = this.add.rectangle(600,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 2, am: this.am, device : this.device});
-            }else{
-            this.scene.start("level2Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level2Scene", {english: this.English, am: this.am, device : this.device});
             }
-            
         });
+        lvl2.setAlpha(0.25);
 
-        this.add.text(640,360,"2",{font : "24px", color : "black"});
-
-
-
-        this.add.rectangle(960,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl3 = this.add.rectangle(950,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 3, am: this.am, device : this.device});
-            }else{
-            this.scene.start("level3Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level3Scene", {english: this.English, am: this.am, device : this.device});
             }
         });
+        lvl3.setAlpha(0.25);
 
-        this.add.text(960,360,"3",{font : "24px", color : "black"});
-
-
-
-        this.add.rectangle(1280,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl4 = this.add.rectangle(1250,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 4, am: this.am, device : this.device});
-            }else{
-            this.scene.start("level4Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level4Scene", {english: this.English, am: this.am, device : this.device});
             }
         });
+        lvl4.setAlpha(0.25);
 
-        this.add.text(1280,360,"4",{font : "24px", color : "black"});
-
-
-
-        this.add.rectangle(1600,360,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl5 = this.add.rectangle(1625,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 5, am: this.am, device : this.device});
-            }else{
-            this.scene.start("level5Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level5Scene", {english: this.English, am: this.am, device : this.device});
             }
         });
+        lvl5.setAlpha(0.25);
 
-        this.add.text(1600,360,"5",{font : "24px", color : "black"});
-
-
-
-        this.add.rectangle(320,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl6 = this.add.rectangle(250,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 6, am: this.am, device : this.device});
-            }else{
-            this.scene.start("level6Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level6Scene", {english: this.English, am: this.am, device : this.device});
             }
         });
+        lvl6.setAlpha(0.25);
 
-        this.add.text(320,720,"6",{font : "24px", color : "black"});
-
-
-
-        this.add.rectangle(640,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl7 = this.add.rectangle(600,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 7, am: this.am, device : this.device});
-            }else{
-            this.scene.start("level7Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level7Scene", {english: this.English, am: this.am, device : this.device});
             }
         });
+        lvl7.setAlpha(0.25);
 
-        this.add.text(640,720,"7",{font : "24px", color : "black"});
-
-
-
-        this.add.rectangle(960,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl8 = this.add.rectangle(950,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 8, am: this.am, device : this.device});
-            }else{
-            this.scene.start("level8Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level8Scene", {english: this.English, am: this.am, device : this.device});
             }
         });
+        lvl8.setAlpha(0.25);
 
-        this.add.text(960,720,"8",{font : "24px", color : "black"});
-
-
-
-        this.add.rectangle(1280,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl9 = this.add.rectangle(1250,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 9, am: this.am, device : this.device});
-            }else{
-            this.scene.start("level9Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level9Scene", {english: this.English, am: this.am, device : this.device});
             }
         });
+        lvl9.setAlpha(0.25);
 
-        this.add.text(1280,720,"9",{font : "24px", color : "black"});
-
-
-
-        this.add.rectangle(1600,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl10 = this.add.rectangle(1625,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 10, am: this.am, device : this.device});
-            }else{
-            this.scene.start("level10Scene", {english: this.English, am: this.am, device : this.device});
+            } else {
+                this.scene.start("level10Scene", {english: this.English, am: this.am, device : this.device});
             }
         });
-
-        this.add.text(1600,720,"10",{font : "24px", color : "black"});
-
-        if (this.English){
-            bText.setText("Back");
-        }
+        lvl10.setAlpha(0.25);
     }
-
-    
 }

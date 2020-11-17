@@ -2387,6 +2387,30 @@ class infiniteScene extends Phaser.Scene {
             }
         }
         else if(this.actualLevel ==9){
+            if (this.keyMovement.W.isDown) {
+                if (this.playerProta) {
+                    if(!this.physics.world.overlap(this.playerPhysics,this.goal5)) {
+                        if (this.playerPhysics.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                } else {
+                    if(!this.physics.world.overlap(this.playerPhysics2,this.goal5)) {
+                        if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
+                            this.playerPhysics2.body.setVelocityY(-250);
+                            this.playerShape.anims.play('jumpL', false);
+                        } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
+                            this.playerPhysics2.body.setVelocityY(250);
+                            this.playerShape.anims.play('jumpL', false);
+                        }
+                    }
+                }
+            }
+
             //Puerta rosa - placa 1
             if (this.physics.world.overlap(this.p1.player1, this.p1.plate) || this.physics.world.overlap(this.p1.player2, this.p1.plate)
                 || this.physics.world.overlap(this.p4.player1, this.p4.plate) || this.physics.world.overlap(this.p4.player2, this.p4.plate)) {

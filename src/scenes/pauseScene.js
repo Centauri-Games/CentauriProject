@@ -12,23 +12,27 @@ class pauseScene extends Phaser.Scene{
 
     preload(){
         this.load.image('pause', 'assets/screens/Pausa.png');
+        this.load.image('pauseEnglish', 'assets/screens/PausaIngles.png');
     }
 
     create(){
-        this.add.sprite(960, 540, 'pause').setScale(2, 2);
-        this.rText = this.add.text(960,360,"Reanudar",{font : "48px"});
-        this.bText = this.add.text(960,720,"Volver al menú",{font : "48px"});
         if (this.English){
-            this.rText.setText("Resume");
-            this.bText.setText("Back to menu");
+            this.add.sprite(885, 665, 'pauseEnglish').setScale(2);
+        } else {
+            this.add.sprite(885, 665, 'pause').setScale(2);
         }
 
-        this.rText.setInteractive().on("pointerup",()=>{
-            this.scene.resume(this.Level);
+        var bResume = this.add.rectangle(960,535,600,100,0x550055).setInteractive().on('pointerup',()=>{
+            this.scene.switch(this.level);
+            this.level.keyMovement.ESC.isDown = false;
         });
-        this.bText.setInteractive().on("pointerup",()=>{
-            this.scene.start("menuScene", {english: this.English, device : this.device});
+        bResume.setAlpha(0.25);
+
+        var bBack = this.add.rectangle(960,770,600,100,0xffff00).setInteractive().on('pointerup',()=>{
+            this.level.scene.restart();
+            this.scene.start("menuScene", {english: this.English, online : true, am: this.am});
         });
+        bBack.setAlpha(0.25);
     }
 
     update(){
