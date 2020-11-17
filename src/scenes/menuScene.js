@@ -53,7 +53,7 @@ class menuScene extends Phaser.Scene{
 
         var bControls = this.add.rectangle(292.5,540,450,100,0xaa7f2a).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
-            this.scene.start("controls", {english: this.English, online : true, am: this.am});
+            this.scene.start("controls", {english: this.English, am: this.am});
         });
         bControls.setAlpha(0.1);
 
