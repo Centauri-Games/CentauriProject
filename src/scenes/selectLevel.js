@@ -32,7 +32,7 @@ class selectLevel extends Phaser.Scene{
         });
         fullScreen.setAlpha(0.01);
 
-        var lvl1 = this.add.rectangle(250,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
+        var lvl1 = this.add.rectangle(275,380,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 1, am: this.am,device : this.device});
             } else {
@@ -41,7 +41,7 @@ class selectLevel extends Phaser.Scene{
         });
         lvl1.setAlpha(0.25);
 
-        var lvl2 = this.add.rectangle(600,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
+        var lvl2 = this.add.rectangle(610,380,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 2, am: this.am, device : this.device});
             } else {
@@ -50,7 +50,7 @@ class selectLevel extends Phaser.Scene{
         });
         lvl2.setAlpha(0.25);
 
-        var lvl3 = this.add.rectangle(950,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
+        var lvl3 = this.add.rectangle(950,380,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 3, am: this.am, device : this.device});
             } else {
@@ -59,7 +59,7 @@ class selectLevel extends Phaser.Scene{
         });
         lvl3.setAlpha(0.25);
 
-        var lvl4 = this.add.rectangle(1250,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
+        var lvl4 = this.add.rectangle(1290,380,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 4, am: this.am, device : this.device});
             } else {
@@ -68,7 +68,7 @@ class selectLevel extends Phaser.Scene{
         });
         lvl4.setAlpha(0.25);
 
-        var lvl5 = this.add.rectangle(1625,360,200,200,0x550055).setInteractive().on("pointerup",()=>{
+        var lvl5 = this.add.rectangle(1625,380,200,200,0x550055).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 5, am: this.am, device : this.device});
             } else {
@@ -77,7 +77,7 @@ class selectLevel extends Phaser.Scene{
         });
         lvl5.setAlpha(0.25);
 
-        var lvl6 = this.add.rectangle(250,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl6 = this.add.rectangle(275,700,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 6, am: this.am, device : this.device});
             } else {
@@ -86,7 +86,7 @@ class selectLevel extends Phaser.Scene{
         });
         lvl6.setAlpha(0.25);
 
-        var lvl7 = this.add.rectangle(600,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl7 = this.add.rectangle(610,700,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 7, am: this.am, device : this.device});
             } else {
@@ -95,7 +95,7 @@ class selectLevel extends Phaser.Scene{
         });
         lvl7.setAlpha(0.25);
 
-        var lvl8 = this.add.rectangle(950,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl8 = this.add.rectangle(950,700,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 8, am: this.am, device : this.device});
             } else {
@@ -104,7 +104,7 @@ class selectLevel extends Phaser.Scene{
         });
         lvl8.setAlpha(0.25);
 
-        var lvl9 = this.add.rectangle(1250,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl9 = this.add.rectangle(1290,700,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 9, am: this.am, device : this.device});
             } else {
@@ -113,7 +113,7 @@ class selectLevel extends Phaser.Scene{
         });
         lvl9.setAlpha(0.25);
 
-        var lvl10 = this.add.rectangle(1625,720,200,200,0xffff00).setInteractive().on("pointerup",()=>{
+        var lvl10 = this.add.rectangle(1625,700,200,200,0xffff00).setInteractive().on("pointerup",()=>{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 10, am: this.am, device : this.device});
             } else {
