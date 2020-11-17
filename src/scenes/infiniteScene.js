@@ -82,38 +82,47 @@ class infiniteScene extends Phaser.Scene {
             case 2:
                 this.actualLevel = 2;
                 this.generateLevel2();
+                this.levelCounter ++;
                 break;
             case 3:
                 this.actualLevel = 3;
                 this.generateLevel3();
+                this.levelCounter ++;
                 break;
             case 4:
                 this.actualLevel = 4;
                 this.generateLevel4();
+                this.levelCounter ++;
                 break;
             case 5:
                 this.actualLevel = 5;
                 this.generateLevel5();
+                this.levelCounter ++;
                 break;
             case 6:
                 this.actualLevel = 6;
                 this.generateLevel6();
+                this.levelCounter ++;
                 break;
             case 7:
                 this.actualLevel = 7;
                 this.generateLevel7();
+                this.levelCounter ++;
                 break;
             case 8:
                 this.actualLevel = 8;
-                //this.generateLevel8();
+                this.generateLevel8();
+                this.levelCounter ++;
                 break;
             case 9:
                 this.actualLevel = 9;
-                //this.generateLevel9();
+                this.generateLevel9();
+                this.levelCounter ++;
                 break;
             case 10:
                 this.actualLevel = 10;
-                //this.generateLevel10();
+                this.generateLevel10();
+                this.levelCounter ++;
                 break;
         }
     }
@@ -3589,151 +3598,6 @@ class infiniteScene extends Phaser.Scene {
             }
         }
     }
-
-    /*async syncLoadPhysics(playerShape,mode){
-        this.actualLevel = 8;
-
-        this.generateLevel1(0);
-        this.generateLevel2(5000);
-        this.generateLevel3(10000);
-        this.generateLevel4(15000);
-        this.generateLevel5(20000);
-        this.generateLevel6(25000);
-        this.generateLevel7(30000);
-        this.generateLevel8(35000);
-
-    }
-*/
-    update(){
-        /* if (passedlevelcounter)
-         updatinglevels = 2;
-         */
-        if (this.keyMovement.SPACE.isUp && this.lastDown){
-            this.playerProta = !this.playerProta;
-            this.lastDown = false;
-        } else if (this.keyMovement.SPACE.isDown){
-            this.lastDown = true;
-        }
-
-        if (this.keyMovement.A.isDown) {
-            if (this.playerProta){
-                this.playerPhysics.body.setVelocityX(-175);
-                this.playerShape.flipX = true;
-                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                    this.playerShape.anims.play('jumpL', false);
-                } else {
-                    this.playerShape.anims.play('runL', true);
-                }
-            } else {
-                this.playerPhysics2.body.setVelocityX(-175);
-                this.playerShape2.flipX = true;
-                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                    this.playerShape2.anims.play('jumpS', false);
-                } else {
-                    this.playerShape2.anims.play('runS', true);
-                }
-            }
-        } else if (this.keyMovement.D.isUp){
-            if (this.playerProta) {
-                this.playerPhysics.body.setVelocityX(0);
-                this.playerShape.anims.play('stopL', false);
-            } else {
-                this.playerPhysics2.body.setVelocityX(0);
-                this.playerShape2.anims.play('stopS', false);
-            }
-        }
-        /////////////////////////////////////////
-        /////////////////////////////////////////
-        if (this.keyMovement.D.isDown) {
-            if (this.playerProta){
-                this.playerPhysics.body.setVelocityX(175);
-                this.playerShape.flipX = false;
-                if (this.playerPhysics.body.velocity.y < 0 || (this.playerPhysics.body.velocity.y > 0 && !this.playerPhysics.body.touching.down)){
-                    this.playerShape.anims.play('jumpL', false);
-                } else {
-                    this.playerShape.anims.play('runL', true);
-                }
-            } else {
-                this.playerPhysics2.body.setVelocityX(175);
-                this.playerShape2.flipX = false;
-                if (this.playerPhysics2.body.velocity.y < 0 || (this.playerPhysics2.body.velocity.y > 0 && !this.playerPhysics2.body.touching.down)){
-                    this.playerShape2.anims.play('jumpS', false);
-                } else {
-                    this.playerShape2.anims.play('runS', true);
-                }
-            }
-        } else if(this.keyMovement.A.isUp) {
-            if (this.playerProta) {
-                this.playerPhysics.body.setVelocityX(0);
-                this.playerShape.anims.play('stopL', false);
-            } else {
-                this.playerPhysics2.body.setVelocityX(0);
-                this.playerShape2.anims.play('stopS', false);
-            }
-        }
-        ///////////////////////////////////////////
-        //////////////////////////////////////////
-        if (this.keyMovement.W.isDown) {
-            if (this.playerProta) {
-                if (this.playerPhysics.body.touching.down || this.playerPhysics.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
-                        this.playerPhysics.body.setVelocityY(-250);
-                    } else {
-                        this.playerPhysics.body.setVelocityY(250);
-                    }
-                    this.playerShape.anims.play('jumpL', false);
-                }
-            } else {
-                if (this.playerPhysics2.body.touching.down || this.playerPhysics2.body.touching.up) {
-                    if (this.physics.world.gravity.y > 0){
-                        this.playerPhysics2.body.setVelocityY(-250);
-                    } else {
-                        this.playerPhysics2.body.setVelocityY(250);
-                    }
-                    this.playerShape2.anims.play('jumpS', false);
-                }
-            }
-        }
-        if (this.keyMovement.ESC.isDown) {
-            this.bgMusic.stop();
-            this.scene.switch('pauseScene', {level: this.level, english: this.English, am: this.am});
-        }
-
-        if(this.actualLevel == 7){
-            if (this.physics.world.overlap(this.playerShape2, this.leverLeft)){
-                this.mpl2.movingPlatformPhysics.body.setVelocityX(-100);
-                if(!this.overlapped1){
-                    this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
-                    this.overlapped1=true;
-                }
-
-            } else if (this.physics.world.overlap(this.playerShape2, this.leverRight)){
-                this.mpl2.movingPlatformPhysics.body.setVelocityX(100);
-                if(!this.overlapped2){
-                    this.sc.sound.add("leverFX", { volume: 1, loop: false }).play();
-                    this.overlapped2=true;
-                }
-            } else {
-                this.mpl2.movingPlatformPhysics.body.setVelocityX(0);
-                this.leverLeft.anims.play('unpull', false);
-                this.leverRight.anims.play('unpull', false);
-                this.overlapped1 = false;
-                this.overlapped2 = false;
-            }
-        }
-        else if(this.actualLevel == 8){
-            if (this.physics.world.overlap(this.playerPhysics2, this.nextLevel2) && this.physics.world.overlap(this.playerPhysics, this.nextLevel1)){
-                this.sound.add("diamondFX", { volume: 1, loop: false }).play();
-                console.log("completed");
-                this.levelGenerator();
-            }
-        }
-    }
-
-    /*async syncLoadPhysics(playerShape,mode){
-        
-        return await this.physics.add.existing(playerShape, mode);
-    }*/
 
     //Función para configurar espejo
     setInteractiveMirror(mirror, correctPosition){
