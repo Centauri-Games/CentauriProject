@@ -530,7 +530,7 @@ class Spike{
 
     addPlayerCollide(scene, playerShape, playerShape2, eng, startX, startY){
         scene.physics.add.collider(playerShape, this.spikes, function(){
-            if (this.hp.getHP() > 0){
+            if (this.hp.getHP() > 1){
                 this.hp.takeDamage();
                 playerShape.setPosition(startX, startY);
             } else {
