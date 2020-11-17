@@ -207,7 +207,35 @@ class level2Scene extends Phaser.Scene{
         sp12.addPlayerCollide(this, playerShape2);
 
         //VIDA
-        var hp = new Life(this, iniXL, iniYL, this.English);
+        //Sprite vida
+        this.anims.create({
+            key: '2hp',
+            frames: this.anims.generateFrameNumbers('heart', {start: 0, end: 1}),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: '1hp',
+            frames: this.anims.generateFrameNumbers('heart', {start: 1, end: 2}),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: '0hp',
+            frames: this.anims.generateFrameNumbers('heart', {start: 2, end: 3}),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        this.hearts = this.add.sprite(0,0, 'heart');
+        this.hearts2 = this.add.sprite(0,0, 'heart');
+
+        cameraMain.ignore(this.hearts2);
+        camera2.ignore(this.hearts);
+
+        var hp = new Life(this, iniXL, iniYL, this.English, this.hearts, this.hearts2);
 
         //PINCHOS
         var spikesupd = new Spike(this, 2000, 1560, 4000, 100, 0xff0000, hp);
@@ -341,6 +369,10 @@ class level2Scene extends Phaser.Scene{
         this.goal = goal;
     }
     update(){
+
+        this.hearts.setPosition(this.playerShape.x, this.playerShape.y-55);
+        this.hearts2.setPosition(this.playerShape2.x, this.playerShape2.y-55);
+
         if(this.physics.world.overlap(this.playerPhysics,this.goal) && this.physics.world.overlap(this.playerPhysics2,this.goal)){
             this.sound.add("diamondFX", { volume: 1, loop: false }).play();
             this.scene.start("level3Scene", {english: this.English, am: this.am});
@@ -426,10 +458,10 @@ class level2Scene extends Phaser.Scene{
                 if(!this.physics.world.overlap(this.playerPhysics2,this.goal)) {
                     if (this.playerPhysics2.body.touching.down && this.physics.world.gravity.y > 0) {
                         this.playerPhysics2.body.setVelocityY(-250);
-                        this.playerShape.anims.play('jumpL', false);
+                        this.playerShape2.anims.play('jumpL', false);
                     } else if (this.playerPhysics2.body.touching.up && this.physics.world.gravity.y < 0) {
                         this.playerPhysics2.body.setVelocityY(250);
-                        this.playerShape.anims.play('jumpL', false);
+                        this.playerShape2.anims.play('jumpL', false);
                     }
                 }
             }

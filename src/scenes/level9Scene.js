@@ -149,7 +149,35 @@ class level9Scene extends Phaser.Scene{
         camera2.startFollow(playerShape2);
 
         //VIDA
-        var hp = new Life(this, iniXL, iniYL, this.English);
+        //Sprite vida
+        this.anims.create({
+            key: '2hp',
+            frames: this.anims.generateFrameNumbers('heart', {start: 0, end: 1}),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: '1hp',
+            frames: this.anims.generateFrameNumbers('heart', {start: 1, end: 2}),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: '0hp',
+            frames: this.anims.generateFrameNumbers('heart', {start: 2, end: 3}),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        this.hearts = this.add.sprite(0,0, 'heart');
+        this.hearts2 = this.add.sprite(0,0, 'heart');
+
+        cameraMain.ignore(this.hearts2);
+        camera2.ignore(this.hearts);
+
+        var hp = new Life(this, iniXL, iniYL, this.English, this.hearts, this.hearts2);
 
         //SUELO
         var floor1 = this.add.rectangle(1700, 2700, 3800, 100, 0xff0000);
@@ -497,6 +525,10 @@ class level9Scene extends Phaser.Scene{
     
     }
     update() {
+
+        this.hearts.setPosition(this.playerShape.x, this.playerShape.y-55);
+        this.hearts2.setPosition(this.playerShape2.x, this.playerShape2.y-55);
+
         //Puerta rosa - placa 1
         if (this.physics.world.overlap(this.p1.player1, this.p1.plate) || this.physics.world.overlap(this.p1.player2, this.p1.plate)
             || this.physics.world.overlap(this.p4.player1, this.p4.plate) || this.physics.world.overlap(this.p4.player2, this.p4.plate)) {

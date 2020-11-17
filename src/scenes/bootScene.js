@@ -156,11 +156,34 @@ class bootScene extends Phaser.Scene{
         this.load.audio('mirrorFX', 'assets/sounds/effects/mirror.wav');
         this.load.audio('portalFX', 'assets/sounds/effects/portal.wav');
 
+        this.load.spritesheet('pressToStart', 'assets/screens/Presstostart.png', {
+            frameWidth: 1920,
+            frameHeight: 1080
+        });
+
+        this.load.spritesheet('heart', 'assets/sprites/hearts.png', {
+            frameWidth: 72,
+            frameHeight: 20
+        });
+
     }
 
     create(){
         this.am = new AudioManager();
-        this.scene.start("menuScene", {english: this.English, am: this.am});
+
+        this.anims.create({
+            key: 'starting',
+            frames: this.anims.generateFrameNumbers('pressToStart', { start: 0, end: 5 }),
+            frameRate: 6,
+            repeat: -1
+        });
+
+        var screen = this.add.sprite(960, 540,'pressToStart');
+        screen.anims.play('starting',true);
+
+        screen.setInteractive().on('pointerup',()=>{
+            this.scene.start("menuScene", {english: this.English, am: this.am});
+        });
     }
 
     update(){
