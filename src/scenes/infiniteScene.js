@@ -9,6 +9,12 @@ class infiniteScene extends Phaser.Scene {
         this.device = data.device;
     }
 
+    updateRanking(){
+        /*Almacenar this.levelCounter y quizás un nombre */
+        /* Guardar en webstorage */
+        /* En la pantalla de puntuaciones, recuperarlo */
+    }
+
     levelGenerator(){
 
         //Generar numero aleatorio diferente al anterior nivel
@@ -29,7 +35,6 @@ class infiniteScene extends Phaser.Scene {
             this.playerPhysics2.body.setSize(65, 80);
         }
 
-        level = 10;
         this.hp.resetDamage();  //Resetea las vidas para el siguiente nivel
 
         switch(level) {
