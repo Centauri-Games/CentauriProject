@@ -614,7 +614,7 @@ class Box{
 
     addPlayerCollide(scene, playerShape){
         scene.physics.add.collider(playerShape,this.box,function(){
-            this.box.body.setDragX(100);//FRICCIÓN
+            this.box.body.setDragX(1000);//FRICCIÓN
         },null,this);
     }
 
