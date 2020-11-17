@@ -24,6 +24,7 @@ class pauseScene extends Phaser.Scene{
 
         var bResume = this.add.rectangle(960,535,600,100,0x550055).setInteractive().on('pointerup',()=>{
             this.scene.stop();
+            this.level.keyMovement.ESC.isDown = false;
             this.scene.resume(this.level);
         });
         bResume.setAlpha(0.25);
