@@ -18,6 +18,10 @@ class infiniteScene extends Phaser.Scene {
         }while(level == this.actualLevel)
         this.levelDisplace = this.levelCounter * 5000;
 
+        this.initialTime = this.totalTime - Math.floor(this.levelCounter/3) *30;    //Cada 3 niveles, el tiempo disminuye
+        if(this.initialTime < 60)   //El tiempo minimo es 1 min
+            this.initialTime = 60;
+
         if(this.actualLevel == 6){  //Si el ultimo nivel fue el 6, reset a sprites normales
             this.playerShape.setTexture("light").setScale(1,1);
             this.playerPhysics.body.setSize(65, 80);
@@ -25,104 +29,59 @@ class infiniteScene extends Phaser.Scene {
             this.playerPhysics2.body.setSize(65, 80);
         }
 
+        level = 10;
         this.hp.resetDamage();  //Resetea las vidas para el siguiente nivel
 
-        switch(level){
+        switch(level) {
             case 1:
                 this.actualLevel = 1;
                 this.generateLevel1(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 2:
                 this.actualLevel = 2;
                 this.generateLevel2(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 3:
                 this.actualLevel = 3;
                 this.generateLevel3(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 4:
                 this.actualLevel = 4;
                 this.generateLevel4(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 5:
                 this.actualLevel = 5;
                 this.generateLevel5(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 6:
                 this.actualLevel = 6;
                 this.generateLevel6(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 7:
                 this.actualLevel = 7;
                 this.generateLevel7(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 8:
                 this.actualLevel = 8;
                 this.generateLevel8(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 9:
                 this.actualLevel = 9;
                 this.generateLevel9(this.levelDisplace);
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
             case 10:
                 this.actualLevel = 10;
                 this.generateLevel10(this.levelDisplace);
-                this.levelCounter ++;
-                this.generateLevel1();
-                break;
-            case 2:
-                this.actualLevel = 2;
-                this.generateLevel2();
-                this.levelCounter ++;
-                break;
-            case 3:
-                this.actualLevel = 3;
-                this.generateLevel3();
-                this.levelCounter ++;
-                break;
-            case 4:
-                this.actualLevel = 4;
-                this.generateLevel4();
-                this.levelCounter ++;
-                break;
-            case 5:
-                this.actualLevel = 5;
-                this.generateLevel5();
-                this.levelCounter ++;
-                break;
-            case 6:
-                this.actualLevel = 6;
-                this.generateLevel6();
-                this.levelCounter ++;
-                break;
-            case 7:
-                this.actualLevel = 7;
-                this.generateLevel7();
-                this.levelCounter ++;
-                break;
-            case 8:
-                this.actualLevel = 8;
-                this.generateLevel8();
-                this.levelCounter ++;
-                break;
-            case 9:
-                this.actualLevel = 9;
-                this.generateLevel9();
-                this.levelCounter ++;
-                break;
-            case 10:
-                this.actualLevel = 10;
-                this.generateLevel10();
-                this.levelCounter ++;
+                this.levelCounter++;
                 break;
         }
     }
@@ -2760,7 +2719,7 @@ class infiniteScene extends Phaser.Scene {
         spikes2D.setAlpha(0);
         spikes2D.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS);
 
-        var spikes3D = new Spike(this, 1500+levelDisplace, 850 + displaceY, 480, 100, 0xff0000, hp);
+        var spikes3D = new Spike(this, 1500+levelDisplace, 850 + displaceY, 480, 100, 0xff0000, this.hp);
         spikes3D.setAlpha(0);
         spikes3D.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS);
 
@@ -3086,7 +3045,8 @@ class infiniteScene extends Phaser.Scene {
         this.levelGenerator();
 
         //Timer
-        this.initialTime = 5*60;    //5 minutos de cuenta atrás
+        this.totalTime = 3*60;
+        this.initialTime = 3*60;    //3 minutos de cuenta atrás
         this.timerText = this.add.text(iniXL, iniYL, this.formatTime(this.initialTime),{fill: '#ffffff' });
         this.timerText2 = this.add.text(iniXL, iniYL, this.formatTime(this.initialTime),{fill: '#ffffff' });
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
