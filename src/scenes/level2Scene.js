@@ -472,6 +472,7 @@ class level2Scene extends Phaser.Scene{
         }
 
         if (this.keyMovement.ESC.isDown) {
+            this.keyMovement.ESC.isDown = false;
             this.bgMusic.stop();
             this.scene.pause();
             this.scene.launch('pauseScene', {level: this.level, english: this.English, am: this.am});
