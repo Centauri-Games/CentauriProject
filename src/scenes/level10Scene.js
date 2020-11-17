@@ -133,7 +133,7 @@ class level10Scene extends Phaser.Scene{
 
         //PLATAFORMAS
         //Móviles
-        var mpd = new MovingPlatform(this, 2000, 2800, 'woodP');
+        var mpd = new MovingPlatform(this, 2000, 2850, 'woodP');
         mpd.addPlayerCollide(this, playerShape2);
         mpd.setMovement(this, 0, -400);
 
