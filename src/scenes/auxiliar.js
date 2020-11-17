@@ -547,33 +547,37 @@ class Spike{
 
 class Life{
 
-    constructor(scene, posX, posY, english){
+    constructor(scene, posX, posY, english, hp1, hp2){
         this.lifes = 3;
-        this.lifesText = scene.add.text(posX, posY, 'Vidas: ' + this.lifes, {font: '32px'});
         this.english = english;
-        if (this.english){
-            this.lifesText.setText('Lives: ' + this.lifes);
-        }
+        this.hp1 = hp1;
+        this.hp2 = hp2;
     }
 
     getHP(){
         return this.lifes;
     }
 
-    takeDamage(){
+    takeDamage() {
         this.lifes--;
-        this.lifesText.setText('Vidas: ' + this.lifes);
-        if (this.english){
-            this.lifesText.setText('Lives: ' + this.lifes);
+        if (this.lifes == 2){
+            this.hp1.anims.play('2hp', false);
+            this.hp2.anims.play('2hp', false);
+        }
+        else if(this.lifes ==1){
+            this.hp1.anims.play('1hp', false);
+            this.hp2.anims.play('1hp', false);
+        }
+        else{
+            this.hp1.anims.play('0hp', false);
+            this.hp2.anims.play('0hp', false);
         }
     }
 
     resetDamage(){
         this.lifes = 3;
-        this.lifesText.setText('Vidas: ' + this.lifes);
-        if (this.english){
-            this.lifesText.setText('Lives: ' + this.lifes);
-        }
+        this.hp1.anims.play('3hp', false);
+        this.hp2.anims.play('3hp', false);
     }
 }
 
@@ -610,7 +614,7 @@ class Box{
 
     addPlayerCollide(scene, playerShape){
         scene.physics.add.collider(playerShape,this.box,function(){
-            this.box.body.setDragX(100);//FRICCIÓN
+            this.box.body.setDragX(1000);//FRICCIÓN
         },null,this);
     }
 
