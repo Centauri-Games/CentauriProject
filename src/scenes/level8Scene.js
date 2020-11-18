@@ -320,7 +320,6 @@ class level8Scene extends Phaser.Scene{
 
         if (this.physics.world.overlap(this.playerPhysics2, this.nextLevel2) && this.physics.world.overlap(this.playerPhysics, this.nextLevel1)){
             this.portalFX.stop();
-            console.log(this.portalFX);
             this.sound.add("diamondFX", { volume: 1, loop: false }).play();
             this.scene.start("level9Scene", {english: this.English, am: this.am, device: this.device});
         }
@@ -418,6 +417,7 @@ class level8Scene extends Phaser.Scene{
 
         if (this.keyMovement.ESC.isDown) {
             this.keyMovement.ESC.isDown = false;
+            this.portalFX.stop();
             this.scene.pause();
             this.scene.launch('pauseScene', {level: this.level, am: this.am, english: this.English});
         }

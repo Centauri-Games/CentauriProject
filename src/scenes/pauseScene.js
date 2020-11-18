@@ -23,6 +23,15 @@ class pauseScene extends Phaser.Scene{
             this.add.sprite(885, 665, 'pause').setScale(2);
         }
 
+        var fullScreen = this.add.image(1390, 105, 'screen').setScale(0.2).setInteractive().on('pointerup',()=>{
+            if (this.scale.isFullscreen){
+                this.scale.stopFullscreen();
+            } else {
+                this.scale.startFullscreen();
+            }
+        });
+        fullScreen.setAlpha(0.01);
+
         var bResume = this.add.rectangle(960,535,600,100,0x550055).setInteractive().on('pointerup',()=>{
             this.scene.stop();
             this.am.bgMusic.resume();
