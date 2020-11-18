@@ -535,6 +535,29 @@ class Spike{
                 playerShape.setPosition(startX, startY);
             } else {
                 scene.sound.add("deathFX", { volume: 1, loop: false }).play();
+
+                if(scene.level == 'infiniteScene'){ //Si es la escena infinita, actualiza ranking
+                    var score = scene.levelCounter * 1000;
+
+                    var rank = localStorage.getItem('rank');    //Se recupera el array de puntuaciones
+                    rank = JSON.parse(rank);
+
+                    if(rank == null)            //si no existe, se crea
+                        rank = new Array();
+
+                    if(rank.length < 10){   //Añadir puntuacion
+                        rank.push(score);
+                    }
+                    else{   //Incluir y ordenar
+                        if(rank[9] < score[1]){
+                            rank[9] = score;
+                            rank.sort((a,b) => {return a-b});
+                        }
+                    }
+                    console.log(rank);
+                    localStorage.setItem('rank', JSON.stringify(rank)); //Se vuelve a almacenar
+                }
+
                 scene.scene.start("gameOverScene", {english: eng,level : scene.level, am: this.am});
             }
         }, null, this);

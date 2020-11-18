@@ -15,9 +15,7 @@ class infiniteScene extends Phaser.Scene {
         /* Guardar en webstorage */
         /* En la pantalla de puntuaciones, recuperarlo */
 
-        var name = "patata";
-
-        var score = new Array(name, this.levelCounter);
+        var score = this.levelCounter * 1000;
 
         var rank = localStorage.getItem('rank');    //Se recupera el array de puntuaciones
         rank = JSON.parse(rank);
@@ -31,11 +29,10 @@ class infiniteScene extends Phaser.Scene {
         else{   //Incluir y ordenar
             if(rank[9] < score[1]){
                 rank[9] = score;
-                //Sort array
+                rank.sort((a,b) => {return a-b});
             }
         }
         localStorage.setItem('rank', JSON.stringify(rank)); //Se vuelve a almacenar
-        console.log(rank);
     }
 
     levelGenerator(){
@@ -46,8 +43,6 @@ class infiniteScene extends Phaser.Scene {
             level = Math.floor((Math.random() * 10) + 1);
         }while(level == this.actualLevel)
         this.levelDisplace = this.levelCounter * 5000;
-
-        this.updateRanking();
 
         this.initialTime = this.totalTime - Math.floor(this.levelCounter/3) *30;    //Cada 3 niveles, el tiempo disminuye
         if(this.initialTime < 60)   //El tiempo minimo es 1 min
@@ -2254,6 +2249,7 @@ class infiniteScene extends Phaser.Scene {
         this.timerText.setText(this.formatTime(this.initialTime));
         this.timerText2.setText(this.formatTime(this.initialTime));
         if(this.initialTime == 0){
+            this.updateRanking();
             this.scene.start("gameOverScene", {english: this.English,level : this.level, am: this.am});
         }
     }
