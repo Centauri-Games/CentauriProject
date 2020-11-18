@@ -65,7 +65,7 @@ class menuScene extends Phaser.Scene{
 
         var bRanking = this.add.rectangle(292.5,955,450,100,0xffff00).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
-            this.scene.start("controls", {english: this.English, online : true, am: this.am});
+            this.scene.start("rankingScene", {english: this.English, online : true, am: this.am});
         });
         bRanking.setAlpha(0.25);
 
