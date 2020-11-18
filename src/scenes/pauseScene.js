@@ -35,7 +35,7 @@ class pauseScene extends Phaser.Scene{
             this.am.bgMusicPlaying = false;
             this.scene.stop();
             this.scene.stop(this.level);
-            this.scene.start("menuScene", {english: this.English, online : true, am: this.am});
+            this.scene.start("menuScene", {english: this.English, online : true, am: this.am, device: this.device});
         });
         bBack.setAlpha(0.25);
     }

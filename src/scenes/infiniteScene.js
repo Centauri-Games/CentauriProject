@@ -2255,7 +2255,7 @@ class infiniteScene extends Phaser.Scene {
         this.timerText2.setText(this.formatTime(this.initialTime));
         if(this.initialTime == 0){
             this.updateRanking();
-            this.scene.start("gameOverScene", {english: this.English,level : this.level, am: this.am});
+            this.scene.start("gameOverScene", {english: this.English,level : this.level, am: this.am, device: this.device});
         }
     }
 

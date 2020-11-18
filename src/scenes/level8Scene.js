@@ -319,7 +319,7 @@ class level8Scene extends Phaser.Scene{
 
         if (this.physics.world.overlap(this.playerPhysics2, this.nextLevel2) && this.physics.world.overlap(this.playerPhysics, this.nextLevel1)){
             this.sound.add("diamondFX", { volume: 1, loop: false }).play();
-            this.scene.start("level9Scene", {english: this.English, am: this.am});
+            this.scene.start("level9Scene", {english: this.English, am: this.am, device: this.device});
         }
 
         if (this.keyMovement.SPACE.isUp && this.lastDown){
@@ -416,7 +416,7 @@ class level8Scene extends Phaser.Scene{
         if (this.keyMovement.ESC.isDown) {
             this.keyMovement.ESC.isDown = false;
             this.scene.pause();
-            this.scene.launch('pauseScene', {level: this.level, am: this.am, english: this.English, am: this.am});
+            this.scene.launch('pauseScene', {level: this.level, am: this.am, english: this.English});
         }
     }
 }

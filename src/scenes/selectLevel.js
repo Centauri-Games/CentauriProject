@@ -36,7 +36,7 @@ class selectLevel extends Phaser.Scene{
             if (this.online){
                 this.scene.start("matchmakingScene", {level : 1, am: this.am,device : this.device});
             } else {
-                this.scene.start("level1Scene", {english: this.English, am: this.am, device: this.device});
+                this.scene.start("storyScene", {english: this.English, am: this.am, device: this.device});
             }
         });
         lvl1.setAlpha(0.25);
