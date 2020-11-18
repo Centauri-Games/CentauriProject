@@ -1,0 +1,12 @@
+
+Tema 2 - Música para el juego en sí
+
+Para el juego en si (para el desarrollo de las partidas como tal) se ha compuesto una segunda melodía con la cuál se ha tratado de dar una sensación más espacial, pensando en aquellos
+niveles con estética y dinámica más futurista.
+
+Se ha tratado de transmitir al usuario una sensacion de misterio, de manera que sigue la línea marcada por el menú y el tema compuesto para dichas pantallas.
+
+Por todo esto, se ha compuesto este tema de una manera incremental y progresiva. También se ha optado por el uso de tonalidades más graves al comienzo
+hasta que llega a la melodía principal de violín que recoge todo el protagonismo y la cuál es más calmada. Trans este progreso hacia la melodía prinicpal
+y el desarrollo correspondiente de esta, se continúa hasta terminar como se comenzó, con el sintetizador que desaparece de manera progresiva, dejando de 
+nuevo en el usuario una sensacion tenebrosa y de mistario, para ello, el tema desaparece lentamente y se nota que se va "alejando"
