@@ -383,8 +383,8 @@ class level6Scene extends Phaser.Scene{
     }
     update() {
 
-        this.hearts.setPosition(this.playerShape.x, this.playerShape.y-55);
-        this.hearts2.setPosition(this.playerShape2.x, this.playerShape2.y-55);
+        this.hearts.setPosition(this.playerShape.x, this.playerShape.y-75);
+        this.hearts2.setPosition(this.playerShape2.x, this.playerShape2.y-75);
 
         if (this.physics.world.overlap(this.playerPhysics, this.goal) && this.physics.world.overlap(this.playerPhysics2, this.goal)){
             this.sound.add("diamondFX", { volume: 1, loop: false }).play();
@@ -393,9 +393,7 @@ class level6Scene extends Phaser.Scene{
 
         if (this.keyMovement.SPACE.isUp && this.lastDown){
             this.playerProta = !this.playerProta;
-            this.playerShape.anims.play('stopL', false);
             this.playerPhysics.body.setVelocityX(0);
-            this.playerShape2.anims.play('stopS', false);
             this.playerPhysics2.body.setVelocityX(0);
             this.lastDown = false;
         } else if (this.keyMovement.SPACE.isDown){

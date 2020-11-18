@@ -57,6 +57,9 @@ class infiniteScene extends Phaser.Scene {
 
         this.hp.resetDamage();  //Resetea las vidas para el siguiente nivel
 
+        if(this.levelCounter == 0)
+            level = 6;
+
         switch(level) {
             case 1:
                 this.actualLevel = 1;
@@ -1016,10 +1019,10 @@ class infiniteScene extends Phaser.Scene {
         this.bg.setDepth(-2);
         this.bg.setScrollFactor(0);
 
-        var iniXL = 3600+levelDisplace;
+        var iniXL = 300+levelDisplace;
         var iniYL = 650;
 
-        var iniXS = 3600+levelDisplace;
+        var iniXS = 300+levelDisplace;
         var iniYS = 2090;
 
         this.playerShape.setTexture("light6").setScale(0.8,0.8);
@@ -2256,18 +2259,30 @@ class infiniteScene extends Phaser.Scene {
 
 
     update(){
-        this.timerText.setPosition(this.playerShape.x - 20, this.playerShape.y - 80);
-        this.timerText2.setPosition(this.playerShape2.x - 20, this.playerShape2.y - 80);
+        if(this.actualLevel != 6) {
+            this.timerText.setPosition(this.playerShape.x - 20, this.playerShape.y - 80);
+            this.timerText2.setPosition(this.playerShape2.x - 20, this.playerShape2.y - 80);
 
-        this.hearts.setPosition(this.playerShape.x, this.playerShape.y-55);
-        this.hearts2.setPosition(this.playerShape2.x, this.playerShape2.y-55);
+            this.hearts.setPosition(this.playerShape.x, this.playerShape.y - 55);
+            this.hearts2.setPosition(this.playerShape2.x, this.playerShape2.y - 55);
+        }
+
+        else{
+            this.timerText.setPosition(this.playerShape.x - 20, this.playerShape.y - 100);
+            this.timerText2.setPosition(this.playerShape2.x - 20, this.playerShape2.y - 100);
+
+            this.hearts.setPosition(this.playerShape.x, this.playerShape.y - 75);
+            this.hearts2.setPosition(this.playerShape2.x, this.playerShape2.y - 75);
+        }
 
 
         if (this.keyMovement.SPACE.isUp && this.lastDown){
             this.playerProta = !this.playerProta;
-            this.playerShape.anims.play('stopL', false);
+            if(this.actualLevel != 6){
+                this.playerShape.anims.play('stopL', false);
+                this.playerShape2.anims.play('stopS', false);
+            }
             this.playerPhysics.body.setVelocityX(0);
-            this.playerShape2.anims.play('stopS', false);
             this.playerPhysics2.body.setVelocityX(0);
             this.lastDown = false;
         } else if (this.keyMovement.SPACE.isDown){
@@ -2594,6 +2609,8 @@ class infiniteScene extends Phaser.Scene {
                 this.sound.add("diamondFX", { volume: 1, loop: false }).play();
                 console.log("completed");
                 this.levelGenerator();
+                this.playerPhysics.body.moves = true;
+                this.playerPhysics2.body.moves = true;
             }
 
             if (this.keyMovement.W.isDown) {
@@ -2726,6 +2743,8 @@ class infiniteScene extends Phaser.Scene {
                 this.sound.add("diamondFX", { volume: 1, loop: false }).play();
                 console.log("completed");
                 this.levelGenerator();
+                this.playerPhysics.body.moves = true;
+                this.playerPhysics2.body.moves = true;
             }
         }
 
