@@ -24,7 +24,7 @@ class level3Scene extends Phaser.Scene{
 
         //Audio Manager
         if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
-            this.bgMusic = this.sound.add("ingameMS", { volume: 0.7, loop: true });
+            this.bgMusic = this.sound.add("ingameMS2", { volume: 0.7, loop: true });
             this.bgMusic.play();
             this.am.bgMusic = this.bgMusic;
             this.am.bgMusicPlaying = true;

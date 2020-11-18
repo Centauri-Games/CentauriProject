@@ -142,7 +142,8 @@ class bootScene extends Phaser.Scene{
         //Music
         this.load.audio('menuMS', 'assets/sounds/music/menu.wav');
         this.load.audio('creditsMS', 'assets/sounds/music/credits.wav');
-        this.load.audio('ingameMS', 'assets/sounds/music/ingame.mp3');
+        this.load.audio('ingameMS1', 'assets/sounds/music/ingame1.wav');
+        this.load.audio('ingameMS2', 'assets/sounds/music/ingame2.wav');
 
         this.load.audio('barrierFX', 'assets/sounds/effects/barrier.wav');
         this.load.audio('buttonFX', 'assets/sounds/effects/button.wav');
@@ -164,6 +165,30 @@ class bootScene extends Phaser.Scene{
         this.load.spritesheet('heart', 'assets/sprites/hearts.png', {
             frameWidth: 72,
             frameHeight: 20
+        });
+
+        this.load.image('story1ES', 'assets/story/story1ES.png');
+        this.load.image('story2ES', 'assets/story/story2ES.png');
+        this.load.image('story3ES', 'assets/story/story3ES.png');
+        this.load.image('story4ES', 'assets/story/story4ES.png');
+        this.load.image('story5ES', 'assets/story/story5ES.png');
+        this.load.image('storyEndES', 'assets/story/storyEndES.png');
+
+        this.load.image('story1EN', 'assets/story/story1EN.png');
+        this.load.image('story2EN', 'assets/story/story2EN.png');
+        this.load.image('story3EN', 'assets/story/story3EN.png');
+        this.load.image('story4EN', 'assets/story/story4EN.png');
+        this.load.image('story5EN', 'assets/story/story5EN.png');
+        this.load.image('storyEndEN', 'assets/story/storyEndEN.png');
+
+        this.load.spritesheet('continue', 'assets/story/continue.png', {
+            frameWidth: 502,
+            frameHeight: 68
+        });
+
+        this.load.spritesheet('continuar', 'assets/story/continuar.png', {
+            frameWidth: 502,
+            frameHeight: 68
         });
 
     }

@@ -12,55 +12,6 @@ class level9Scene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg', 'assets/backgrounds/jungle.png');
-
-        this.load.image('platform', 'assets/sprites/plataforma.png');
-        this.load.spritesheet('light', 'assets/players/Hyperion.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
-            frameWidth: 65,
-            frameHeight: 80
-        });
-
-        this.load.spritesheet('pinkDoor', 'assets/sprites/pinkDoor.png', {
-            frameWidth: 112,
-            frameHeight: 480
-        });
-        this.load.spritesheet('blueDoor', 'assets/sprites/blueDoor.png', {
-            frameWidth: 112,
-            frameHeight: 480
-        });
-
-        this.load.spritesheet('pressurePink', 'assets/sprites/pressurePink.png', {
-            frameWidth: 82,
-            frameHeight: 48
-        });
-
-        this.load.spritesheet('pressureBlue', 'assets/sprites/pressureBlue.png', {
-            frameWidth: 82,
-            frameHeight: 48
-        });
-
-        this.load.spritesheet('pressureYellow', 'assets/sprites/pressureYellow.png', {
-            frameWidth: 82,
-            frameHeight: 48
-        });
-
-        this.load.spritesheet('pressureGreen', 'assets/sprites/pressureGreen.png', {
-            frameWidth: 82,
-            frameHeight: 48
-        });
-
-        this.load.image('portalA', 'assets/sprites/portalAzul.png');
-
-        this.load.image('greenP', 'assets/sprites/greenPlatform.png');
-        this.load.image('yellowP', 'assets/sprites/yellowPlatform.png');
-        this.load.image('pinkP', 'assets/sprites/pinkPlatform.png');
-
-        this.load.image('tiles', 'assets/tileset/Tilemap.png')
-        this.load.tilemapTiledJSON('map','assets/levels/level9.json');
     }
     create(){
 
@@ -70,7 +21,7 @@ class level9Scene extends Phaser.Scene{
 
         //Audio Manager
         if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
-            this.bgMusic = this.sound.add("ingameMS", { volume: 0.7, loop: true });
+            this.bgMusic = this.sound.add("ingameMS1", { volume: 0.7, loop: true });
             this.am.bgMusic = this.bgMusic;
             this.bgMusic.play();
             this.am.bgMusicPlaying = true;
