@@ -697,6 +697,7 @@ class Scaffold{
 class Button{
     constructor(scene, buttonX, buttonY, doorX, doorY, nameB, nameD){
         this.button = scene.add.sprite(buttonX, buttonY, nameB);
+        this.active = false;
         scene.physics.add.existing(this.button, 1);
         scene.anims.create({
             key: 'pressed',
@@ -720,10 +721,13 @@ class Button{
 
     addCollideButton(scene, playerShape){
         scene.physics.add.collider(playerShape, this.button, function(){
-            this.door.anims.play('open', false);
-            this.scene.sound.add("door1FX", { volume: 1, loop: false }).play();
-            this.button.anims.play('pressed', false);
-            scene.physics.world.removeCollider(this.doorCollider);
+            if(!this.active) {
+                this.active = true;
+                this.door.anims.play('open', false);
+                this.scene.sound.add("door1FX", {volume: 1, loop: false}).play();
+                this.button.anims.play('pressed', false);
+                scene.physics.world.removeCollider(this.doorCollider);
+            }
         }, null, this);
     }
 }

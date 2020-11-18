@@ -57,9 +57,6 @@ class infiniteScene extends Phaser.Scene {
 
         this.hp.resetDamage();  //Resetea las vidas para el siguiente nivel
 
-        if(this.levelCounter == 0)
-            level = 6;
-
         switch(level) {
             case 1:
                 this.actualLevel = 1;
@@ -1377,11 +1374,15 @@ class infiniteScene extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('bridge', {start: 0, end: 4}),
             frameRate: 10
         });
-        this.physics.add.collider(this.playerShape, bridgeButton, function(){
-            bridge.anims.play('activated', false);
-            bridgeButton.anims.play('pressedR', false);
-            this.sc.sound.add("door1FX", { volume: 1, loop: false }).play();
-            this.physics.add.collider(this.playerShape2, bridge);
+        var activeButton = false;
+        this.physics.add.collider(playerShape, bridgeButton, function(){
+            if(!activeButton) {
+                activeButton = true;
+                bridge.anims.play('activated', false);
+                bridgeButton.anims.play('pressedR', false);
+                this.sc.sound.add("door1FX", {volume: 1, loop: false}).play();
+                this.physics.add.collider(playerShape2, bridge);
+            }
         }, null, this);
 
         //PALANCAS QUE MUEVEN LA PLATAFORMA
