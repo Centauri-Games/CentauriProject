@@ -1357,10 +1357,10 @@ class infiniteScene extends Phaser.Scene {
         this.sc = this;
 
         //PUERTA
-        var doorStart = this.add.sprite(1500+levelDisplace, 360, 'doorStart');
-        doorStart.setScale(0.5, 0.5);
+        var doorStart = this.add.sprite(1510 +levelDisplace, 389, 'doorStart');
+        doorStart.setScale(0.4, 0.47);
         doorStart.setDepth(100);
-        var doorButton = new Button(this, 500+levelDisplace, 1150 + displaceY, 1550+levelDisplace, 350, 'greenButton', 'door');
+        var doorButton = new Button(this, 500+levelDisplace, 1150 + displaceY, 1550+levelDisplace,377, 'greenButton', 'door');
         doorButton.addCollideDoor(this, this.playerShape);
         doorButton.addCollideButton(this, this.playerShape2);
 

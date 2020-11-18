@@ -236,10 +236,10 @@ class level7Scene extends Phaser.Scene{
         this.sc = this;
 
         //PUERTA
-        var doorStart = this.add.sprite(1500, 360, 'doorStart');
-        doorStart.setScale(0.5, 0.5);
+        var doorStart = this.add.sprite(1510, 389, 'doorStart');
+        doorStart.setScale(0.4, 0.47);
         doorStart.setDepth(100);
-        var doorButton = new Button(this, 500, 1150 + displaceY, 1550, 350, 'greenButton', 'door');
+        var doorButton = new Button(this, 500, 1150 + displaceY, 1550, 377, 'greenButton', 'door');
         doorButton.addCollideDoor(this, playerShape);
         doorButton.addCollideButton(this, playerShape2);
 

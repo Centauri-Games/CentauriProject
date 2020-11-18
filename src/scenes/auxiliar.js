@@ -706,7 +706,7 @@ class Button{
         });
         this.scene = scene;
         this.door = scene.add.sprite(doorX, doorY, nameD);
-        this.door.setScale(0.5, 0.445);
+        this.door.setScale(0.4, 0.4);
         scene.anims.create({
             key: 'open',
             frames: scene.anims.generateFrameNumbers(nameD, {start: 1, end: 1}),
