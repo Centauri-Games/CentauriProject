@@ -1,0 +1,14 @@
+
+Tema 1 - Música para la pantalla del menú
+
+Con este primer tema para el menú, se pretendía componer un tema que transmitiese intriga y misterio así como que crease una sensación fría, tenebroa y sombría.
+
+
+Para conseguir transmitir todo esto al jugador, se ha dado el protagonismo a instrumentos graves como el bajo electrónico. Por otro lado, tambien se ha usado melodías
+suaves, lentas y tranquilas, para seguir consiguiendo esta percepción,  así como efectos de sonido que provocan la sensacion que vienen de lejos y se acercan a nosotros, generando
+algo de intranquilidad o de algo que acecha y rodea al jugador.
+
+A nivel compositivo, esta cancion es un loop en sí, y para que no sea repetitiva para el usuario se ha optado por meter pequeños elementos diferenciales y que sea un tema con distintas partes las cuales tengan
+matices bien diferencidos como el uso de percusion o los ya mencionados efectos de sonido, evitando de esta forma producir una sensación de cansancio en el usuario.
+
+
