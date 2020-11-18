@@ -23,6 +23,17 @@ class controls extends Phaser.Scene{
             this.scene.start("menuScene", {english: this.English, am: this.am});
         });
         bText.setAlpha(0.01);
+
+        //Audio Manager
+        if(this.am==null){
+            this.am = new AudioManager();
+        }
+        if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
+            this.bgMusic = this.sound.add("menuMS", { volume: 0.5, loop: true });
+            this.bgMusic.play();
+            this.am.bgMusicPlaying = true;
+            this.am.bgMusic = this.bgMusic; //Guarda la referencia a la musica sonando para después poder pararla
+        }
     }
 
     update(){

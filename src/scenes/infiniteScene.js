@@ -2025,6 +2025,7 @@ class infiniteScene extends Phaser.Scene {
         if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
             this.bgMusic = this.sound.add("ingameMS", { volume: 0.7, loop: true });
             this.bgMusic.play();
+            this.am.bgMusic = this.bgMusic;
             this.am.bgMusicPlaying = true;
         }
 
@@ -2362,9 +2363,8 @@ class infiniteScene extends Phaser.Scene {
         //////////////////////////////////////////
         if (this.keyMovement.ESC.isDown) {
             this.keyMovement.ESC.isDown = false;
-            this.bgMusic.stop();
             this.scene.pause();
-            this.scene.launch('pauseScene', {level: this.level, english: this.English, am: this.am});
+            this.scene.launch('pauseScene', {level: this.level, english: this.English, am: this.am, device: this.device});
         }
 
         //Meta

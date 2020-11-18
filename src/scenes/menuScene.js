@@ -75,7 +75,6 @@ class menuScene extends Phaser.Scene{
         }
         if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
             this.bgMusic = this.sound.add("menuMS", { volume: 0.5, loop: true });
-            console.log(this.bgMusic);
             this.bgMusic.play();
             this.am.bgMusicPlaying = true;
             this.am.bgMusic = this.bgMusic; //Guarda la referencia a la musica sonando para después poder pararla
