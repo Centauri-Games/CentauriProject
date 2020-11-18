@@ -117,7 +117,7 @@ class level2Scene extends Phaser.Scene{
         camera2.setBounds(0,1440,4032, 1440);
 
         //Techo inferior/Suelo superior
-        var floorDownl = this.add.rectangle(2000, 1440, 4000, 100, 0x000000);
+        var floorDownl = this.add.rectangle(2000, 1450, 4000, 100, 0x000000);
         floorDownl.setAlpha(0);
         this.physics.add.existing(floorDownl, 1);
         this.physics.add.collider(playerShape, floorDownl);
@@ -157,15 +157,18 @@ class level2Scene extends Phaser.Scene{
         floorUpl7.setAlpha(0);
         this.physics.add.existing(floorUpl7, 1);
         this.physics.add.collider(playerShape, floorUpl7);
-        //this.physics.add.collider(playerShape2, limit);
-        //LÍMITES JUGADORES
-        /*
 
-        var limit2 = this.add.rectangle(1600, 0, 3000, 100, 0x000000);
-        this.physics.add.existing(limit2, 1);
-        this.physics.add.collider(playerShape, limit2);*/
 
         //PLATAFORMAS
+
+        var limit1 = new StaticPlatform(this, 200, 1700, 'blueP');
+        limit1.rotate(Math.PI);
+        limit1.addPlayerCollide(this, playerShape2);
+        var limit2 = new StaticPlatform(this, 350, 1700, 'blueP');
+        limit2.rotate(Math.PI);
+        limit2.addPlayerCollide(this, playerShape2);
+
+
         var sp = new StaticPlatform(this, 600, 2600, 'blueP');
         sp.addPlayerCollide(this, playerShape2);
 
@@ -204,7 +207,7 @@ class level2Scene extends Phaser.Scene{
         sp11.rotate(Math.PI);
         sp11.addPlayerCollide(this, playerShape2);
 
-        var sp12 = new StaticPlatform(this, 3250, 2200, 'blueP');
+        var sp12 = new StaticPlatform(this, 3250, 2300, 'blueP');
         sp12.addPlayerCollide(this, playerShape2);
 
         //VIDA

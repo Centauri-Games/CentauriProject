@@ -222,7 +222,7 @@ class level3Scene extends Phaser.Scene{
 
         //J Inferior
 
-        var mp2 = new MovingPlatform(this, 700, 2400, 'woodP'); //Plataforma 1
+        var mp2 = new MovingPlatform(this, 600, 2400, 'woodP'); //Plataforma 1
         mp2.addPlayerCollide(this, playerShape2);
         mp2.setMovement(this, 0, 150, playerPhysics2);
 
@@ -231,7 +231,7 @@ class level3Scene extends Phaser.Scene{
 
         var mp3 = new MovingPlatform(this, 1500, 2700, 'woodP'); //Plataforma 2
         mp3.addPlayerCollide(this, playerShape2);
-        mp3.setMovement(this, 0, -300, playerPhysics2);
+        mp3.setMovement(this, 0, -325, playerPhysics2);
 
         var floor11 = this.add.rectangle(1920, 2015, 500, 80, 0x000000);
         floor11.setAlpha(0);

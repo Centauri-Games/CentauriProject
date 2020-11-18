@@ -313,7 +313,7 @@ class infiniteScene extends Phaser.Scene {
         this.camera2.setBounds(levelDisplace,1440,4032, 1440);
 
         //Techo inferior/Suelo superior
-        var floorDownl = this.add.rectangle(2000+levelDisplace, 1440, 4000, 100, 0x000000);
+        var floorDownl = this.add.rectangle(2000+levelDisplace, 1450, 4000, 100, 0x000000);
         floorDownl.setAlpha(0);
         this.physics.add.existing(floorDownl, 1);
         this.physics.add.collider(this.playerShape, floorDownl);
@@ -353,6 +353,13 @@ class infiniteScene extends Phaser.Scene {
         floorUpl7.setAlpha(0);
         this.physics.add.existing(floorUpl7, 1);
         this.physics.add.collider(this.playerShape, floorUpl7);
+
+        var limit1 = new StaticPlatform(this, 200+levelDisplace, 1700, 'blueP');
+        limit1.rotate(Math.PI);
+        limit1.addPlayerCollide(this, this.playerShape2);
+        var limit2 = new StaticPlatform(this, 350+levelDisplace, 1700, 'blueP');
+        limit2.rotate(Math.PI);
+        limit2.addPlayerCollide(this, this.playerShape2);
 
 
         //PLATAFORMAS
@@ -394,7 +401,7 @@ class infiniteScene extends Phaser.Scene {
         sp11.rotate(Math.PI);
         sp11.addPlayerCollide(this, this.playerShape2);
 
-        var sp12 = new StaticPlatform(this, 3250+levelDisplace, 2200, 'blueP');
+        var sp12 = new StaticPlatform(this, 3250+levelDisplace, 2300, 'blueP');
         sp12.addPlayerCollide(this, this.playerShape2);
 
         //PINCHOS
@@ -544,7 +551,7 @@ class infiniteScene extends Phaser.Scene {
 
         //J Inferior
 
-        var mp2 = new MovingPlatform(this, 700+levelDisplace, 2400, 'woodP'); //Plataforma 1
+        var mp2 = new MovingPlatform(this, 600+levelDisplace, 2400, 'woodP'); //Plataforma 1
         mp2.addPlayerCollide(this, this.playerShape2);
         mp2.setMovement(this, 0, 150, this.playerPhysics2);
 
@@ -553,7 +560,7 @@ class infiniteScene extends Phaser.Scene {
 
         var mp3 = new MovingPlatform(this, 1500+levelDisplace, 2700, 'woodP'); //Plataforma 2
         mp3.addPlayerCollide(this, this.playerShape2);
-        mp3.setMovement(this, 0, -300, this.playerPhysics2);
+        mp3.setMovement(this, 0, -325, this.playerPhysics2);
 
         var floor11 = this.add.rectangle(1920+levelDisplace, 2015, 500, 80, 0x000000);
         floor11.setAlpha(0);
