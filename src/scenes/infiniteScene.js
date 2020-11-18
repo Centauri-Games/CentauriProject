@@ -650,13 +650,13 @@ class infiniteScene extends Phaser.Scene {
         this.playerShape2.setPosition(iniXS, iniYS);
         this.anims.create({
             key: 'openl',
-            frames: this.anims.generateFrameNumbers('pinkDoor', { start: 0, end: 5 }),
+            frames: this.anims.generateFrameNumbers('laserDoor', { start: 0, end: 5 }),
             frameRate: 10,
             repeat: 0
         });
         this.anims.create({
             key: 'closel',
-            frames: this.anims.generateFrameNumbers('pinkDoor', { start: 5, end: 0 }),
+            frames: this.anims.generateFrameNumbers('laserDoor', { start: 5, end: 0 }),
             frameRate: 10,
             repeat: 0
         });
@@ -873,10 +873,10 @@ class infiniteScene extends Phaser.Scene {
         laser12.setAlpha(0);
 
         //PUERTAS
-        var doorUp = new Door(this, 3625+levelDisplace, 850, 'laserDoor');
+        var doorUp = new Door(this, 3625+levelDisplace, 852, 'laserDoor');
         doorUp.scale(1.25,1.25);
         doorUp.addPlayerCollide(this.playerShape);
-        var doorDown = new Door(this, 3625+levelDisplace, 850+displaceY, 'laserDoor');
+        var doorDown = new Door(this, 3625+levelDisplace, 852+displaceY, 'laserDoor');
         doorDown.scale(1.25,1.25);
         doorDown.addPlayerCollide(this.playerShape2);
         mirror7.addDoors(doorUp, doorDown);

@@ -28,7 +28,8 @@ class level8Scene extends Phaser.Scene{
             this.am.bgMusicPlaying = true;
         }
 
-        this.portalFX = this.sound.add("portalFX", { volume: 0.5, loop: true }).play();
+        this.portalFX = this.sound.add("portalFX", { volume: 0.5, loop: true });
+        this.portalFX.play();
 
         var bg = this.add.sprite(960,540,'bg4');
         bg.setScrollFactor(0);
@@ -319,6 +320,7 @@ class level8Scene extends Phaser.Scene{
 
         if (this.physics.world.overlap(this.playerPhysics2, this.nextLevel2) && this.physics.world.overlap(this.playerPhysics, this.nextLevel1)){
             this.portalFX.stop();
+            console.log(this.portalFX);
             this.sound.add("diamondFX", { volume: 1, loop: false }).play();
             this.scene.start("level9Scene", {english: this.English, am: this.am, device: this.device});
         }
