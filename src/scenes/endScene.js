@@ -10,31 +10,6 @@ class endScene extends Phaser.Scene{
     }
 
     preload(){
-
-        this.load.image('story1ES', 'assets/story/story1ES.png');
-        this.load.image('story2ES', 'assets/story/story2ES.png');
-        this.load.image('story3ES', 'assets/story/story3ES.png');
-        this.load.image('story4ES', 'assets/story/story4ES.png');
-        this.load.image('story5ES', 'assets/story/story5ES.png');
-        this.load.image('storyEndES', 'assets/story/storyEndES.png');
-
-        this.load.image('story1EN', 'assets/story/story1EN.png');
-        this.load.image('story2EN', 'assets/story/story2EN.png');
-        this.load.image('story3EN', 'assets/story/story3EN.png');
-        this.load.image('story4EN', 'assets/story/story4EN.png');
-        this.load.image('story5EN', 'assets/story/story5EN.png');
-        this.load.image('storyEndEN', 'assets/story/storyEndEN.png');
-
-        this.load.spritesheet('continue', 'assets/story/continue.png', {
-            frameWidth: 502,
-            frameHeight: 68
-        });
-
-        this.load.spritesheet('continuar', 'assets/story/continuar.png', {
-            frameWidth: 502,
-            frameHeight: 68
-        });
-
     }
 
     create(){
@@ -77,6 +52,9 @@ class endScene extends Phaser.Scene{
         if(this.am==null){
             this.am = new AudioManager();
         }
+        this.am.bgMusic.stop();
+        this.am.bgMusicPlaying = false;
+        
         if (this.am.musicOn === true && this.am.bgMusicPlaying === false) {
             this.bgMusic = this.sound.add("menuMS", { volume: 0.5, loop: true });
             this.bgMusic.play();
