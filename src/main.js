@@ -15,11 +15,12 @@ var gameConfig = {
         }
     },
     input : {
-        activePointers : 3
+        activePointers : 5
     },
     scene: [bootScene, menuScene, settings, controls, credits, selectLevel, selectMode, level1Scene, level2Scene,
         level3Scene, level4Scene, level5Scene, level6Scene, level7Scene,
-        level8Scene, level9Scene,level10Scene, infiniteScene, gameOverScene, matchmakingScene, pauseScene]
+        level8Scene, level9Scene,level10Scene, infiniteScene, gameOverScene, pauseScene, rankingScene,
+        storyScene, endScene]
 }
 
 var game = new Phaser.Game(gameConfig);

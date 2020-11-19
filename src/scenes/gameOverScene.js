@@ -6,13 +6,12 @@ class gameOverScene extends Phaser.Scene{
     init(data){
         this.level = data.level;
         this.English = data.english;
+        this.coop = data.coop;
         this.am = data.am;
         this.device = data.device;
     }
 
     preload(){
-        this.load.image('gameOver', 'assets/screens/GameOver.png');
-        this.load.image('gameOverEnglish', 'assets/screens/GameOverIngles.png');
     }
 
     create(){
@@ -27,12 +26,12 @@ class gameOverScene extends Phaser.Scene{
         }
 
         var bRestart = this.add.rectangle(960,535,600,100,0x550055).setInteractive().on('pointerup',()=>{
-            this.scene.start(this.level, {english: this.English, am: this.am,device : this.device});
+            this.scene.start(this.level, {english: this.English, am: this.am,device : this.device,coop : this.coop});
         });
         bRestart.setAlpha(0.25);
 
         var bBack = this.add.rectangle(960,770,600,100,0xffff00).setInteractive().on('pointerup',()=>{
-            this.scene.start("menuScene", {english: this.English, online : true, am: this.am});
+            this.scene.start("menuScene", {english: this.English, online : true, am: this.am,coop : this.coop});
         });
         bBack.setAlpha(0.25);
     }

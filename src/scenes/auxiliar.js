@@ -535,7 +535,30 @@ class Spike{
                 playerShape.setPosition(startX, startY);
             } else {
                 scene.sound.add("deathFX", { volume: 1, loop: false }).play();
-                scene.scene.start("gameOverScene", {english: eng,level : scene.level, am: this.am});
+
+                if(scene.level == 'infiniteScene'){ //Si es la escena infinita, actualiza ranking
+                    var score = scene.levelCounter * 1000;
+
+                    var rank = localStorage.getItem('rank');    //Se recupera el array de puntuaciones
+                    rank = JSON.parse(rank);
+
+                    if(rank == null)            //si no existe, se crea
+                        rank = new Array();
+
+                    if(rank.length < 10){   //Añadir puntuacion
+                        rank.push(score);
+                    }
+                    else{   //Incluir y ordenar
+                        if(rank[9] < score[1]){
+                            rank[9] = score;
+                            rank.sort((a,b) => {return a-b});
+                        }
+                    }
+                    console.log(rank);
+                    localStorage.setItem('rank', JSON.stringify(rank)); //Se vuelve a almacenar
+                }
+
+                scene.scene.start("gameOverScene", {english: eng,level : scene.level, am: this.am, device: scene.device, coop : scene.coop});
             }
         }, null, this);
     }
@@ -674,6 +697,7 @@ class Scaffold{
 class Button{
     constructor(scene, buttonX, buttonY, doorX, doorY, nameB, nameD){
         this.button = scene.add.sprite(buttonX, buttonY, nameB);
+        this.active = false;
         scene.physics.add.existing(this.button, 1);
         scene.anims.create({
             key: 'pressed',
@@ -682,7 +706,7 @@ class Button{
         });
         this.scene = scene;
         this.door = scene.add.sprite(doorX, doorY, nameD);
-        this.door.setScale(0.5, 0.445);
+        this.door.setScale(0.4, 0.4);
         scene.anims.create({
             key: 'open',
             frames: scene.anims.generateFrameNumbers(nameD, {start: 1, end: 1}),
@@ -697,10 +721,13 @@ class Button{
 
     addCollideButton(scene, playerShape){
         scene.physics.add.collider(playerShape, this.button, function(){
-            this.door.anims.play('open', false);
-            this.scene.sound.add("door1FX", { volume: 1, loop: false }).play();
-            this.button.anims.play('pressed', false);
-            scene.physics.world.removeCollider(this.doorCollider);
+            if(!this.active) {
+                this.active = true;
+                this.door.anims.play('open', false);
+                this.scene.sound.add("door1FX", {volume: 1, loop: false}).play();
+                this.button.anims.play('pressed', false);
+                scene.physics.world.removeCollider(this.doorCollider);
+            }
         }, null, this);
     }
 }

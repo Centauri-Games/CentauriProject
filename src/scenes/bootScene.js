@@ -35,7 +35,7 @@ class bootScene extends Phaser.Scene{
             frameWidth: 65,
             frameHeight: 80
         });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
+        this.load.spritesheet('shadow', 'assets/players/Erebos.png', {
             frameWidth: 65,
             frameHeight: 80
         });
@@ -128,7 +128,7 @@ class bootScene extends Phaser.Scene{
         //Menús
         this.load.image('screen', 'assets/UI/FullScreen.png');  //Componentes de menus e interfaces
         this.load.image('settings', 'assets/UI/Settings.png');
-        this.load.image('español', 'assets/UI/España.png');
+        this.load.image('español', 'assets/UI/Espana.png');
         this.load.image('english', 'assets/UI/UK.png');
 
         //Interfaz Móvil
@@ -142,7 +142,8 @@ class bootScene extends Phaser.Scene{
         //Music
         this.load.audio('menuMS', 'assets/sounds/music/menu.wav');
         this.load.audio('creditsMS', 'assets/sounds/music/credits.wav');
-        this.load.audio('ingameMS', 'assets/sounds/music/ingame.mp3');
+        this.load.audio('ingameMS1', 'assets/sounds/music/ingame1.wav');
+        this.load.audio('ingameMS2', 'assets/sounds/music/ingame2.wav');
 
         this.load.audio('barrierFX', 'assets/sounds/effects/barrier.wav');
         this.load.audio('buttonFX', 'assets/sounds/effects/button.wav');
@@ -165,6 +166,57 @@ class bootScene extends Phaser.Scene{
             frameWidth: 72,
             frameHeight: 20
         });
+
+        this.load.image('story1ES', 'assets/story/story1ES.png');
+        this.load.image('story2ES', 'assets/story/story2ES.png');
+        this.load.image('story3ES', 'assets/story/story3ES.png');
+        this.load.image('story4ES', 'assets/story/story4ES.png');
+        this.load.image('story5ES', 'assets/story/story5ES.png');
+        this.load.image('storyEndES', 'assets/story/storyEndES.png');
+
+        this.load.image('story1EN', 'assets/story/story1EN.png');
+        this.load.image('story2EN', 'assets/story/story2EN.png');
+        this.load.image('story3EN', 'assets/story/story3EN.png');
+        this.load.image('story4EN', 'assets/story/story4EN.png');
+        this.load.image('story5EN', 'assets/story/story5EN.png');
+        this.load.image('storyEndEN', 'assets/story/storyEndEN.png');
+
+        this.load.spritesheet('continue', 'assets/story/continue.png', {
+            frameWidth: 502,
+            frameHeight: 68
+        });
+
+        this.load.spritesheet('continuar', 'assets/story/continuar.png', {
+            frameWidth: 502,
+            frameHeight: 68
+        });
+
+        this.load.image('menu', 'assets/screens/Menu.png');
+        this.load.image('menuEnglish', 'assets/screens/MenuIngles.png');
+        this.load.image('screen', 'assets/UI/FullScreen.png');
+        this.load.image('settings', 'assets/UI/Settings.png');
+        this.load.image('howToPlay', 'assets/screens/Controles.png');
+        this.load.image('howToPlayEnglish', 'assets/screens/ControlesIngles.png');
+        this.load.image('howToPlayMB', 'assets/screens/ControlesMovil.png');
+        this.load.image('howToPlayMBEnglish', 'assets/screens/ControlesMovilIngles.png');
+        this.load.image('credit', 'assets/screens/Contacto.png');
+        this.load.image('creditEnglish', 'assets/screens/ContactoIngles.png');
+        this.load.image('gameOver', 'assets/screens/GameOver.png');
+        this.load.image('gameOverEnglish', 'assets/screens/GameOverIngles.png');
+        this.load.image('pause', 'assets/screens/Pausa.png');
+        this.load.image('pauseEnglish', 'assets/screens/PausaIngles.png');
+        this.load.image('rankES', 'assets/screens/Puntuaciones.png');
+        this.load.image('rankEN', 'assets/screens/PuntuacionesIngles.png');
+        this.load.image('levelSelect', 'assets/screens/SeleccionNivel.png');
+        this.load.image('screen', 'assets/UI/FullScreen.png');
+        this.load.image('mode', 'assets/screens/SeleccionModo.png');
+        this.load.image('modeEnglish', 'assets/screens/SeleccionModoIngles.png');
+        this.load.image('screen', 'assets/UI/FullScreen.png');
+        this.load.image('language', 'assets/screens/SeleccionIdioma.png');
+        this.load.image('languageEnglish', 'assets/screens/SeleccionIdiomaIngles.png');
+
+
+        this.load.bitmapFont('agency', 'assets/font/agency_0.png', 'assets/font/agency.xml');
 
     }
 
