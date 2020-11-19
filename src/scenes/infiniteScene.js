@@ -1869,11 +1869,11 @@ class infiniteScene extends Phaser.Scene {
 
         var displaceY = 1440;
 
-        var spikesD = new Spike(this, 1295 + levelDisplace, 1200 + displaceY, 480, 100, 0xff0000, this.hp);
+        var spikesD = new Spike(this, 1295 + levelDisplace, 1190 + displaceY, 480, 100, 0xff0000, this.hp);
         spikesD.setAlpha(0);
         spikesD.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS);
 
-        var spikes2D = new Spike(this, 3023 + levelDisplace, 1488 + displaceY, 864, 100, 0xff0000, this.hp);
+        var spikes2D = new Spike(this, 3023 + levelDisplace, 1465 + displaceY, 864, 100, 0xff0000, this.hp);
         spikes2D.setAlpha(0);
         spikes2D.addPlayerCollide(this, this.playerShape2, this.playerShape, this.English, iniXS, iniYS);
 
@@ -1883,7 +1883,7 @@ class infiniteScene extends Phaser.Scene {
 
         //PLATAFORMAS
         //Móviles
-        var mpd = new MovingPlatform(this, 2000 + levelDisplace, 2800, 'woodP');
+        var mpd = new MovingPlatform(this, 2000 + levelDisplace, 2850, 'woodP');
         mpd.addPlayerCollide(this, this.playerShape2);
         mpd.setMovement(this, 0, -400);
 
