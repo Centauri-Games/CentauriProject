@@ -1383,7 +1383,7 @@ class infiniteScene extends Phaser.Scene {
             frameRate: 10
         });
         var activeButton = false;
-        this.physics.add.collider(playerShape, bridgeButton, function () {
+        this.physics.add.collider(this.playerShape, bridgeButton, function () {
             if (!activeButton) {
                 activeButton = true;
                 bridge.anims.play('activated', false);
@@ -2161,6 +2161,7 @@ class infiniteScene extends Phaser.Scene {
 
 
             pause = this.add.sprite(1800, 120, 'pauseIcon').setInteractive();
+            pause.setDepth(100);
             pause.input.hitArea.setTo(700, 246, 476, 437);
             pause.setScale(0.45);
             pause.setScrollFactor(0, 0);
@@ -2177,6 +2178,7 @@ class infiniteScene extends Phaser.Scene {
 
             if (this.coop) {
                 jumpr = this.add.sprite(1580, 450, 'jumpIcon').setInteractive();
+                jumpr.setDepth(100);
                 jumpr.alpha = 0.7;
                 jumpr.input.hitArea.setTo(700, 246, 476, 437);
                 jumpr.setScale(0.3);
@@ -2191,9 +2193,10 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.I.isDown = true;
                     keyMovement.I.isUp = false;
                 });
-                cameraMain.ignore(jumpr);
+                this.cameraMain.ignore(jumpr);
                 ///////////////////////////////////////
                 jumpl = this.add.sprite(350, 450, 'jumpIcon').setInteractive();
+                jumpl.setDepth(100);
                 jumpl.alpha = 0.7;
                 jumpl.input.hitArea.setTo(700, 246, 476, 437);
                 jumpl.setScale(0.3);
@@ -2208,9 +2211,10 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.W.isDown = true;
                     keyMovement.W.isUp = false;
                 });
-                cameraMain.ignore(jumpl);
+                this.cameraMain.ignore(jumpl);
 
                 right = this.add.sprite(600, 450, 'rightIcon').setInteractive();
+                right.setDepth(100);
                 right.alpha = 0.7;
                 right.input.hitArea.setTo(700, 246, 476, 437);
                 right.setScrollFactor(0, 0);
@@ -2225,9 +2229,10 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.D.isDown = true;
                     keyMovement.D.isUp = false;
                 });
-                cameraMain.ignore(right);
+                this.cameraMain.ignore(right);
                 ///////////////////////////////////
                 left = this.add.sprite(100, 450, 'leftIcon').setInteractive();
+                left.setDepth(100);
                 left.alpha = 0.7;
                 left.input.hitArea.setTo(700, 246, 476, 437);
                 left.setScale(0.4);
@@ -2242,11 +2247,12 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.A.isDown = true;
                     keyMovement.A.isUp = false;
                 });
-                cameraMain.ignore(left);
+                this.cameraMain.ignore(left);
 
                 ////////////////////////////
 
                 right2 = this.add.sprite(1830, 450, 'rightIcon').setInteractive();
+                right2.setDepth(100);
                 right2.alpha = 0.7;
                 right2.input.hitArea.setTo(700, 246, 476, 437);
                 right2.setScrollFactor(0, 0);
@@ -2261,9 +2267,10 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.L.isDown = true;
                     keyMovement.L.isUp = false;
                 });
-                cameraMain.ignore(right2);
+                this.cameraMain.ignore(right2);
                 ///////////////////////////////////
                 left2 = this.add.sprite(1330, 450, 'leftIcon').setInteractive();
+                left2.setDepth(100);
                 left2.alpha = 0.7;
                 left2.input.hitArea.setTo(700, 246, 476, 437);
                 left2.setScale(0.4);
@@ -2278,12 +2285,13 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.J.isDown = true;
                     keyMovement.J.isUp = false;
                 });
-                cameraMain.ignore(left2);
+                this.cameraMain.ignore(left2);
 
             } else {
 
 
                 right = this.add.sprite(1830, 450, 'rightIcon').setInteractive();
+                right.setDepth(100);
                 right.alpha = 0.7;
                 right.input.hitArea.setTo(700, 246, 476, 437);
                 right.setScrollFactor(0, 0);
@@ -2298,9 +2306,10 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.D.isDown = true;
                     keyMovement.D.isUp = false;
                 });
-                cameraMain.ignore(right);
+                this.cameraMain.ignore(right);
                 ///////////////////////////////////
                 left = this.add.sprite(100, 450, 'leftIcon').setInteractive();
+                left.setDepth(100);
                 left.alpha = 0.7;
                 left.input.hitArea.setTo(700, 246, 476, 437);
                 left.setScale(0.4);
@@ -2315,9 +2324,10 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.A.isDown = true;
                     keyMovement.A.isUp = false;
                 });
-                cameraMain.ignore(left);
+                this.cameraMain.ignore(left);
                 ////////////////////////////////////
                 jumpr = this.add.sprite(1820, 250, 'jumpIcon').setInteractive();
+                jumpr.setDepth(100);
                 jumpr.alpha = 0.7;
                 jumpr.input.hitArea.setTo(700, 246, 476, 437);
                 jumpr.setScale(0.3);
@@ -2332,9 +2342,10 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.W.isDown = true;
                     keyMovement.W.isUp = false;
                 });
-                cameraMain.ignore(jumpr);
+                this.cameraMain.ignore(jumpr);
                 ///////////////////////////////////////
                 jumpl = this.add.sprite(100, 250, 'jumpIcon').setInteractive();
+                jumpl.setDepth(100);
                 jumpl.alpha = 0.7;
                 jumpl.input.hitArea.setTo(700, 246, 476, 437);
                 jumpl.setScale(0.3);
@@ -2349,9 +2360,10 @@ class infiniteScene extends Phaser.Scene {
                     keyMovement.W.isDown = true;
                     keyMovement.W.isUp = false;
                 });
-                cameraMain.ignore(jumpl);
+                this.cameraMain.ignore(jumpl);
                 //////////////////////////////
                 swap = this.add.sprite(120, 120, 'swapIcon').setInteractive();
+                swap.setDepth(100);
                 swap.input.hitArea.setTo(700, 246, 476, 437);
                 swap.setScale(0.35);
                 swap.setScrollFactor(0, 0);
@@ -2370,7 +2382,7 @@ class infiniteScene extends Phaser.Scene {
             }
             this.keyMovement = keyMovement;
 
-        } else {
+       } else {
             this.keyMovement = this.input.keyboard.addKeys('A, D, W, ESC, SPACE, J , L, I ');
         }
 

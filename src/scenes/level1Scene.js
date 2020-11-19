@@ -261,7 +261,7 @@ class level1Scene extends Phaser.Scene {
         spikesDownR.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXS, iniYS, iniXL, iniYL);
 
         //CONTROL Y MOVIMIENTO
-        if (this.device == "mobile") {
+       if (this.device == "mobile") {
 
 
             var keyMovement = {
