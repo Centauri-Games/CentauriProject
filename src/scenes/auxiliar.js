@@ -558,7 +558,7 @@ class Spike{
                     localStorage.setItem('rank', JSON.stringify(rank)); //Se vuelve a almacenar
                 }
 
-                scene.scene.start("gameOverScene", {english: eng,level : scene.level, am: this.am, device: this.device});
+                scene.scene.start("gameOverScene", {english: eng,level : scene.level, am: this.am, device: scene.device, coop : scene.coop});
             }
         }, null, this);
     }

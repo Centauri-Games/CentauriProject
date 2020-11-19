@@ -8,6 +8,8 @@ class storyScene extends Phaser.Scene{
         this.English = data.english;
         this.device = data.device;
         this.am = data.am;
+        this.coop = data.coop;
+        console.log(this.coop);
     }
 
     preload(){
@@ -55,7 +57,7 @@ class storyScene extends Phaser.Scene{
                         break;
                     case 4:
                         screenN ++;
-                        this.scene.start("level1Scene", {english: this.English, am: this.am, device: this.device});
+                        this.scene.start("level1Scene", {english: this.English, am: this.am, device: this.device,coop : this.coop});
                         break;
                 }
             });
@@ -82,7 +84,7 @@ class storyScene extends Phaser.Scene{
                         screen.setTexture('story5ES');
                         break;
                     case 4:
-                        this.scene.start("level1Scene", {english: this.English, am: this.am, device: this.device});
+                        this.scene.start("level1Scene", {english: this.English, am: this.am, device: this.device,coop : this.coop});
                         break;
                 }
 

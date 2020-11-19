@@ -6,7 +6,7 @@ class selectMode extends Phaser.Scene{
 
     init(data){
         this.English = data.english;
-        this.online = data.online;
+        this.coop = data.coop;
         this.am = data.am;
         this.device = data.device;
     }
@@ -35,16 +35,16 @@ class selectMode extends Phaser.Scene{
         fullScreen.setAlpha(0.01);
 
         var bStory = this.add.rectangle(985,380,700,150,0x550055).setInteractive().on('pointerup',()=>{
-            this.scene.start("selectLevel", {english: this.English, online : this.online, am: this.am, device : this.device});
+            this.scene.start("selectLevel", {english: this.English, coop : this.coop, am: this.am, device : this.device});
         });
         bStory.setAlpha(0.25);
 
         var bInfinite = this.add.rectangle(985,700,700,150,0xffff00).setInteractive().on('pointerup',()=>{
-            if (this.online){
-                this.scene.start("matchmakingScene", {level : 0, am: this.am, device : this.device} )
-            } else {
-                this.scene.start("infiniteScene", {english: this.English, am: this.am, device : this.device});
-            }
+            
+                
+            
+                this.scene.start("infiniteScene", {english: this.English, am: this.am, device : this.device,coop : this.coop});
+            
         });
         bInfinite.setAlpha(0.25);
 

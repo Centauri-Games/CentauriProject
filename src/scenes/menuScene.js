@@ -38,12 +38,12 @@ class menuScene extends Phaser.Scene{
 
         var bSingle = this.add.rectangle(292.5,125,450,100,0x550055).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
-            this.scene.start("selectMode", {english: this.English, online : false, am: this.am, device: this.device});
+            this.scene.start("selectMode", {english: this.English, coop : false, am: this.am, device: this.device});
         });
         bSingle.setAlpha(0.25);
 
         var bMulti = this.add.rectangle(292.5,340,450,100,0x550055).setInteractive().on('pointerup',()=>{
-            this.scene.start("selectMode", {english: this.English, online : true, am: this.am, device: this.device});
+            this.scene.start("selectMode", {english: this.English, coop : true, am: this.am, device: this.device});
         });
         bMulti.setAlpha(0.25);
 
