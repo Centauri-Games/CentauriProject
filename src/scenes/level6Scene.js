@@ -195,64 +195,64 @@ class level6Scene extends Phaser.Scene {
 
         var spikesDown2 = new Spike(this, 2000, 90 + displaceY, 3800, 100, 0xff0000, hp);
         spikesDown2.setAlpha(0);
-        spikesDown2.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikesDown2.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes1d = new Spike(this, 740, 370 + displaceY, 150, 600, 0xff0000, hp);
         spikes1d.setAlpha(0);
-        spikes1d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes1d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes2d = new Spike(this, 1125, 230 + displaceY, 150, 300, 0xff0000, hp);
         spikes2d.setAlpha(0);
-        spikes2d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes2d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes3d = new Spike(this, 1510, 325 + displaceY, 150, 500, 0xff0000, hp);
         spikes3d.setAlpha(0);
-        spikes3d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes3d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes4d = new Spike(this, 1895, 375 + displaceY, 150, 600, 0xff0000, hp);
         spikes4d.setAlpha(0);
-        spikes4d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes4d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
         //Symmetry
         var spikes5d = new Spike(this, 2185, 375 + displaceY, 150, 600, 0xff0000, hp);
         spikes5d.setAlpha(0);
-        spikes5d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes5d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes6d = new Spike(this, 2570, 325 + displaceY, 150, 500, 0xff0000, hp);
         spikes6d.setAlpha(0);
-        spikes6d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes6d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes7d = new Spike(this, 2955, 275 + displaceY, 150, 400, 0xff0000, hp);
         spikes7d.setAlpha(0);
-        spikes7d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes7d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes8d = new Spike(this, 3340, 370 + displaceY, 150, 600, 0xff0000, hp);
         spikes8d.setAlpha(0);
-        spikes8d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes8d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         //
         var spikes9d = new Spike(this, 1125, 1000 + displaceY, 150, 500, 0xff0000, hp);
         spikes9d.setAlpha(0);
-        spikes9d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes9d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes10d = new Spike(this, 1510, 1040 + displaceY, 150, 400, 0xff0000, hp);
         spikes10d.setAlpha(0);
-        spikes10d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes10d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes11d = new Spike(this, 1895, 1090 + displaceY, 150, 300, 0xff0000, hp);
         spikes11d.setAlpha(0);
-        spikes11d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes11d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes12d = new Spike(this, 2185, 1090 + displaceY, 150, 300, 0xff0000, hp);
         spikes12d.setAlpha(0);
-        spikes12d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes12d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes13d = new Spike(this, 2570, 1040 + displaceY, 150, 400, 0xff0000, hp);
         spikes13d.setAlpha(0);
-        spikes13d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes13d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         var spikes14d = new Spike(this, 2955, 1000 + displaceY, 150, 500, 0xff0000, hp);
         spikes14d.setAlpha(0);
-        spikes14d.addPlayerCollide(this, playerShape, playerShape2, this.English, iniXL, iniYL, iniXL, iniYL);
+        spikes14d.addPlayerCollide(this, playerShape2, playerShape, this.English, iniXL, iniYL, iniXL, iniYL);
 
         //SUELO
         //J Superior
