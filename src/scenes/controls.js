@@ -6,18 +6,23 @@ class controls extends Phaser.Scene{
     init(data){
         this.English = data.english;
         this.am = data.am;
+        this.device = data.device;
     }
 
     preload(){
-        this.load.image('howToPlay', 'assets/screens/Controles.png');
-        this.load.image('howToPlayEnglish', 'assets/screens/ControlesIngles.png');
     }
 
     create(){
         if (this.English){
-            this.add.sprite(960, 540, 'howToPlayEnglish');
+            if(this.device == "desktop")
+                this.add.sprite(960, 540, 'howToPlayEnglish');
+            else
+                this.add.sprite(960, 540, 'howToPlayMBEnglish');
         } else {
-            this.add.sprite(960, 540, 'howToPlay');
+            if(this.device == "desktop")
+                this.add.sprite(960, 540, 'howToPlay');
+            else
+                this.add.sprite(960, 540, 'howToPlayMB');
         }
         var bText = this.add.text(125,125,"Atrás",{font : "48px"}).setInteractive().on("pointerup",()=>{
             this.scene.start("menuScene", {english: this.English, am: this.am});

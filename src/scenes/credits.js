@@ -9,8 +9,6 @@ class credits extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('credit', 'assets/screens/Contacto.png');
-        this.load.image('creditEnglish', 'assets/screens/ContactoIngles.png');
     }
 
     create(){

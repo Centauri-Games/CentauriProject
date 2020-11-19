@@ -9,10 +9,6 @@ class settings extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('language', 'assets/screens/SeleccionIdioma.png');
-        this.load.image('languageEnglish', 'assets/screens/SeleccionIdiomaIngles.png');
-        this.load.image('español', 'assets/UI/España.png');
-        this.load.image('english', 'assets/UI/UK.png');
     }
 
     create(){

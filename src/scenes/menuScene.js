@@ -14,10 +14,6 @@ class menuScene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('menu', 'assets/screens/Menú.png');
-        this.load.image('menuEnglish', 'assets/screens/MenúIngles.png');
-        this.load.image('screen', 'assets/UI/FullScreen.png');
-        this.load.image('settings', 'assets/UI/Settings.png');
     }
 
     create(){
@@ -53,7 +49,7 @@ class menuScene extends Phaser.Scene{
 
         var bControls = this.add.rectangle(292.5,540,450,100,0xaa7f2a).setInteractive().on('pointerup',()=>{
             //this.setFillStyle(0xffffff);
-            this.scene.start("controls", {english: this.English, am: this.am});
+            this.scene.start("controls", {english: this.English, am: this.am, device:this.device});
         });
         bControls.setAlpha(0.1);
 

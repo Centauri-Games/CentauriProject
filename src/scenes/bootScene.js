@@ -191,6 +191,35 @@ class bootScene extends Phaser.Scene{
             frameHeight: 68
         });
 
+        this.load.image('menu', 'assets/screens/Menú.png');
+        this.load.image('menuEnglish', 'assets/screens/MenúIngles.png');
+        this.load.image('screen', 'assets/UI/FullScreen.png');
+        this.load.image('settings', 'assets/UI/Settings.png');
+        this.load.image('howToPlay', 'assets/screens/Controles.png');
+        this.load.image('howToPlayEnglish', 'assets/screens/ControlesIngles.png');
+        this.load.image('howToPlayMB', 'assets/screens/ControlesMovil.png');
+        this.load.image('howToPlayMBEnglish', 'assets/screens/ControlesMovilIngles.png');
+        this.load.image('credit', 'assets/screens/Contacto.png');
+        this.load.image('creditEnglish', 'assets/screens/ContactoIngles.png');
+        this.load.image('gameOver', 'assets/screens/GameOver.png');
+        this.load.image('gameOverEnglish', 'assets/screens/GameOverIngles.png');
+        this.load.image('pause', 'assets/screens/Pausa.png');
+        this.load.image('pauseEnglish', 'assets/screens/PausaIngles.png');
+        this.load.image('rankES', 'assets/screens/Puntuaciones.png');
+        this.load.image('rankEN', 'assets/screens/PuntuacionesIngles.png');
+        this.load.image('levelSelect', 'assets/screens/SeleccionNivel.png');
+        this.load.image('screen', 'assets/UI/FullScreen.png');
+        this.load.image('mode', 'assets/screens/SeleccionModo.png');
+        this.load.image('modeEnglish', 'assets/screens/SeleccionModoIngles.png');
+        this.load.image('screen', 'assets/UI/FullScreen.png');
+        this.load.image('language', 'assets/screens/SeleccionIdioma.png');
+        this.load.image('languageEnglish', 'assets/screens/SeleccionIdiomaIngles.png');
+        this.load.image('español', 'assets/UI/España.png');
+        this.load.image('english', 'assets/UI/UK.png');
+
+
+        this.load.bitmapFont('agency', 'assets/font/agency_0.png', 'assets/font/agency.xml');
+
     }
 
     create(){

@@ -12,9 +12,6 @@ class selectMode extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('mode', 'assets/screens/SeleccionModo.png');
-        this.load.image('modeEnglish', 'assets/screens/SeleccionModoIngles.png');
-        this.load.image('screen', 'assets/UI/FullScreen.png');
     }
 
     create(){

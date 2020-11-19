@@ -11,8 +11,6 @@ class pauseScene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('pause', 'assets/screens/Pausa.png');
-        this.load.image('pauseEnglish', 'assets/screens/PausaIngles.png');
     }
 
     create(){

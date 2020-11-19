@@ -9,9 +9,6 @@ class rankingScene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('rankES', 'assets/screens/Puntuaciones.png');
-        this.load.image('rankEN', 'assets/screens/PuntuacionesIngles.png');
-        this.load.bitmapFont('agency', 'assets/font/agency_0.png', 'assets/font/agency.xml');
     }
 
     create(){

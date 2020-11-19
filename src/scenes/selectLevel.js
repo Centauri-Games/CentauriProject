@@ -11,8 +11,6 @@ class selectLevel extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('levelSelect', 'assets/screens/SeleccionNivel.png');
-        this.load.image('screen', 'assets/UI/FullScreen.png');
     }
 
     create(){
