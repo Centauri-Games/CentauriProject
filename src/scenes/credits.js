@@ -31,6 +31,27 @@ class credits extends Phaser.Scene{
             this.am = new AudioManager();
         }
 
+        var bYT = this.add.rectangle(610, 955, 180, 140).setInteractive().on('pointerup',()=>{
+            window.open("https://www.youtube.com/channel/UCMPGHT6gt11RJQFEf30gTKg?view_as=subscriber", "_blank");
+        });
+        bYT.setAlpha(0.5);
+
+        var bMail = this.add.rectangle(878, 950, 155, 140).setInteractive().on('pointerup',()=>{
+            window.open("mailto:centaurigames2020@gmail.com", "_blank");
+        });
+        bMail.setAlpha(0.5);
+
+        var bTw = this.add.rectangle(1105, 950, 150, 150).setInteractive().on('pointerup',()=>{
+            window.open("https://twitter.com/GamesCentauri", "_blank");
+        });
+        bTw.setAlpha(0.5);
+
+        var bGt = this.add.rectangle(1305, 950, 150, 150).setInteractive().on('pointerup',()=>{
+            window.open("https://github.com/Centauri-Games", "_blank");
+        });
+        bGt.setAlpha(0.5);
+
+
         this.am.bgMusic.stop();
         this.am.bgMusicPlaying = false;
 
