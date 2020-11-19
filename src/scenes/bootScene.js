@@ -35,7 +35,7 @@ class bootScene extends Phaser.Scene{
             frameWidth: 65,
             frameHeight: 80
         });
-        this.load.spritesheet('shadow', 'assets/players/Érebos.png', {
+        this.load.spritesheet('shadow', 'assets/players/Erebos.png', {
             frameWidth: 65,
             frameHeight: 80
         });
@@ -191,8 +191,8 @@ class bootScene extends Phaser.Scene{
             frameHeight: 68
         });
 
-        this.load.image('menu', 'assets/screens/Menú.png');
-        this.load.image('menuEnglish', 'assets/screens/MenúIngles.png');
+        this.load.image('menu', 'assets/screens/Menu.png');
+        this.load.image('menuEnglish', 'assets/screens/MenuIngles.png');
         this.load.image('screen', 'assets/UI/FullScreen.png');
         this.load.image('settings', 'assets/UI/Settings.png');
         this.load.image('howToPlay', 'assets/screens/Controles.png');
