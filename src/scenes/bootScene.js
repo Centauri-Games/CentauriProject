@@ -128,7 +128,7 @@ class bootScene extends Phaser.Scene{
         //Menús
         this.load.image('screen', 'assets/UI/FullScreen.png');  //Componentes de menus e interfaces
         this.load.image('settings', 'assets/UI/Settings.png');
-        this.load.image('español', 'assets/UI/España.png');
+        this.load.image('español', 'assets/UI/Espana.png');
         this.load.image('english', 'assets/UI/UK.png');
 
         //Interfaz Móvil
@@ -214,8 +214,6 @@ class bootScene extends Phaser.Scene{
         this.load.image('screen', 'assets/UI/FullScreen.png');
         this.load.image('language', 'assets/screens/SeleccionIdioma.png');
         this.load.image('languageEnglish', 'assets/screens/SeleccionIdiomaIngles.png');
-        this.load.image('español', 'assets/UI/España.png');
-        this.load.image('english', 'assets/UI/UK.png');
 
 
         this.load.bitmapFont('agency', 'assets/font/agency_0.png', 'assets/font/agency.xml');
